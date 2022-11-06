@@ -13,9 +13,7 @@ class SignupActivity : AppCompatActivity() {
     lateinit var binding: ActivitySignupBinding
     lateinit var database: DatabaseReference
     lateinit var databasechild: DatabaseReference
-    data class User(val username: String? = null, val usernumber: String? = null, val userpassword: String? = null) {
-
-    }
+    data class User(val username: String? = null, val usernumber: String? = null, val userpassword: String? = null)
     fun writeNewUser(name: String, number: String, password: String) {
         val user = User(name, number, password)
         database.child("Users").child(number).setValue(user)
