@@ -4,52 +4,79 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/signup_background"
     tools:context=".SignupActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/btn_signup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+    <EditText
+        android:id="@+id/edt_name"
+        android:layout_width="265dp"
+        android:layout_height="43dp"
+        android:layout_marginLeft="78dp"
+        android:layout_marginTop="250dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:ems="10"
+        android:inputType="text"
+        android:background="#00FF0000"/>
 
-        <EditText
-            android:id="@+id/edit_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="50px"
-            android:ems="10"
-            android:inputType="text" />
+    <EditText
+        android:id="@+id/edt_phone"
+        android:layout_width="265dp"
+        android:layout_height="43dp"
+        android:layout_marginLeft="78dp"
+        android:layout_marginTop="323dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:ems="10"
+        android:inputType="phone"
+        android:background="#00FF0000"/>
 
-        <EditText
-            android:id="@+id/edit_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="50px"
-            android:ems="10"
-            android:inputType="phone" />
+    <EditText
+        android:id="@+id/edt_pw"
+        android:layout_width="265dp"
+        android:layout_height="43dp"
+        android:layout_marginLeft="78dp"
+        android:layout_marginTop="406dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:background="#00FF0000"/>
 
-        <EditText
-            android:id="@+id/edit_pw"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="50px"
-            android:ems="10"
-            android:inputType="textPassword" />
-    </LinearLayout>
+    <EditText
+        android:id="@+id/edt_pw2"
+        android:layout_width="265dp"
+        android:layout_height="43dp"
+        android:layout_marginLeft="78dp"
+        android:layout_marginTop="457dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:background="#00FF0000"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="265dp"
+        android:layout_height="43dp"
+        android:layout_marginLeft="78dp"
+        android:layout_marginTop="520dp"
+        android:background="#00FF0000"
+        android:text="message"
+        android:textColor="#F44336"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 
     <Button
         android:id="@+id/btn_signup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="sign up"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_width="126dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="250dp"
+        android:layout_marginTop="575dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#00FF0000"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

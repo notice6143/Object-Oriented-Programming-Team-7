@@ -14,7 +14,12 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnLogin.setOnClickListener {
-            val intent = Intent(this, CalendarActivity::class.java)
+            //val intent = Intent(this, CalendarActivity::class.java)
+            val intent = Intent(this, TestActivity::class.java)
+            val phone = binding.edtPhone.getText().toString()
+            val pw= binding.edtPw.getText().toString()
+            intent.putExtra("phone", phone)
+            intent.putExtra("pw", pw)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
             finish()
