@@ -12,11 +12,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        /*
         val intent = Intent(this, LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
         finish()
+         */
 
         binding.btnLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)

@@ -15,15 +15,7 @@ class TestActivity : AppCompatActivity() {
     lateinit var binding: ActivityTestBinding
     lateinit var database: DatabaseReference
 
-    data class Calendar(val key: String? = null, val title: String? = null, val date: String? = null, val memo: String? = null)
-    fun writeNewCalendar(key: String, title: String, date: String, memo: String) {
-        val cal = Calendar(key, title, date, memo)
-        val a = database.child("Users").child("010-1234-5678")
-    }
-    fun viewCalendar(key: String, title: String, date: String, memo: String) {
-        val cal = Calendar(key, title, date, memo)
-        val a = database.child("Users").child("010-1234-5678")
-    }
+    data class Calendar(val title: String? = null, val date: String? = null, val memo: String? = null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,15 +34,12 @@ class TestActivity : AppCompatActivity() {
         val pw = intent.getStringExtra("pw")
         binding.txtTest1.setText(phone)
         binding.txtTest2.setText(pw)
-
         binding.btnTest1.setOnClickListener {
-            database.child("Users").child("010-1234-5678").child("Calendars").get().addOnSuccessListener {
-                val key = it.child("key").value as String
+            database.child("Users").child("010-1234-5678").child("Calendars").child("aaaa").get().addOnSuccessListener {
                 val title = it.child("title").value as String
                 val date = it.child("date").value as String
                 val memo = it.child("memo").value as String
-                val cal = Calendar(key, title, date, memo)
-                binding.txtTest1.setText(key)
+                val cal = Calendar(title, date, memo)
                 binding.txtTest2.setText(title)
                 binding.txtTest3.setText(date)
                 binding.txtTest4.setText(memo)
@@ -61,8 +50,8 @@ class TestActivity : AppCompatActivity() {
             val title = binding.edtTest2.getText().toString()
             val date = binding.edtTest3.getText().toString()
             val memo = binding.edtTest4.getText().toString()
-            val cal = Calendar(key, title, date, memo)
-            database.child("Users").child("010-1234-5678").child("Calendars").setValue(cal)
+            val cal = Calendar(title, date, memo)
+            database.child("Users").child("010-1234-5678").child("Calendars").child(key).setValue(cal)
         }
     }
 }
