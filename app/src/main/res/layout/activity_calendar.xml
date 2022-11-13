@@ -1,35 +1,18 @@
-<!-- Calendar -->
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/calendar"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:clipToOutline="true"
-    android:background="@drawable/calendar"
-    />
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/calender"
+    tools:context=".LoginActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rec_days"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginTop="98dp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="1dp" />
 
-    <!-- drawable/calendar.xml -->
-<vector
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:aapt="http://schemas.android.com/aapt"
-android:width="411dp"
-android:height="731dp"
-android:viewportWidth="411"
-android:viewportHeight="731"
-    >
-
-<group>
-
-    <clip-path
-        android:pathData="M0 0H411V731H0V0Z"
-        />
-
-    <path
-        android:pathData="M0 0V731H411V0"
-        android:fillColor="#FFFFFF"
-        />
-
-</group>
-
-</vector>
+</androidx.constraintlayout.widget.ConstraintLayout>
