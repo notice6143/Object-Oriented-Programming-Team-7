@@ -12,7 +12,6 @@ import java.util.Calendar
 import java.util.Date
 
 class CalendarActivity : AppCompatActivity() {      //달력이 구동되는 위치
-    val temp = 1
 
     lateinit var binding : ActivityCalendarBinding
 
