@@ -36,12 +36,12 @@ class SignupActivity : AppCompatActivity() {
                 Log.d("널확인", number)
                 if(key != null)
                     binding.txtError.setText("Phone number is invalid or already taken")
-                else if(password != password2)
-                    binding.txtError.setText("Passwords don't match")
                 else if(name == "")
                     binding.txtError.setText("Please enter your name")
                 else if(number == "")
                     binding.txtError.setText("Please enter your phone number")
+                else if(password != password2)
+                    binding.txtError.setText("Passwords don't match")
                 else if(password == "")
                     binding.txtError.setText("Please enter password")
                 else if(key == null) {
@@ -54,5 +54,4 @@ class SignupActivity : AppCompatActivity() {
             }
         }
     }
-
 }

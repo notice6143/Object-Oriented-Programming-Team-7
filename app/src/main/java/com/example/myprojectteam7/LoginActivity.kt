@@ -25,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
                 val userphone = it.child(phone).child("usernumber").value as String?
                 val userpassword = it.child(phone).child("userpassword").value as String?
                 if(userphone == phone && userpassword == password) {
-                    //val intent = Intent(this, CalendarActivity::class.java)
+                    //val intent = Intent(this, TestActivity::class.java)
                     val intent = Intent(this, CalendarActivity::class.java)
                     intent.putExtra("phone", phone)
                     intent.putExtra("password", password)
