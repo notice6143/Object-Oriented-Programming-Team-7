@@ -9,6 +9,7 @@ import com.example.myprojectteam7.databinding.ListDayBinding
 
 class CalenderAdapter(val mycal: Mycalender)
     : RecyclerView.Adapter<CalenderAdapter.Holder>() {
+    val temp = 0
 
     val calender_max_size = 35
 
