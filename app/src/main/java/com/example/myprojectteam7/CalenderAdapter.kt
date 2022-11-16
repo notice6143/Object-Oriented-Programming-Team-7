@@ -18,14 +18,20 @@ class CalenderAdapter(val mycal: Mycalender)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bind(mycal.dayList[position])
+        holder.bind(mycal.weekDayList[position])
     }
 
     override fun getItemCount() = mycal.dayList.size
 
     class Holder(val binding: ListDayBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(day: Day){
-            binding.txtDay.text = day.date
+        fun bind(day: List<Day>){
+            binding.txtSunday.text = day[0].date
+            binding.txtMonday.text = day[1].date
+            binding.txtTuesday.text = day[2].date
+            binding.txtWensday.text = day[3].date
+            binding.txtThursday.text = day[4].date
+            binding.txtFriday.text = day[5].date
+            binding.txtSaturday.text = day[6].date
 
         }
     }

@@ -24,7 +24,7 @@ class CalendarActivity : AppCompatActivity() {      //달력이 구동되는 위
     var firstdayOfWeek = (dayOfWeek + 8 - date % 7) % 7
 
 
-    var nowcal = Mycalender(year,month,firstdayOfWeek)
+    var nowcal = Mycalender(year,month)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCalendarBinding.inflate(layoutInflater)
