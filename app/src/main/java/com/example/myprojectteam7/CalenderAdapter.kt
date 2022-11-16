@@ -10,8 +10,6 @@ import com.example.myprojectteam7.databinding.ListDayBinding
 class CalenderAdapter(val mycal: Mycalender)
     : RecyclerView.Adapter<CalenderAdapter.Holder>() {
 
-    val calender_max_size = 35
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ListDayBinding.inflate(LayoutInflater.from(parent.context))
         return Holder(binding)
@@ -21,7 +19,7 @@ class CalenderAdapter(val mycal: Mycalender)
         holder.bind(mycal.weekDayList[position])
     }
 
-    override fun getItemCount() = mycal.dayList.size
+    override fun getItemCount() = 35
 
     class Holder(val binding: ListDayBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(day: List<Day>){

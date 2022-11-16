@@ -15,13 +15,9 @@ class CalendarActivity : AppCompatActivity() {      //달력이 구동되는 위
 
     lateinit var binding : ActivityCalendarBinding
 
-    var days = mutableListOf<String>("")
     var cal = Calendar.getInstance()
     var year = cal.get(Calendar.YEAR)
     var month = cal.get(Calendar.MONTH)
-    var date = cal.get(Calendar.DATE)
-    var dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)
-    var firstdayOfWeek = (dayOfWeek + 8 - date % 7) % 7
 
 
     var nowcal = Mycalender(year,month)
