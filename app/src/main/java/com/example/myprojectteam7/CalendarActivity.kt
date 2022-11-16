@@ -19,7 +19,6 @@ class CalendarActivity : AppCompatActivity() {      //달력이 구동되는 위
     var year = cal.get(Calendar.YEAR)
     var month = cal.get(Calendar.MONTH)
 
-
     var nowcal = Mycalender(year,month)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

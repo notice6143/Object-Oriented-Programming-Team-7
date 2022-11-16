@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/txt_sunday"
-        android:layout_width="57.1dp"
+        android:layout_width="57dp"
         android:layout_height="100dp"
         android:text="0"
         app:layout_constraintEnd_toStartOf="@+id/txt_monday"

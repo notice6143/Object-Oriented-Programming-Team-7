@@ -15,6 +15,7 @@ class CalenderAdapter(val mycal: Mycalender)
         return Holder(binding)
     }
 
+
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.bind(mycal.weekDayList[position])
     }
