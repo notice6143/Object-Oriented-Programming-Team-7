@@ -3,18 +3,21 @@ package com.example.myprojectteam7
 import java.util.Calendar
 
 class Mycalender( var year: Int,  var month: Int) {
-
+    //달을 옮기려면 Calender.set()쓰면 된다고 합니다
     val cal = Calendar.getInstance()
-    val dayOfWeek = Calendar.DAY_OF_WEEK
-    val date = cal.get(Calendar.DATE)
-    val firstday = (dayOfWeek + 8 - date % 7) % 7
-    var maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
+    var dayOfWeek = 0
+
+    init {
+        cal.set(year, month, cal.get(Calendar.DATE))
+        dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)
+    }
+
+    val firstday = (dayOfWeek + 8 - cal.get(Calendar.DATE) % 7) % 7
+    var maxDay = cal.getMaximum(Calendar.DAY_OF_MONTH)  //달 마다 요일 수 구하기
 
     val dayList = makeDayList()
     val weekDayList = weekList(dayList)
 
-    init {
-    }
 
     fun makeDayList(): List<Day>{
         val temp = mutableListOf<Day>()
@@ -23,7 +26,7 @@ class Mycalender( var year: Int,  var month: Int) {
         for(i in 1 until firstday){
             temp.add(Day(""))
         }
-        for(i in firstday .. maxDay){
+        for(i in 1 .. maxDay){
             temp.add(Day("$idx"))
             idx++
         }
