@@ -15,4 +15,18 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="1dp" />
 
+    <Button
+        android:id="@+id/btn_settings"
+        android:layout_width="16dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="384dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="46dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/rec_days"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

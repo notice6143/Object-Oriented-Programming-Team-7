@@ -3,6 +3,7 @@ package com.example.myprojectteam7
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myprojectteam7.databinding.ActivityCalendarBinding
@@ -13,7 +14,7 @@ import java.util.Date
 
 class CalendarActivity : AppCompatActivity() {      //달력이 구동되는 위치
 
-    lateinit var binding : ActivityCalendarBinding
+    lateinit var binding: ActivityCalendarBinding
 
     var days = mutableListOf<String>("")
     var cal = Calendar.getInstance()
@@ -24,7 +25,7 @@ class CalendarActivity : AppCompatActivity() {      //달력이 구동되는 위
     var firstdayOfWeek = (dayOfWeek + 8 - date % 7) % 7
 
 
-    var nowcal = Mycalender(year,month,firstdayOfWeek)
+    var nowcal = Mycalender(year, month, firstdayOfWeek)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCalendarBinding.inflate(layoutInflater)
@@ -32,5 +33,6 @@ class CalendarActivity : AppCompatActivity() {      //달력이 구동되는 위
 
         binding.recDays.layoutManager = LinearLayoutManager(this)
         binding.recDays.adapter = CalenderAdapter(nowcal)
+
     }
 }
