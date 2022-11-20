@@ -27,7 +27,24 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        binding = FragmentSettingsBinding.inflate(inflater,container,false)
 
+        fun editSelf(index: Int, part: String){
+            val change = Bundle().apply {
+                putString("value${index}",part)
+            }
+            setFragmentResult("value",change)
+        }
+        binding.changeName.setOnKeyListener { view, i, keyEvent ->
+            editSelf(1,binding.changeName.text.toString())
+            false
+        }
+        binding.changeEmail.setOnKeyListener { view, i, keyEvent ->
+            editSelf(2,binding.changeEmail.text.toString())
+            false
+        }
+
+        return binding.root
     }
 
     companion object {

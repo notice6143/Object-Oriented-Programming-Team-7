@@ -16,16 +16,14 @@ class CalendarActivity : AppCompatActivity() {      //달력이 구동되는 위
 
     lateinit var binding: ActivityCalendarBinding
 
-    var days = mutableListOf<String>("")
     var cal = Calendar.getInstance()
     var year = cal.get(Calendar.YEAR)
     var month = cal.get(Calendar.MONTH)
-    var date = cal.get(Calendar.DATE)
-    var dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)
-    var firstdayOfWeek = (dayOfWeek + 8 - date % 7) % 7
 
+    var nowcal = Mycalender(year,month)
 
-    var nowcal = Mycalender(year, month, firstdayOfWeek)
+    lateinit var adapter: SettingsFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCalendarBinding.inflate(layoutInflater)
@@ -34,5 +32,44 @@ class CalendarActivity : AppCompatActivity() {      //달력이 구동되는 위
         binding.recDays.layoutManager = LinearLayoutManager(this)
         binding.recDays.adapter = CalenderAdapter(nowcal)
 
+        binding.txtMonth.text = month.toString()        //달을 영어로 바꾸는 함수 필 달이 하나 작게 나옴
+        binding.txtYear.text = year.toString()          //달이 하나 작게 나와서 -> 년도 늦게 바뀜
+
+        binding.btnBack.setOnClickListener {
+            month--
+            if(month == 0){
+                month = 12
+                year--
+            }
+
+            nowcal = Mycalender(year, month)
+
+            binding.recDays.layoutManager = LinearLayoutManager(this)
+            binding.recDays.adapter = CalenderAdapter(nowcal)
+            binding.txtMonth.text = month.toString()        //달을 영어로 바꾸는 함수 필
+            binding.txtYear.text = year.toString()
+        }
+
+        binding.btnNext.setOnClickListener {
+            month++
+            if(month == 13){
+                month = 1
+                year++
+            }
+
+            nowcal = Mycalender(year, month)
+
+            binding.recDays.layoutManager = LinearLayoutManager(this)
+            binding.recDays.adapter = CalenderAdapter(nowcal)
+            binding.txtMonth.text = month.toString()        //달을 영어로 바꾸는 함수 필
+            binding.txtYear.text = year.toString()
+        }
+
+        binding.btnSettings.setOnClickListener {
+            supportFragmentManager.beginTransaction().run {   //transaction 시작
+                replace(binding.recDays.id, SettingsFragment()) //할 일 정해주기
+                commit() // 일을 해라
+            }
+        }
     }
 }
