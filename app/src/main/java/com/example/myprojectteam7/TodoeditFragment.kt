@@ -13,9 +13,6 @@ import com.example.myprojectteam7.databinding.FragmentTodoeditBinding
 
 @RequiresApi(Build.VERSION_CODES.O)
 class TodoeditFragment : Fragment() {
-    private var year: String = ""
-    private var month: String = ""
-    private var id: String = ""
     lateinit var myCal: Mycalendar
     var binding: FragmentTodoeditBinding? = null
 
@@ -23,9 +20,6 @@ class TodoeditFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             myCal = it.getSerializable("Calendar") as Mycalendar
-            id = myCal.id
-            year = myCal.year
-            month = myCal.month
         }
     }
 

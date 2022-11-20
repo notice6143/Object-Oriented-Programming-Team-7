@@ -8,9 +8,17 @@ import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.myprojectteam7.databinding.ActivityMainBinding
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+
 @RequiresApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
+
+    fun getKey(id: String, date : LocalDate): String {
+        val yym = date.format(DateTimeFormatter.ofPattern("yyyy/MM")).toString()
+        return "Users/" + id + "/Calendars/" + yym + "/" + "index"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

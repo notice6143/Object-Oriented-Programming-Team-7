@@ -13,13 +13,11 @@ import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.navigation.fragment.findNavController
 import com.example.myprojectteam7.databinding.FragmentYearmonthBinding
+import com.example.myprojectteam7.viewmodel.CalendarViewModel
 import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 class YearmonthFragment : Fragment() {
-    private var year: String = ""
-    private var month: String = ""
-    private var id: String = ""
     lateinit var myCal: Mycalendar
     var binding: FragmentYearmonthBinding? = null
 
@@ -27,9 +25,6 @@ class YearmonthFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             myCal = it.getSerializable("Calendar") as Mycalendar
-            id = myCal.id
-            year = myCal.year
-            month = myCal.month
         }
     }
 
@@ -44,14 +39,16 @@ class YearmonthFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.btnYmres?.setOnClickListener {
-            year = binding?.edtYear?.getText().toString()
-            month = binding?.edtMonth?.getText().toString()
-            val date: LocalDate = LocalDate.of(year.toInt(),month.toInt(),1)
-            val putCal: Mycalendar = Mycalendar(date, id)
-            //putCal.setArray()
-            Log.d("프래그먼트","1111")
-            val bundle = bundleOf("Calendar" to putCal)
-            findNavController().navigate(R.id.action_yearmonthFragment_to_calendarFragment, bundle)
+            val year = binding?.edtYear?.getText().toString()
+            val month = binding?.edtMonth?.getText().toString()
+            val date: LocalDate = LocalDate.of(year.toInt(),month.toInt(),myCal.day.toInt())
+            val viewModel = CalendarViewModel((activity as MainActivity).getKey(myCal.id, date))
+            viewModel.idx.observe(viewLifecycleOwner) {
+                var idx = viewModel.idx.value as HashMap<String,Int>
+                val putCal: Mycalendar = Mycalendar(date, myCal.id, idx)
+                val bundle = bundleOf("Calendar" to putCal)
+                findNavController().navigate(R.id.action_yearmonthFragment_to_calendarFragment, bundle)
+            }
         }
 
         binding?.btnCancel?.setOnClickListener {

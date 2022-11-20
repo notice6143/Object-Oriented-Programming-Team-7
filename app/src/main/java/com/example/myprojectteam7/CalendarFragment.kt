@@ -13,24 +13,20 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myprojectteam7.databinding.FragmentCalendarBinding
+import com.example.myprojectteam7.viewmodel.CalendarViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarFragment : Fragment() {
-    private var year: String = ""
-    private var month: String = ""
-    private var id: String = ""
     lateinit var myCal: Mycalendar
     var binding: FragmentCalendarBinding? = null
+    val viewModel = CalendarViewModel("test")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             myCal = it.getSerializable("Calendar") as Mycalendar
-            id = myCal.id
-            year = myCal.year
-            month = myCal.month
         }
     }
 
@@ -39,21 +35,20 @@ class CalendarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCalendarBinding.inflate(inflater)
-        binding?.txtYear?.setText(myCal.year)
-        binding?.txtMonth?.setText(myCal.monthStr)
-        binding?.recWeek?.layoutManager = GridLayoutManager(context,7)
-        binding?.recWeek?.adapter = CalenderAdapter(myCal)
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding?.txtYear?.setText(myCal.year)
+        binding?.txtMonth?.setText(myCal.monthStr)
+        binding?.recWeek?.layoutManager = GridLayoutManager(context,7)
+        binding?.recWeek?.adapter = CalenderAdapter(myCal)
+
         binding?.txtYear?.setOnClickListener {
             val bundle = bundleOf("Calendar" to myCal)
             findNavController().navigate(R.id.action_calendarFragment_to_yearmonthFragment, bundle)
-        }
-        binding?.recWeek?.setOnClickListener {
-            findNavController().navigate(R.id.action_calendarFragment_to_todolistFragment)
         }
     }
     override fun onDestroyView() {

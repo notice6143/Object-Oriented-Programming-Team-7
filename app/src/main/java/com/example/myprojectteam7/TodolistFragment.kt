@@ -9,13 +9,11 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myprojectteam7.databinding.FragmentTodolistBinding
 
 @RequiresApi(Build.VERSION_CODES.O)
 class TodolistFragment : Fragment() {
-    private var year: String = ""
-    private var month: String = ""
-    private var id: String = ""
     lateinit var myCal: Mycalendar
     var binding: FragmentTodolistBinding? = null
 
@@ -23,9 +21,6 @@ class TodolistFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             myCal = it.getSerializable("Calendar") as Mycalendar
-            id = myCal.id
-            year = myCal.year
-            month = myCal.month
         }
     }
 
@@ -39,6 +34,10 @@ class TodolistFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding?.scheduleDate?.text =  myCal.monthStr + " " + myCal.day + ", " + myCal.year
+        binding?.recSchedule?.layoutManager = LinearLayoutManager(context)
+        binding?.recSchedule?.adapter = TodolistAdapter(myCal)
+
         binding?.btnEdit?.setOnClickListener {
             val bundle = bundleOf("Calendar" to myCal)
             findNavController().navigate(R.id.action_todolistFragment_to_todoeditFragment,bundle)
