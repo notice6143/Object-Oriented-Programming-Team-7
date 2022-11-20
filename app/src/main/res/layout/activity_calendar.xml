@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/calender2"
     tools:context=".LoginActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rec_days"
         android:layout_width="407dp"
-        android:layout_height="500dp"
+        android:layout_height="545dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="101dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,5 +67,16 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/frgFragment"
+        android:layout_width="338dp"
+        android:layout_height="478dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="@+id/rec_days"
+        app:layout_constraintTop_toTopOf="@+id/rec_days">
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

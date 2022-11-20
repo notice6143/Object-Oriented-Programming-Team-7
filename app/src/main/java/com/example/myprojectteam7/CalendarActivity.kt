@@ -17,7 +17,7 @@ class CalendarActivity : AppCompatActivity() {      //달력이 구동되는 위
 
     var cal = Calendar.getInstance()
     var year = cal.get(Calendar.YEAR)
-    var month = cal.get(Calendar.MONTH)
+    var month = cal.get(Calendar.MONTH) + 1
 
     var nowcal = Mycalender(year,month)
 

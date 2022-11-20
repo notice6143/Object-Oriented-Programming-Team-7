@@ -32,6 +32,9 @@ class CalenderAdapter(val mycal: Mycalender)
             binding.txtFriday.text = day[5].date
             binding.txtSaturday.text = day[6].date
 
+            binding.root.setOnClickListener{
+                //눌리면 창을 띄우거나 창이동 혹은 그냥 메시지만
+            }
         }
     }
 }
