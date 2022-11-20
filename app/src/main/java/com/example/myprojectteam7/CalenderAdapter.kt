@@ -30,7 +30,7 @@ class CalenderAdapter(val myCal:Mycalendar): RecyclerView.Adapter<CalenderAdapte
     override fun getItemCount() = myCal.week.size
 
     class Holder(val binding: ListDayBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(week: Week?, myCal: Mycalendar) {
+        fun bind(week: Days?, myCal: Mycalendar) {
 
             binding.txtDay1.text = if (week?.day1 != 0) week?.day1.toString() else ""
 

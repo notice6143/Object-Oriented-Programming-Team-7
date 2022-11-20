@@ -25,10 +25,10 @@ data class Mycalendar(val date : LocalDate, val id:String): Serializable {
         }
         return temp
     }
-    fun weeklist(arr:IntArray): Array<Week?> {
-        var temp=Array<Week?>(35){null}
+    fun weeklist(arr:IntArray): Array<Days?> {
+        var temp=Array<Days?>(35){null}
         for(i in 0..34) {
-            temp[i]=Week(arr[i])
+            temp[i]=Days(arr[i])
         }
         return temp
     }

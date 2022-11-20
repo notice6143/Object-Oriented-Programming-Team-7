@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.example.myprojectteam7.databinding.FragmentTodoeditBinding
 
@@ -38,10 +39,14 @@ class TodoeditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.btnEdit?.setOnClickListener {
-        }
 
-        binding?.btnClose?.setOnClickListener {
+        binding?.btnClose2?.setOnClickListener {
+            val bundle = bundleOf("Calendar" to myCal)
+            findNavController().navigate(R.id.action_todoeditFragment_to_todolistFragment,bundle)
         }
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

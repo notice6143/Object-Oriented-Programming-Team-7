@@ -39,6 +39,10 @@ class TodolistFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding?.btnEdit?.setOnClickListener {
+            val bundle = bundleOf("Calendar" to myCal)
+            findNavController().navigate(R.id.action_todolistFragment_to_todoeditFragment,bundle)
+        }
 
         binding?.btnClose?.setOnClickListener {
             val bundle = bundleOf("Calendar" to myCal)

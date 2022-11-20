@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:id="@+id/btn_edit"
+        android:id="@+id/btn_edit2"
         android:layout_width="109.15dp"
         android:layout_height="31.44dp"
         android:layout_marginStart="70dp"
@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <View
-        android:id="@+id/btn_close"
+        android:id="@+id/btn_close2"
         android:layout_width="109.15dp"
         android:layout_height="31.44dp"
         android:layout_marginEnd="68dp"
