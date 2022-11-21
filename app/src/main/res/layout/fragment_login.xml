@@ -2,29 +2,18 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/signup_background"
-    tools:context=".SignupActivity">
-
-    <EditText
-        android:id="@+id/edt_name"
-        android:layout_width="265dp"
-        android:layout_height="43dp"
-        android:layout_marginLeft="78dp"
-        android:layout_marginTop="250dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:ems="10"
-        android:inputType="text"
-        android:background="#00FF0000"/>
+    android:background="@drawable/login_background"
+    tools:context=".LoginFragment">
 
     <EditText
         android:id="@+id/edt_phone"
         android:layout_width="265dp"
         android:layout_height="43dp"
-        android:layout_marginLeft="78dp"
-        android:layout_marginTop="323dp"
+        android:layout_marginLeft="73dp"
+        android:layout_marginTop="344dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:ems="10"
@@ -35,24 +24,21 @@
         android:id="@+id/edt_pw"
         android:layout_width="265dp"
         android:layout_height="43dp"
-        android:layout_marginLeft="78dp"
-        android:layout_marginTop="406dp"
+        android:layout_marginLeft="73dp"
+        android:layout_marginTop="440dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:ems="10"
         android:inputType="textPassword"
         android:background="#00FF0000"/>
-
-    <EditText
-        android:id="@+id/edt_pw2"
-        android:layout_width="265dp"
-        android:layout_height="43dp"
-        android:layout_marginLeft="78dp"
-        android:layout_marginTop="457dp"
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="126dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="575dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:ems="10"
-        android:inputType="textPassword"
         android:background="#00FF0000"/>
 
     <TextView
@@ -67,8 +53,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-
     <Button
         android:id="@+id/btn_signup"
         android:layout_width="126dp"
@@ -78,4 +62,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:background="#00FF0000"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
