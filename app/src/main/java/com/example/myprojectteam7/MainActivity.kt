@@ -1,10 +1,14 @@
 package com.example.myprojectteam7
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.annotation.RequiresApi
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.myprojectteam7.databinding.ActivityMainBinding
-
+@RequiresApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
 
@@ -13,23 +17,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val intent = Intent(this, CalendarActivity::class.java)
+        val intent = Intent(this, CalendarFragment::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
         finish()
 
+        val navController = binding.frgNav.getFragment<NavHostFragment>().navController
+        setupActionBarWithNavController(navController)
+        setContentView(binding.root)
+    }
 
-        binding.btnLogin.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(intent)
-            finish()
-        }
-        binding.btnSignup.setOnClickListener {
-            val intent = Intent(this, SignupActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(intent)
-            finish()
-        }
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = binding.frgNav.getFragment<NavHostFragment>().navController
+
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

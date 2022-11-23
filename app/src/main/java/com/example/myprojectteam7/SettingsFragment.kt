@@ -10,8 +10,6 @@ import com.example.myprojectteam7.databinding.FragmentSettingsBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 class SettingsFragment : Fragment() {
 
@@ -29,12 +27,6 @@ class SettingsFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentSettingsBinding.inflate(inflater,container,false)
 
-        fun editSelf(index: Int, part: String){
-            val change = Bundle().apply {
-                putString("value${index}",part)
-            }
-            setFragmentResult("value",change)
-        }
         binding.changeName.setOnKeyListener { view, i, keyEvent ->
             editSelf(1,binding.changeName.text.toString())
             false
@@ -43,17 +35,27 @@ class SettingsFragment : Fragment() {
             editSelf(2,binding.changeEmail.text.toString())
             false
         }
+        //binding.
 
         return binding.root
     }
+    fun editSelf(index: Int, part: String){
+        val change = Bundle().apply {
+            putString("value${index}",part)
+        }
+        setFragmentResult("value",change)
+    }
 
-    companion object {
+    companion object{
+        fun newInstance() =
+            SettingsFragment()
+    }
+
+    /*companion object {
         fun newInstance(param1: String, param2: String) =
             SettingsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+                
             }
     }
+     */
 }
