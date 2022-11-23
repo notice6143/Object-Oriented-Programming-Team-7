@@ -1,36 +1,43 @@
 package com.example.myprojectteam7
 
 import android.icu.util.Calendar
+import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.os.bundleOf
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myprojectteam7.databinding.ActivityCalendarBinding
 import com.example.myprojectteam7.databinding.ListDayBinding
 
-class CalenderAdapter(val mycal: Mycalender)
-    : RecyclerView.Adapter<CalenderAdapter.Holder>() {
+@RequiresApi(Build.VERSION_CODES.O)
+class CalenderAdapter(val myCal:Mycalendar): RecyclerView.Adapter<CalenderAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ListDayBinding.inflate(LayoutInflater.from(parent.context))
         return Holder(binding)
     }
 
-
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bind(mycal.weekDayList[position])
+        holder.bind(myCal.week[position], myCal)
     }
 
-    override fun getItemCount() = 35
+    override fun getItemCount() = myCal.week.size
 
-    class Holder(val binding: ListDayBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(day: List<Day>){
-            binding.txtSunday.text = day[0].date
-            binding.txtMonday.text = day[1].date
-            binding.txtTuesday.text = day[2].date
-            binding.txtWensday.text = day[3].date
-            binding.txtThursday.text = day[4].date
-            binding.txtFriday.text = day[5].date
-            binding.txtSaturday.text = day[6].date
+    class Holder(val binding: ListDayBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(week: Days?, myCal: Mycalendar) {
+
+            binding.txtDay1.text = if (week?.day1 != 0) week?.day1.toString() else ""
+
+            binding.txtDay1.setOnClickListener { view ->
+                val bundle = bundleOf("Calendar" to myCal)
+                view.findNavController().navigate(R.id.action_calendarFragment_to_todolistFragment, bundle)
+            }
 
         }
     }
