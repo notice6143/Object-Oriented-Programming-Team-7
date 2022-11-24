@@ -11,16 +11,17 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myprojectteam7.databinding.FragmentTodolistBinding
+import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 class TodolistFragment : Fragment() {
-    lateinit var myCal: Mycalendar
     var binding: FragmentTodolistBinding? = null
+    var phone: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            myCal = it.getSerializable("Calendar") as Mycalendar
+            phone = it.getString("Phone") as String
         }
     }
 
@@ -34,6 +35,22 @@ class TodolistFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val viewModel = CalendarsViewModel(phone)
+        viewModel.date.observe(viewLifecycleOwner) {
+            binding?.scheduleDate?.text = "${viewModel.monthStr} ${viewModel.day}, ${viewModel.year}"
+            //binding?.recSchedule?.layoutManager = LinearLayoutManager(context)
+            //binding?.recSchedule?.adapter = TodolistAdapter(myCal)
+        }
+        binding?.btnEdit?.setOnClickListener {
+            val bundle = bundleOf("Phone" to phone)
+            findNavController().navigate(R.id.action_todolistFragment_to_todoeditFragment,bundle)
+        }
+
+        binding?.btnClose?.setOnClickListener {
+            val bundle = bundleOf("Phone" to phone)
+            findNavController().navigate(R.id.action_todolistFragment_to_calendarFragment,bundle)
+        }
+        /*
         binding?.scheduleDate?.text =  myCal.monthStr + " " + myCal.day + ", " + myCal.year
         binding?.recSchedule?.layoutManager = LinearLayoutManager(context)
         binding?.recSchedule?.adapter = TodolistAdapter(myCal)
@@ -47,7 +64,9 @@ class TodolistFragment : Fragment() {
             val bundle = bundleOf("Calendar" to myCal)
             findNavController().navigate(R.id.action_todolistFragment_to_calendarFragment,bundle)
         }
+         */
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null

@@ -5,14 +5,13 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.core.os.bundleOf
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myprojectteam7.databinding.ListScheduleBinding
-import java.time.LocalDate
+import com.example.myprojectteam7.old.Mycalendar
+import com.example.myprojectteam7.old.Todolists
 
 @RequiresApi(Build.VERSION_CODES.O)
-class TodolistAdapter(val myCal:Mycalendar): RecyclerView.Adapter<TodolistAdapter.Holder>() {
+class TodolistAdapter(val myCal: Mycalendar): RecyclerView.Adapter<TodolistAdapter.Holder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ListScheduleBinding.inflate(LayoutInflater.from(parent.context))
         return Holder(binding)
