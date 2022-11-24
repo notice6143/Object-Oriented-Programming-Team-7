@@ -1,14 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout6"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingFragment">
+    tools:context=".SettingsFragment" >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <FrameLayout
+        android:layout_width="289dp"
+        android:layout_height="418dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="120dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/settings_frg" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/txt_frsemail"
+                android:layout_width="174dp"
+                android:layout_height="29dp"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="85dp"
+                android:ems="10"
+                android:inputType="textEmailAddress"
+                app:layout_constraintBottom_toTopOf="@+id/btn_logout"
+                app:layout_constraintEnd_toStartOf="@+id/btn_enterfr"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress3"
+                tools:visibility="invisible" />
+
+            <EditText
+                android:id="@+id/editTextTextEmailAddress3"
+                android:layout_width="169dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="73dp"
+                android:layout_marginEnd="47dp"
+                android:ems="10"
+                android:inputType="textEmailAddress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_myname"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/txt_myname"
+                android:layout_width="169dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="73dp"
+                android:layout_marginTop="63dp"
+                android:layout_marginEnd="47dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_logout"
+                android:layout_width="238dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="26dp"
+                android:layout_marginEnd="26dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/btn_delacc"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btn_delacc"
+                android:layout_width="238dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="26dp"
+                android:layout_marginEnd="26dp"
+                android:layout_marginBottom="33dp"
+                app:layout_constraintBottom_toTopOf="@+id/btn_setclose"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btn_setclose"
+                android:layout_width="91dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="55dp"
+                android:layout_marginEnd="27dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btn_setsave"
+                tools:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btn_setsave"
+                android:layout_width="91dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="27dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btn_enterfr"
+                android:layout_width="65dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="86dp"
+                app:layout_constraintBottom_toTopOf="@+id/btn_logout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txt_frsemail"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress3"
+                tools:visibility="invisible" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,35 +7,110 @@
     android:layout_height="match_parent"
     tools:context=".TododetailFragment">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tododetail"
+    <FrameLayout
+        android:layout_width="243dp"
+        android:layout_height="350dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="120dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <View
-        android:id="@+id/btn_edit"
-        android:layout_width="109.15dp"
-        android:layout_height="31.44dp"
-        android:layout_marginStart="70dp"
-        android:layout_marginBottom="64dp"
-        android:background="@drawable/ic_baseline_save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tododetail_frg" />
 
-    <View
-        android:id="@+id/btn_close"
-        android:layout_width="109.15dp"
-        android:layout_height="31.44dp"
-        android:layout_marginEnd="68dp"
-        android:layout_marginBottom="65dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/ic_baseline_close"
-        />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <Button
+                android:id="@+id/btn_detailedit"
+                android:layout_width="85dp"
+                android:layout_height="31dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="13dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_detailclose"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btn_detailclose"
+                android:layout_width="85dp"
+                android:layout_height="31dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="13dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/txt_todo"
+                android:layout_width="118dp"
+                android:layout_height="31dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="93dp"
+                android:text="My to do"
+                android:textColor="#515151"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_memo"
+                android:layout_width="197dp"
+                android:layout_height="89dp"
+                android:layout_marginStart="23dp"
+                android:layout_marginEnd="23dp"
+                android:layout_marginBottom="28dp"
+                android:text="memo"
+                app:layout_constraintBottom_toTopOf="@+id/btn_detailedit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:id="@+id/txt_time"
+                android:layout_width="165dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="53dp"
+                android:layout_marginBottom="38dp"
+                android:ems="10"
+                android:inputType="time"
+                app:layout_constraintBottom_toTopOf="@+id/txt_memo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_date"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+            <EditText
+                android:id="@+id/txt_date"
+                android:layout_width="166dp"
+                android:layout_height="31dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="52dp"
+                android:layout_marginBottom="12dp"
+                android:ems="10"
+                android:inputType="date"
+                app:layout_constraintBottom_toTopOf="@+id/txt_time"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_todo"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
