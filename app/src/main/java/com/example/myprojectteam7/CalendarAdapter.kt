@@ -27,8 +27,8 @@ class CalendarAdapter(val cals: LiveData<ArrayList<ViewCalendar>>, val phone: St
                     binding.txtDay1.text = it.date1.dayOfMonth.toString()
                     binding.date.setBackgroundResource(
                         when (cal.date1.monthValue) {
-                            nowMonth -> R.drawable.ic_baseline_date_disabled
-                            else -> R.drawable.ic_baseline_date
+                            nowMonth -> R.drawable.ic_baseline_date
+                            else -> R.drawable.ic_baseline_date_disabled
                         }
                     )
                     binding.date.setOnClickListener { view ->
@@ -38,6 +38,7 @@ class CalendarAdapter(val cals: LiveData<ArrayList<ViewCalendar>>, val phone: St
                     }
 
                     binding.txtDay1.setOnClickListener { view ->
+                        //선택한 날짜로 포인터
                         viewModel.setViewDate(it.date1)
                         val bundle = bundleOf("Phone" to phone)
                         view.findNavController().navigate(R.id.action_calendarFragment_to_todolistFragment, bundle)

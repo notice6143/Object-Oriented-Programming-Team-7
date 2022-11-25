@@ -38,7 +38,7 @@ class YearmonthFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewModel = CalendarsViewModel(phone)
-        viewModel.dates.observe(viewLifecycleOwner) {
+        viewModel.date.observe(viewLifecycleOwner) {
 
         }
         binding?.btnYmres?.setOnClickListener {

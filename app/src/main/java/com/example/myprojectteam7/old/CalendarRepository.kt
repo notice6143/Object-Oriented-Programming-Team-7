@@ -4,12 +4,15 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
+import com.example.myprojectteam7.Date
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarRepository(key: String?) {
@@ -88,5 +91,35 @@ class CalendarRepository(key: String?) {
 
     fun postYear(newValue: String) {
         userRef.setValue(newValue)
+    }
+
+    //Date를 읽고 한달로 -> 리사이클러뷰
+    fun observeViewDate(view: MutableLiveData<ArrayList<Date>>) {
+        userRef.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val viewDate = snapshot.child("viewDate")
+                val date = LocalDate.parse(viewDate.value.toString(), DateTimeFormatter.ISO_DATE)
+                val firstday = LocalDate.of(date.year,date.monthValue,1)
+                val firstdayOfWeek = if(firstday.dayOfWeek.value!=7) firstday.dayOfWeek.value else 0
+                val startdate = firstday.minusDays(firstdayOfWeek.toLong())
+                val Dates = ArrayList<Date>()
+                for(i in 0.. 41) {
+                    val temp = startdate.plusDays(i.toLong())
+                    Dates.add(Date(temp))
+                }
+                view.postValue(Dates)
+                /*
+                val viewshot = snapshot.child("viewDate")
+                val indexshot = snapshot.child("Calendar")
+                var temp = ArrayList<Date>()
+                Log.d("스냅샷1",viewshot.value.toString())
+                val date = LocalDate.parse(viewshot.value.toString(), DateTimeFormatter.ISO_DATE)
+                Log.d("스냅샷2",date.toString())
+                view.postValue(temp)
+                 */
+            }
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
     }
 }

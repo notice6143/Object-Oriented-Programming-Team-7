@@ -9,14 +9,14 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
+import com.example.myprojectteam7.databinding.FragmentTododetailBinding
 import com.example.myprojectteam7.databinding.FragmentTodoeditBinding
 import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 
-//Calendar -> todolist -> todoedit
-//일정 추가
+//일정 상세내용
 @RequiresApi(Build.VERSION_CODES.O)
-class TodoeditFragment : Fragment() {
-    var binding: FragmentTodoeditBinding? = null
+class TodoDetailFragment : Fragment() {
+    var binding: FragmentTododetailBinding? = null
     var phone: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,32 +30,36 @@ class TodoeditFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentTodoeditBinding.inflate(inflater)
+        binding = FragmentTododetailBinding.inflate(inflater)
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewModel = CalendarsViewModel(phone)
+        viewModel.todo.observe(viewLifecycleOwner) {
+            binding?.txtTitle?.text = viewModel.todotitle
+            binding?.txtDate?.text = viewModel.tododate.toString()
+            binding?.txtUid?.text = viewModel.todouid
+            binding?.edtMemo?.hint = viewModel.todomemo
 
-        viewModel.date.observe(viewLifecycleOwner) {
-            binding?.scheduleDate1?.text = "${viewModel.monthStr} ${viewModel.day}, ${viewModel.year}"
-            binding?.btnSave2?.setOnClickListener {
-                val title: String = binding?.edtTitle?.getText().toString()
+            binding?.btnEdit?.setOnClickListener {
                 val memo: String = binding?.edtMemo?.getText().toString()
-                if(title != "") {
-                    val todo = Todo(phone, title, viewModel.date.value, memo)
+                if(memo != "") {
+                    val todo = Todo(viewModel.todouid, viewModel.todotitle, viewModel.tododate, memo, viewModel.todokey)
                     viewModel.setTodo(todo)
                     val bundle = bundleOf("Phone" to phone)
-                    findNavController().navigate(R.id.action_todoeditFragment_to_todolistFragment, bundle)
+                    findNavController().navigate(R.id.action_tododetailFragment_to_todolistFragment, bundle)
                 }
             }
         }
 
-        binding?.btnClose2?.setOnClickListener {
+        binding?.btnClose?.setOnClickListener {
             val bundle = bundleOf("Phone" to phone)
-            findNavController().navigate(R.id.action_todoeditFragment_to_todolistFragment,bundle)
+            findNavController().navigate(R.id.action_tododetailFragment_to_todolistFragment,bundle)
         }
+
+
     }
     override fun onDestroyView() {
         super.onDestroyView()

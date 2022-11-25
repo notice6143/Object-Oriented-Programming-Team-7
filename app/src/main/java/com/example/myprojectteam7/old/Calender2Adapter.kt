@@ -29,8 +29,8 @@ class Calender2Adapter(val dates: LiveData<ArrayList<Date>>, val phone: String):
                     binding.txtDay1.text = it.date1.dayOfMonth.toString()
                     binding.date.setBackgroundResource(
                         when (date.date1.monthValue) {
-                            nowMonth -> R.drawable.ic_baseline_date_disabled
-                            else -> R.drawable.ic_baseline_date
+                            nowMonth -> R.drawable.ic_baseline_date
+                            else -> R.drawable.ic_baseline_date_disabled
                         }
                     )
                     binding.txtDay1.setOnClickListener { view ->

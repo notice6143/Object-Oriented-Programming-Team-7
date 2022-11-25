@@ -14,7 +14,8 @@ data class Todo(
     var uid: String? = "",
     var title: String? = "",
     var date: LocalDate? = LocalDate.parse(UNCHECKED_DATE, DateTimeFormatter.ISO_DATE),
-    var memo: String? = ""
+    var memo: String? = "",
+    var key: String? = ""
 ) {
     @Exclude
     fun toMap(): Map<String, Any?> {
@@ -22,7 +23,8 @@ data class Todo(
             "uid" to uid,
             "title" to title,
             "date" to date.toString(),
-            "memo" to memo
+            "memo" to memo,
+            "key" to key
         )
     }
 }

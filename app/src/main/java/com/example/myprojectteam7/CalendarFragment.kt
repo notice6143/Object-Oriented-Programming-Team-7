@@ -55,19 +55,23 @@ class CalendarFragment : Fragment() {
         binding?.recWeek?.layoutManager = GridLayoutManager(context,7)
         binding?.recWeek?.adapter = CalendarAdapter(viewModel.calendar, phone)
 
-        /*
-        //날짜 리사이클러
-        viewModel.dates.observe(viewLifecycleOwner) {
-            binding?.recWeek?.adapter?.notifyDataSetChanged()
+        //캘린더 리사이클러
+        viewModel.friend.observe(viewLifecycleOwner) {
+            binding?.recFriend?.adapter?.notifyDataSetChanged()
         }
-
-        binding?.recWeek?.layoutManager = GridLayoutManager(context,7)
-        binding?.recWeek?.adapter = CalenderAdapter(viewModel.dates, phone)*/
+        binding?.recFriend?.layoutManager = GridLayoutManager(context,3)
+        binding?.recFriend?.adapter = FriendListAdapter(viewModel.friend, phone)
 
         //년월 선택
         binding?.txtYear?.setOnClickListener {
             val bundle = bundleOf("Phone" to phone)
             findNavController().navigate(R.id.action_calendarFragment_to_yearmonthFragment, bundle)
+        }
+
+        //세팅
+        binding?.btnSetting?.setOnClickListener {
+            val bundle = bundleOf("Phone" to phone)
+            findNavController().navigate(R.id.action_calendarFragment_to_settingFragment, bundle)
         }
     }
     override fun onDestroyView() {
