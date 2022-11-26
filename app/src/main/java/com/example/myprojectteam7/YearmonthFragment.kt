@@ -60,35 +60,6 @@ class YearmonthFragment : Fragment() {
             val bundle = bundleOf("Phone" to phone)
             findNavController().navigate(R.id.action_yearmonthFragment_to_calendarFragment, bundle)
         }
-        /*
-        val viewModel = CalViewModel(myCal.id)
-        viewModel.view.observe(viewLifecycleOwner) {
-            binding?.btnYmres?.setOnClickListener {
-                val year = binding?.edtYear?.getText().toString()
-                val month = binding?.edtMonth?.getText().toString()
-                viewModel.setView(year, month, viewModel.day, viewModel.index)
-                val bundle = bundleOf("Calendar" to viewModel.LiveCal)
-                findNavController().navigate(R.id.action_yearmonthFragment_to_calendarFragment, bundle)
-            }
-        }
-         */
-
-        /*
-        //key -> viewModel -> idx
-        binding?.btnYmres?.setOnClickListener {
-            val year = binding?.edtYear?.getText().toString()
-            val month = binding?.edtMonth?.getText().toString()
-            val date: LocalDate = LocalDate.of(year.toInt(),month.toInt(),myCal.day.toInt())
-            val viewModel = CalendarViewModel(myCal.id, date)
-            viewModel.idx.observe(viewLifecycleOwner) {
-                var idx = viewModel.idx.value as HashMap<String,String>
-                val putCal: Mycalendar = Mycalendar(date, myCal.id, idx)
-                val bundle = bundleOf("Calendar" to putCal)
-                findNavController().navigate(R.id.action_yearmonthFragment_to_calendarFragment, bundle)
-            }
-        }
-
-         */
     }
     override fun onDestroyView() {
         super.onDestroyView()
