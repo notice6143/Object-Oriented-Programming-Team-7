@@ -19,16 +19,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
     <EditText
         android:id="@+id/edt_friend"
         android:layout_width="197dp"
         android:layout_height="29dp"
         android:layout_marginStart="68dp"
         android:layout_marginTop="273dp"
+        android:background="#00FF0000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="#00FF0000"/>
+        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
     <View
         android:id="@+id/btn_enter"

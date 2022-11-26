@@ -15,7 +15,6 @@ import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 //캘린더 날짜 어답터, 중첩리사이클러뷰 -> 날짜어답터안에 리스트어답터 추가
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarAdapter(val cals: LiveData<ArrayList<ViewCalendar>>, val phone: String): RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
-    //val month = dates.value.get(10).monthValue
 
     class ViewHolder(val binding: ListDayBinding, val nowMonth: Int, val phone: String) : RecyclerView.ViewHolder(binding.root) {
         fun bind(cal: ViewCalendar?) {
@@ -65,35 +64,5 @@ class CalendarAdapter(val cals: LiveData<ArrayList<ViewCalendar>>, val phone: St
     }
 
     override fun getItemCount() = cals.value?.size ?: 0
-    /*
-    class Holder(val binding: ListDayBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(days: Days?, myCal: Mycalendar) {
-                binding.date.setBackgroundResource(
-                    when(days?.day1 ?: 0) {
-                        0 -> R.drawable.ic_baseline_date_disabled
-                        else -> R.drawable.ic_baseline_date
-                    }
-                )
-                binding.meSchedule.setBackgroundResource(
-                    when (days?.skds ?: Schedule.NONE) {
-                        Schedule.ME -> R.drawable.ic_baseline_me_rect
-                        Schedule.FRIEND -> R.drawable.ic_baseline_me_rect
-                        Schedule.NONE -> R.drawable.ic_baseline_none_rect
-                    }
-                )
-                binding.txtDay1.text = if (days?.day1 != 0) days?.day1.toString() else ""
-            if (days?.day1 != 0) {
-                binding.txtDay1.setOnClickListener { view ->
-                    val date: LocalDate =
-                        LocalDate.of(myCal.year.toInt(), myCal.month.toInt(), days?.day1 ?: 1)
-                    val putCal: Mycalendar = Mycalendar(date, myCal.id, myCal.idx)
-                    val bundle = bundleOf("Calendar" to putCal)
-                    view.findNavController()
-                        .navigate(R.id.action_calendarFragment_to_todolistFragment, bundle)
-                }
-            }
-        }
-    }
 
-     */
 }

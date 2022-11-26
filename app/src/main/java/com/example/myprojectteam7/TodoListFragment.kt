@@ -59,21 +59,6 @@ class TodoListFragment : Fragment() {
             val bundle = bundleOf("Phone" to phone)
             findNavController().navigate(R.id.action_todolistFragment_to_calendarFragment,bundle)
         }
-        /*
-        binding?.scheduleDate?.text =  myCal.monthStr + " " + myCal.day + ", " + myCal.year
-        binding?.recSchedule?.layoutManager = LinearLayoutManager(context)
-        binding?.recSchedule?.adapter = TodolistAdapter(myCal)
-
-        binding?.btnEdit?.setOnClickListener {
-            val bundle = bundleOf("Calendar" to myCal)
-            findNavController().navigate(R.id.action_todolistFragment_to_todoeditFragment,bundle)
-        }
-
-        binding?.btnClose?.setOnClickListener {
-            val bundle = bundleOf("Calendar" to myCal)
-            findNavController().navigate(R.id.action_todolistFragment_to_calendarFragment,bundle)
-        }
-         */
     }
 
     override fun onDestroyView() {

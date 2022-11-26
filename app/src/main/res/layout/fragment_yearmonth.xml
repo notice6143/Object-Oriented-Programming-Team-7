@@ -7,72 +7,76 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:clickable="true"
-    tools:context=".YearmonthFragment">
+    tools:background="@drawable/yearmonth_background"
+    tools:context=".YearmonthFragment"
+    android:focusable="true">
 
     <!-- TODO: Update blank fragment layout -->
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <EditText
+        android:id="@+id/edt_year"
+        android:layout_width="269dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="78dp"
+        android:layout_marginTop="307dp"
+        android:layout_marginEnd="64dp"
+        android:ems="4"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/edt_month"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <EditText
+        android:id="@+id/edt_month"
+        android:layout_width="269dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="78dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="64dp"
+        android:ems="2"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_year"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <LinearLayout
+        android:layout_width="291dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="58dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="61dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_month"
+        tools:visibility="invisible">
+
+        <Button
+            android:id="@+id/btn_ymres"
+            android:layout_width="107dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:layout_marginStart="80dp"
+            android:background="@drawable/yearmonth_background"
+            tools:visibility="invisible" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:visibility="invisible"></LinearLayout>
 
-            <EditText
-                android:id="@+id/edt_year"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="4"
-                android:inputType="number" />
-
-            <TextView
-                android:id="@+id/txt_text1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="년도" />
-
-            <EditText
-                android:id="@+id/edt_month"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="2"
-                android:inputType="number" />
-
-            <TextView
-                android:id="@+id/txt_text2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="월" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btn_ymres"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="확인" />
-
-            <Button
-                android:id="@+id/btn_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="취소" />
-        </LinearLayout>
-
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="107dp"
+            android:layout_height="32dp"
+            android:layout_margin="10dp"
+            android:layout_marginStart="94dp"
+            android:layout_marginEnd="80dp"
+            tools:visibility="invisible" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

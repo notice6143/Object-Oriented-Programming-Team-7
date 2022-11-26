@@ -13,17 +13,6 @@ import java.time.format.DateTimeFormatter
 @RequiresApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-    fun getKey(id: String, date : LocalDate): String {
-        val yym = date.format(DateTimeFormatter.ofPattern("yyyy/MM")).toString()
-        //return "Users/" + id + "/Calendars/" + yym + "/" + "index"
-        return "Users/${id}/Calendars/${yym}/index"
-    }
-
-    fun getSchedule(id: String, date: LocalDate, title: String): String {
-        val yym = date.format(DateTimeFormatter.ofPattern("yyyy/MM")).toString()
-        //return "Users/" + id + "/Calendars/" + yym + "/" + title
-        return "Users/${id}/Calendars/${yym}/title"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
