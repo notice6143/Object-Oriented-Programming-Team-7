@@ -10,15 +10,13 @@ import java.time.format.DateTimeFormatter
 @RequiresApi(Build.VERSION_CODES.O)
 data class Friend(
     var uid: String? = "",
-    var fid: String? = "",
-    var key: String? = ""
+    var fid: String? = ""
 ) {
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
             "uid" to uid,
-            "fid" to fid,
-            "key" to key
+            "fid" to fid
         )
     }
 }

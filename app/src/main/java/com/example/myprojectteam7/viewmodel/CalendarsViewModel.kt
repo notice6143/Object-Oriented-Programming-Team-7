@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myprojectteam7.*
-import com.example.myprojectteam7.Date
 import com.example.myprojectteam7.Todo
 import com.example.myprojectteam7.ViewCalendar
 import com.example.myprojectteam7.repository.CalendarsRepository
@@ -51,7 +50,8 @@ data class CalendarsViewModel(val phone:String): ViewModel() {
         repository.observeFriendlist(_friend) //친구목록 표시
     }
 
-    //년도, 월, 일, 월 약자 get
+    //get
+    //년도, 월, 일, 월 약자
     //date -> _date.value?.toString()
     val year get() = _date.value?.year ?: 0
     val month get() = _date.value?.monthValue ?: 0
@@ -65,6 +65,10 @@ data class CalendarsViewModel(val phone:String): ViewModel() {
     val todomemo get() = _todo.value?.memo ?: ""
     val todokey get() = _todo.value?.key ?: ""
 
+
+
+
+    //Set
     //viewDate -> 사용자가 가르키고 있는 날짜 set -> 날짜포인터
     private fun modifyViewDate(newDate: LocalDate) {
         repository.postViewDate(newDate)

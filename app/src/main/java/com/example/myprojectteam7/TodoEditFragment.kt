@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
@@ -48,6 +49,7 @@ class TodoEditFragment : Fragment() {
                     viewModel.setTodo(todo)
                     val bundle = bundleOf("Phone" to phone)
                     findNavController().navigate(R.id.action_todoeditFragment_to_todolistFragment, bundle)
+                    Toast.makeText(binding?.root?.context,"일정추가 완료", Toast.LENGTH_SHORT).show()
                 }
             }
         }
