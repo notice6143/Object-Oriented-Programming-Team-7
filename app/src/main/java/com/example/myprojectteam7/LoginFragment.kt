@@ -1,6 +1,5 @@
 package com.example.myprojectteam7
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,7 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.example.myprojectteam7.databinding.FragmentLoginBinding
-import com.example.myprojectteam7.databinding.FragmentYearmonthBinding
+import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -38,19 +37,24 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         binding?.btnLogin?.setOnClickListener {
             val now : LocalDate = LocalDate.now()
+
             val phone = binding?.edtPhone?.getText().toString()
             val password= binding?.edtPw?.getText().toString()
             database.child("Users").get().addOnSuccessListener {
                 val userphone = it.child(phone).child("usernumber").value.toString()
                 val userpassword = it.child(phone).child("userpassword").value.toString()
+
+                //로그인
                 if(userphone == phone && userpassword == password) {
-                    val myCal : Mycalendar = Mycalendar(now,phone)
-                    //myCal.setArray()
-                    val bundle = bundleOf("Calendar" to myCal)
+                    val viewModel = CalendarsViewModel(userpassword)
+                    viewModel.setViewDate(now)
+                    val bundle = bundleOf("Phone" to userpassword)
                     findNavController().navigate(R.id.action_loginFragment_to_calendarFragment, bundle)
                 }
+
                 else
                     binding?.txtError?.setText("Incorrect username or password.")
             }
@@ -63,4 +67,5 @@ class LoginFragment : Fragment() {
         super.onDestroyView()
         binding = null
     }
+
 }
