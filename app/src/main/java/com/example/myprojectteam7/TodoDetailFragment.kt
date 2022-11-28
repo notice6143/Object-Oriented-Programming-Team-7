@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
@@ -18,11 +19,13 @@ import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 class TodoDetailFragment : Fragment() {
     var binding: FragmentTododetailBinding? = null
     var phone: String = ""
+    var todoid: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             phone = it.getString("Phone") as String
+            todoid = it.getString("TodoID") as String
         }
     }
 
@@ -36,7 +39,8 @@ class TodoDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel = CalendarsViewModel(phone)
+        //유저가 선택한 일정을 표시
+        val viewModel = CalendarsViewModel(todoid)
         viewModel.todo.observe(viewLifecycleOwner) {
             binding?.txtTitle?.text = viewModel.todotitle
             binding?.txtDate?.text = viewModel.tododate.toString()
@@ -50,6 +54,7 @@ class TodoDetailFragment : Fragment() {
                     viewModel.setTodo(todo)
                     val bundle = bundleOf("Phone" to phone)
                     findNavController().navigate(R.id.action_tododetailFragment_to_todolistFragment, bundle)
+                    Toast.makeText(binding?.root?.context,"일정이 수정되었습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -58,7 +63,6 @@ class TodoDetailFragment : Fragment() {
             val bundle = bundleOf("Phone" to phone)
             findNavController().navigate(R.id.action_tododetailFragment_to_todolistFragment,bundle)
         }
-
 
     }
     override fun onDestroyView() {
