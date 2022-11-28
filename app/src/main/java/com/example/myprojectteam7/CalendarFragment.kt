@@ -11,22 +11,21 @@ import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myprojectteam7.databinding.FragmentCalendarBinding
-import com.example.myprojectteam7.viewmodel.CalendarViewModel
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 
+//메인 캘린더
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarFragment : Fragment() {
-    lateinit var myCal: Mycalendar
+    //lateinit var myCal: Mycalendar
     var binding: FragmentCalendarBinding? = null
-    val viewModel = CalendarViewModel("test")
+    var phone: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            myCal = it.getSerializable("Calendar") as Mycalendar
+            //myCal = it.getSerializable("Calendar") as Mycalendar
+            phone = it.getString("Phone") as String
         }
     }
 
@@ -40,15 +39,39 @@ class CalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val viewModel = CalendarsViewModel(phone)
 
-        binding?.txtYear?.setText(myCal.year)
-        binding?.txtMonth?.setText(myCal.monthStr)
+        //년도, 월 표시
+        viewModel.date.observe(viewLifecycleOwner) {
+            binding?.txtYear?.text = viewModel.year.toString()
+            binding?.txtMonth?.text = viewModel.monthStr
+        }
+
+        //캘린더 리사이클러
+        viewModel.calendar.observe(viewLifecycleOwner) {
+            binding?.recWeek?.adapter?.notifyDataSetChanged()
+            Log.d("캘린더확인",viewModel.calendar.value.toString())
+        }
         binding?.recWeek?.layoutManager = GridLayoutManager(context,7)
-        binding?.recWeek?.adapter = CalenderAdapter(myCal)
+        binding?.recWeek?.adapter = CalendarAdapter(viewModel.calendar, phone)
 
+        //캘린더 리사이클러
+        viewModel.friend.observe(viewLifecycleOwner) {
+            binding?.recFriend?.adapter?.notifyDataSetChanged()
+        }
+        binding?.recFriend?.layoutManager = GridLayoutManager(context,3)
+        binding?.recFriend?.adapter = FriendListAdapter(viewModel.friend, phone)
+
+        //년월 선택
         binding?.txtYear?.setOnClickListener {
-            val bundle = bundleOf("Calendar" to myCal)
+            val bundle = bundleOf("Phone" to phone)
             findNavController().navigate(R.id.action_calendarFragment_to_yearmonthFragment, bundle)
+        }
+
+        //세팅
+        binding?.btnSetting?.setOnClickListener {
+            val bundle = bundleOf("Phone" to phone)
+            findNavController().navigate(R.id.action_calendarFragment_to_settingFragment, bundle)
         }
     }
     override fun onDestroyView() {

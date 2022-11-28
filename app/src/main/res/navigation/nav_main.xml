@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/todolistFragment"
-        android:name="com.example.myprojectteam7.TodolistFragment"
+        android:name="com.example.myprojectteam7.TodoListFragment"
         android:label="fragment_todolist"
         tools:layout="@layout/fragment_todolist" >
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/todoeditFragment"
-        android:name="com.example.myprojectteam7.TodoeditFragment"
+        android:name="com.example.myprojectteam7.TodoEditFragment"
         android:label="fragment_todoedit"
         tools:layout="@layout/fragment_todoedit" >
         <action
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/tododetailFragment"
-        android:name="com.example.myprojectteam7.TododetailFragment"
+        android:name="com.example.myprojectteam7.TodoDetailFragment"
         android:label="fragment_tododetail"
         tools:layout="@layout/fragment_tododetail" >
         <action
@@ -46,6 +46,9 @@
         <action
             android:id="@+id/action_settingFragment_to_calendarFragment"
             app:destination="@id/calendarFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/yearmonthFragment"

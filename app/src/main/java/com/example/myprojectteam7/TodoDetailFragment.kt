@@ -9,13 +9,14 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
-import com.example.myprojectteam7.databinding.FragmentSettingBinding
+import com.example.myprojectteam7.databinding.FragmentTododetailBinding
 import com.example.myprojectteam7.databinding.FragmentTodoeditBinding
 import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 
+//일정 상세내용
 @RequiresApi(Build.VERSION_CODES.O)
-class SettingFragment : Fragment() {
-    var binding: FragmentSettingBinding? = null
+class TodoDetailFragment : Fragment() {
+    var binding: FragmentTododetailBinding? = null
     var phone: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,34 +30,37 @@ class SettingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSettingBinding.inflate(inflater)
+        binding = FragmentTododetailBinding.inflate(inflater)
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewModel = CalendarsViewModel(phone)
-        binding?.txtNumber?.text = phone
+        viewModel.todo.observe(viewLifecycleOwner) {
+            binding?.txtTitle?.text = viewModel.todotitle
+            binding?.txtDate?.text = viewModel.tododate.toString()
+            binding?.txtUid?.text = viewModel.todouid
+            binding?.edtMemo?.hint = viewModel.todomemo
 
-
-        binding?.btnEnter?.setOnClickListener {
-            val newFriend : String = binding?.edtFriend?.getText().toString()
-            viewModel.setFriend(newFriend)
-        }
-
-
-
-
-        binding?.btnLogout?.setOnClickListener {
-            findNavController().navigate(R.id.action_settingFragment_to_loginFragment)
+            binding?.btnEdit?.setOnClickListener {
+                val memo: String = binding?.edtMemo?.getText().toString()
+                if(memo != "") {
+                    val todo = Todo(viewModel.todouid, viewModel.todotitle, viewModel.tododate, memo, viewModel.todokey)
+                    viewModel.setTodo(todo)
+                    val bundle = bundleOf("Phone" to phone)
+                    findNavController().navigate(R.id.action_tododetailFragment_to_todolistFragment, bundle)
+                }
+            }
         }
 
         binding?.btnClose?.setOnClickListener {
             val bundle = bundleOf("Phone" to phone)
-            findNavController().navigate(R.id.action_settingFragment_to_calendarFragment, bundle)
+            findNavController().navigate(R.id.action_tododetailFragment_to_todolistFragment,bundle)
         }
-    }
 
+
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null

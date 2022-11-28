@@ -1,6 +1,5 @@
 package com.example.myprojectteam7
 
-import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,11 +13,6 @@ import java.time.format.DateTimeFormatter
 @RequiresApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-
-    fun getKey(id: String, date : LocalDate): String {
-        val yym = date.format(DateTimeFormatter.ofPattern("yyyy/MM")).toString()
-        return "Users/" + id + "/Calendars/" + yym + "/" + "index"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
