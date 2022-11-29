@@ -46,6 +46,7 @@ class TodoDetailFragment : Fragment() {
             binding?.txtDate?.text = viewModel.tododate.toString()
             binding?.txtUid?.text = viewModel.todouid
             binding?.edtMemo?.hint = viewModel.todomemo
+            binding?.txtLocation?.text = viewModel.todolacation
 
             binding?.btnEdit?.setOnClickListener {
                 val memo: String = binding?.edtMemo?.getText().toString()
@@ -59,6 +60,12 @@ class TodoDetailFragment : Fragment() {
             }
 
             //location 입력 여부에 따라 창 띄워주기
+            binding?.txtLocation?.setOnClickListener {
+                if(viewModel.todolacation != ""){
+                    val bundle = bundleOf("Phone" to phone)
+                    findNavController().navigate(R.id.action_tododetailFragment_to_mapFragment3,bundle)        //이거 타고 지도 띄워주기
+                }
+            }
         }
 
         binding?.btnClose?.setOnClickListener {

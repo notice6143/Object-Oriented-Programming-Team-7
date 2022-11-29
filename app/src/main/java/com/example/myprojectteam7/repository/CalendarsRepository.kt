@@ -83,7 +83,8 @@ class CalendarsRepository(key: String?) {
                         val date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE)
                         val memo = map.get("memo") as String? ?: ""
                         val key = map.get("key") as String? ?: ""
-                        val temp2 = Todo(uid,title,date,memo,key)
+                        val location = map.get("location") as String ?: ""
+                        val temp2 = Todo(uid,title,date,memo,key,location)
                         Log.d("스냅맵todo",temp2.toString())
                         todolist.add(temp2)
                     }
@@ -104,7 +105,8 @@ class CalendarsRepository(key: String?) {
                             val date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE)
                             val memo = map.get("memo") as String? ?: ""
                             val key = map.get("key") as String? ?: ""
-                            val temp2 = Todo(uid,title,date,memo,key)
+                            val location = map.get("location") as String ?: ""
+                            val temp2 = Todo(uid,title,date,memo,key,location)
                             todolist.add(temp2)
                         }
                     }
@@ -148,7 +150,8 @@ class CalendarsRepository(key: String?) {
                     val date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE)
                     val memo = map.get("memo") as String? ?: ""
                     val key = map.get("key") as String? ?: ""
-                    val temp = Todo(uid,title,date,memo,key)
+                    val location = map.get("location") as String ?: ""
+                    val temp = Todo(uid,title,date,memo,key,location)
                     Log.d("스냅샷todo",temp.toString())
                     todolist.add(temp)
                 }
@@ -169,7 +172,8 @@ class CalendarsRepository(key: String?) {
                         val date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE)
                         val memo = map.get("memo") as String? ?: ""
                         val key = map.get("key") as String? ?: ""
-                        val temp = Todo(uid,title,date,memo,key)
+                        val location = map.get("location") as String ?: ""
+                        val temp = Todo(uid,title,date,memo,key,location)
                         todolist.add(temp)
                     }
                 }
@@ -244,7 +248,8 @@ class CalendarsRepository(key: String?) {
                     val tododate = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE)
                     val todomemo = map.get("memo") as String? ?: ""
                     val todokey = map.get("key") as String? ?: ""
-                    val temp = Todo(todouid, todotitle, tododate, todomemo, todokey)
+                    val todolocation = map.get("location") as String ?: ""
+                    val temp = Todo(todouid, todotitle, tododate, todomemo, todokey,todolocation)
                     view.postValue(temp)
                 }
             }

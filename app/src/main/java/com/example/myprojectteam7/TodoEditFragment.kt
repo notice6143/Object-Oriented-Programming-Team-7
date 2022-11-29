@@ -1,5 +1,6 @@
 package com.example.myprojectteam7
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -35,6 +36,7 @@ class TodoEditFragment : Fragment() {
         return binding?.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewModel = CalendarsViewModel(phone)
@@ -44,8 +46,9 @@ class TodoEditFragment : Fragment() {
             binding?.btnSave2?.setOnClickListener {
                 val title: String = binding?.edtTitle?.getText().toString()
                 val memo: String = binding?.edtMemo?.getText().toString()
+                val location: String = binding?.edtLocation?.getText().toString()       //위치 입력받고 지도? 아무튼 구현하기
                 if(title != "") {
-                    val todo = Todo(phone, title, viewModel.date.value, memo)
+                    val todo = Todo(phone, title, viewModel.date.value, memo, "",location)       //key는 왜 없나요
                     viewModel.setTodo(todo)
                     val bundle = bundleOf("Phone" to phone)
                     findNavController().navigate(R.id.action_todoeditFragment_to_todolistFragment, bundle)

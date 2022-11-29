@@ -64,6 +64,7 @@ data class CalendarsViewModel(val phone:String): ViewModel() {
     val tododate get() = _todo.value?.date ?: LocalDate.parse(UNCHECKED_DATE, DateTimeFormatter.ISO_DATE)
     val todomemo get() = _todo.value?.memo ?: ""
     val todokey get() = _todo.value?.key ?: ""
+    val todolacation get() = _todo.value?.location ?:""
 
 
 

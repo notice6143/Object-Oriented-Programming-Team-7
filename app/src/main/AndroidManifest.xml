@@ -66,12 +66,7 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDLuckJk2p6wYkbtyF23qRFuz4O3STzql8" />
-        <uses-permission
-            android:name="android.permission.ACCESS_COARSE_LOCATION"
-            tools:ignore="ManifestOrder,WrongManifestParent" />
-        <uses-permission
-            android:name="android.permission.ACCESS_FINE_LOCATION"
-            tools:ignore="WrongManifestParent" />
+
     </application>
     
 </manifest>
