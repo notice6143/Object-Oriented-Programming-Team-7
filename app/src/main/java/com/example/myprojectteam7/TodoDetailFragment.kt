@@ -52,6 +52,8 @@ class TodoDetailFragment : Fragment() {
                     findNavController().navigate(R.id.action_tododetailFragment_to_todolistFragment, bundle)
                 }
             }
+
+            //location 입력 여부에 따라 창 띄워주기
         }
 
         binding?.btnClose?.setOnClickListener {
