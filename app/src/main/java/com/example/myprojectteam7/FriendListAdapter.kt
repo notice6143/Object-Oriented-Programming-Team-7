@@ -23,8 +23,8 @@ class FriendListAdapter(val lists: LiveData<ArrayList<Friend>>, val phone: Strin
             friend?.let {
                 binding.txtFriend.text = it.fid
 
-                /*
-                binding.friendlist.setOnClickListener { view ->
+
+                /*binding.friendlist.setOnClickListener { view ->
                     val viewModel = CalendarsViewModel(phone)
                     val bundle = bundleOf("Phone" to phone)
                     view.findNavController().navigate(R.id.action_todolistFragment_to_tododetailFragment, bundle)
@@ -35,7 +35,6 @@ class FriendListAdapter(val lists: LiveData<ArrayList<Friend>>, val phone: Strin
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ListFriendBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-
         return ViewHolder(binding, phone)
     }
 

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
@@ -49,10 +50,13 @@ class LoginFragment : Fragment() {
 
                 //로그인
                 if(userphone == phone && userpassword == password) {
-                    val viewModel = CalendarsViewModel(userpassword)
+                    val viewModel = CalendarsViewModel(userphone)
                     viewModel.setViewDate(now)
-                    val bundle = bundleOf("Phone" to userpassword)
+                    val bundle = bundleOf("Phone" to userphone)
                     findNavController().navigate(R.id.action_loginFragment_to_calendarFragment, bundle)
+
+                    //메시지출력
+                    Toast.makeText(binding?.root?.context,"$userphone 님 환영합니다.", Toast.LENGTH_SHORT).show()
                 }
 
                 else

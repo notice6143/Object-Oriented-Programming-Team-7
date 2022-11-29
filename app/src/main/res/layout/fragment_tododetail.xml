@@ -19,7 +19,7 @@
 
         <TextView
             android:id="@+id/txt_title"
-            android:layout_width="113dp"
+            android:layout_width="220dp"
             android:layout_height="33dp"
             android:layout_marginStart="29dp"
             android:layout_marginTop="26dp"
@@ -39,7 +39,7 @@
 
         <TextView
             android:id="@+id/txt_uid"
-            android:layout_width="108dp"
+            android:layout_width="140dp"
             android:layout_height="23dp"
             android:layout_marginStart="29dp"
             android:layout_marginTop="15dp"
