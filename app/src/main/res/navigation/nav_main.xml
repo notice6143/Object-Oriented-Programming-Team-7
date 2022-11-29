@@ -73,6 +73,9 @@
         <action
             android:id="@+id/action_calendarFragment_to_yearmonthFragment"
             app:destination="@id/yearmonthFragment" />
+        <action
+            android:id="@+id/action_calendarFragment_self2"
+            app:destination="@id/calendarFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
