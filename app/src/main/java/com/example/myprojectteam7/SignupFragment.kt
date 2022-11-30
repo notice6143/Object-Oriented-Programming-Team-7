@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
 import com.example.myprojectteam7.databinding.FragmentSignupBinding
@@ -64,6 +65,7 @@ class SignupFragment : Fragment() {
                 else if(key == null) {
                     writeNewUser(name, number, password)
                     findNavController().navigate(R.id.action_signupFragment_to_loginFragment)
+                    Toast.makeText(binding?.root?.context,"회원가입 성공", Toast.LENGTH_SHORT).show()
                 }
             }
         }

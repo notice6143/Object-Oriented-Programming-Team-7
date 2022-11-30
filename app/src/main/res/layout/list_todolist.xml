@@ -42,7 +42,7 @@
             android:id="@+id/txt_uid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="200dp"
+            android:layout_marginStart="180dp"
             android:text="TextView" />
     </LinearLayout>
 

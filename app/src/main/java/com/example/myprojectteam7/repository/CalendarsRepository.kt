@@ -40,6 +40,7 @@ class CalendarsRepository(key: String?) {
         })
     }
 
+
     //viewDate 쓰기 -> 유저의 Date 포인터
     fun postViewDate(newDate: LocalDate) {
         userRef.child("viewDate").setValue(newDate.toString())
@@ -82,7 +83,8 @@ class CalendarsRepository(key: String?) {
                         val date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE)
                         val memo = map.get("memo") as String? ?: ""
                         val key = map.get("key") as String? ?: ""
-                        val temp2 = Todo(uid,title,date,memo,key)
+                        val location = map.get("location") as String ?: ""
+                        val temp2 = Todo(uid,title,date,memo,key,location)
                         Log.d("스냅맵todo",temp2.toString())
                         todolist.add(temp2)
                     }
@@ -103,12 +105,11 @@ class CalendarsRepository(key: String?) {
                             val date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE)
                             val memo = map.get("memo") as String? ?: ""
                             val key = map.get("key") as String? ?: ""
-                            val temp2 = Todo(uid,title,date,memo,key)
+                            val location = map.get("location") as String ?: ""
+                            val temp2 = Todo(uid,title,date,memo,key,location)
                             todolist.add(temp2)
                         }
                     }
-
-
 
 
                     //Date - Me, Friend add
@@ -149,7 +150,8 @@ class CalendarsRepository(key: String?) {
                     val date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE)
                     val memo = map.get("memo") as String? ?: ""
                     val key = map.get("key") as String? ?: ""
-                    val temp = Todo(uid,title,date,memo,key)
+                    val location = map.get("location") as String ?: ""
+                    val temp = Todo(uid,title,date,memo,key,location)
                     Log.d("스냅샷todo",temp.toString())
                     todolist.add(temp)
                 }
@@ -170,7 +172,8 @@ class CalendarsRepository(key: String?) {
                         val date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE)
                         val memo = map.get("memo") as String? ?: ""
                         val key = map.get("key") as String? ?: ""
-                        val temp = Todo(uid,title,date,memo,key)
+                        val location = map.get("location") as String ?: ""
+                        val temp = Todo(uid,title,date,memo,key,location)
                         todolist.add(temp)
                     }
                 }
@@ -207,9 +210,8 @@ class CalendarsRepository(key: String?) {
             }
         }
         //일정편집: 키 값 그대로 덮어쓰기
-        else {
+        else
             key = newTodo.key
-        }
 
         val newTodoKey = Todo(newTodo.uid,newTodo.title,newTodo.date,newTodo.memo, key)
         Log.d("키추가",newTodoKey.toString())
@@ -231,10 +233,11 @@ class CalendarsRepository(key: String?) {
                 val viewDate = snapshot.child("Users").child(phone).child("viewDate")   //Users/phone/viewDate
                 val date = LocalDate.parse(viewDate.value.toString(), DateTimeFormatter.ISO_DATE) //LocalDate
 
+                //일정 포인터
                 val viewTodo = snapshot.child("Users").child(phone).child("viewTodo")
                 val key = viewTodo.value.toString()
 
-                //phone도 친구 observe 필요
+                //일정경로
                 val todoSnap = snapshot.child("User-todolists").child(phone).child(date.toString()).child(key)
                 Log.d("일정한개",todoSnap.value.toString())
                 if(todoSnap.value != null) {
@@ -245,7 +248,8 @@ class CalendarsRepository(key: String?) {
                     val tododate = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE)
                     val todomemo = map.get("memo") as String? ?: ""
                     val todokey = map.get("key") as String? ?: ""
-                    val temp = Todo(todouid, todotitle, tododate, todomemo, todokey)
+                    val todolocation = map.get("location") as String ?: ""
+                    val temp = Todo(todouid, todotitle, tododate, todomemo, todokey,todolocation)
                     view.postValue(temp)
                 }
             }
@@ -268,16 +272,17 @@ class CalendarsRepository(key: String?) {
                 val friendSnap = snapshot.child("MyFriendList")
 
                 val friendlist = ArrayList<Friend>()
+
                 for(fs in friendSnap.children) {
                     Log.d("친구스냅샷",fs.value.toString())
                     val map = fs.value as Map<String, Any?>
                     val uid = map.get("uid") as String? ?: ""
                     val fid = map.get("fid") as String? ?: ""
-                    val key = map.get("key") as String? ?: ""
-                    val temp = Friend(uid,fid,key)
+                    val temp = Friend(uid,fid)
                     Log.d("친구스냅샷",temp.toString())
                     friendlist.add(temp)
                 }
+
                 Log.d("친구최종스냅",friendlist.toString())
                 view.postValue(friendlist)
             }
@@ -286,30 +291,23 @@ class CalendarsRepository(key: String?) {
         })
     }
 
-    //친구목록 추가
-    //newTodo(userId, title, Date, memo)
+    //친구추가
+    //newFriend(UserID, FriendID), Key는 FriendID
     fun postFriend(friendID: String) {
 
-        //1. key 생성 2. 객체 매핑 3. 해당경로/key 일정 업데이트
-        var key: String? = ""
-
-        //고유의 키 값 생성 후 push ex)-NHeffgDmkuygkDe4Mkb
-        key = userRef.child("MyFriendList").push().key
-
         //스왑
-        val uidFriend = Friend(phone, friendID, key)
-        val fidFriend = Friend(friendID, phone, key)
+        val uidFriend = Friend(phone, friendID)
+        val fidFriend = Friend(friendID, phone)
         val postUid = uidFriend.toMap()
         val postFid = fidFriend.toMap()
 
         //경로 설정
         val childUpdates = hashMapOf<String, Any>(
-            "/Users/$phone/MyFriendList/$key" to postUid,
-            "/Users/$friendID/MyFriendList/$key" to postFid
+            "/Users/$phone/MyFriendList/$friendID" to postUid,
+            "/Users/$friendID/MyFriendList/$phone" to postFid
         )
 
         dataRef.updateChildren(childUpdates)
-
     }
 
 }

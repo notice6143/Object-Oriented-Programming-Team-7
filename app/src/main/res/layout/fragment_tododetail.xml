@@ -19,49 +19,68 @@
 
         <TextView
             android:id="@+id/txt_title"
-            android:layout_width="113dp"
+            android:layout_width="220dp"
             android:layout_height="33dp"
-            android:layout_marginLeft="29dp"
+            android:layout_marginStart="29dp"
             android:layout_marginTop="26dp"
             android:gravity="top"
             android:textColor="#000000"
-            android:textSize="26dp" />
+            android:textSize="26sp" />
 
         <TextView
             android:id="@+id/txt_date"
             android:layout_width="108dp"
             android:layout_height="23dp"
-            android:layout_marginLeft="29dp"
+            android:layout_marginStart="29dp"
             android:layout_marginTop="2dp"
             android:gravity="top"
             android:textColor="#81E4BB"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/txt_uid"
-            android:layout_width="108dp"
+            android:layout_width="140dp"
             android:layout_height="23dp"
-            android:layout_marginLeft="29dp"
+            android:layout_marginStart="29dp"
             android:layout_marginTop="15dp"
             android:gravity="top"
             android:textColor="#000000"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txt_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="77dp"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="272.89dp"
             android:layout_height="128.78dp"
-            android:layout_marginLeft="29dp"
-            android:layout_marginTop="135dp">
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="55dp">
 
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_memo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint=""/>
+                android:hint="" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
+
+    <View
+        android:id="@+id/btn_location"
+        android:layout_width="272dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginBottom="410dp"
+        android:background="@drawable/location"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <View
         android:id="@+id/btn_edit"

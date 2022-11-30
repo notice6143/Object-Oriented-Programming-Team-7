@@ -73,9 +73,6 @@
         <action
             android:id="@+id/action_calendarFragment_to_yearmonthFragment"
             app:destination="@id/yearmonthFragment" />
-        <action
-            android:id="@+id/action_calendarFragment_to_friendListFragment"
-            app:destination="@id/friendListFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -97,14 +94,5 @@
         <action
             android:id="@+id/action_signupFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/friendListFragment"
-        android:name="com.example.myprojectteam7.FriendListFragment"
-        android:label="FriendListFragment"
-        tools:layout="@layout/fragment_friendlist">
-        <action
-            android:id="@+id/action_friendListFragment_to_calendarFragment"
-            app:destination="@id/calendarFragment" />
     </fragment>
 </navigation>
