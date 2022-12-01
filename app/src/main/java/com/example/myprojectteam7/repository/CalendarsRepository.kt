@@ -4,19 +4,27 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.fragment.findNavController
 import com.example.myprojectteam7.*
-import com.example.myprojectteam7.Date
 import com.example.myprojectteam7.Todo
 import com.example.myprojectteam7.ViewCalendar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+
+/* Todo 수정 할 부분
+* ViewCalendar -> Date, ArrayList<Todo>
+  HashMap<LocalDate, ArrayList<Todo>> -> 해쉬맵으로 해당되는 Date를 불러와서 ArrayList<Todo> 사용
+? _todolist : ArrayList<Todo>는 불필요?
+* friend의 일정을 가져올 때 -> Me-Me 친구관계를 생성해서 코드 간결화
+* init -> launch로 필요할 때만 실행 -> 뷰모델를 생성할 때 너무 메모리소모가 큼
++ 일정, 친구 remove 기능
+* User-todolists는 불필요
+ */
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarsRepository(key: String?) {
@@ -24,7 +32,8 @@ class CalendarsRepository(key: String?) {
     //dataRef: 루트, userRef: 유저
     val dataRef = database.reference
     val userRef = database.getReference(key ?: "bug")
-    val phone = key?.split("/")?.get(1) ?: ""
+    //var phone = key?.split("/")?.get(1) ?: ""
+    var phone: String = ""
 
     //Todo 현재날짜
     //현재 유저가 가르키고 있는 Date 읽기
@@ -46,8 +55,7 @@ class CalendarsRepository(key: String?) {
         userRef.child("viewDate").setValue(newDate.toString())
     }
 
-    //Todo 일정
-
+    //달력 관련
     //Date-Todolist 객체
     //Date하나에-일정여러개 매핑 -> 리사이클러뷰
     fun observeCalendar(view: MutableLiveData<ArrayList<ViewCalendar>>) {
@@ -75,17 +83,7 @@ class CalendarsRepository(key: String?) {
                     val todolist = ArrayList<Todo>()
                     //Me
                     for(td in viewTodo.children) {
-                        Log.d("스냅맵j",td.value.toString())
-                        val map = td.value as Map<String, Any?>
-                        val uid = map.get("uid") as String? ?: ""
-                        val title = map.get("title") as String? ?: ""
-                        val dateStr = map.get("date") as String? ?: ""
-                        val date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE)
-                        val memo = map.get("memo") as String? ?: ""
-                        val key = map.get("key") as String? ?: ""
-                        val temp2 = Todo(uid,title,date,memo,key)
-                        Log.d("스냅맵todo",temp2.toString())
-                        todolist.add(temp2)
+                        todolist.add(createTodo(td.value as Map<String, Any?>))
                     }
 
                     //Todo Friend
@@ -97,18 +95,9 @@ class CalendarsRepository(key: String?) {
                         val fid = fmap.get("fid") as String? ?: ""
                         val friendTodo = snapshot.child("User-todolists").child(fid).child(temp.toString())
                         for(td in friendTodo.children) {
-                            val map = td.value as Map<String, Any?>
-                            val uid = map.get("uid") as String? ?: ""
-                            val title = map.get("title") as String? ?: ""
-                            val dateStr = map.get("date") as String? ?: ""
-                            val date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE)
-                            val memo = map.get("memo") as String? ?: ""
-                            val key = map.get("key") as String? ?: ""
-                            val temp2 = Todo(uid,title,date,memo,key)
-                            todolist.add(temp2)
+                            todolist.add(createTodo(td.value as Map<String, Any?>))
                         }
                     }
-
 
                     //Date - Me, Friend add
                     dateTodo.add(ViewCalendar(temp,todolist))
@@ -140,17 +129,7 @@ class CalendarsRepository(key: String?) {
 
                 //Me
                 for(td in viewTodo.children) {
-                    Log.d("스냅샷i",td.value.toString())
-                    val map = td.value as Map<String, Any?>
-                    val uid = map.get("uid") as String? ?: ""
-                    val title = map.get("title") as String? ?: ""
-                    val dateStr = map.get("date") as String? ?: ""
-                    val date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE)
-                    val memo = map.get("memo") as String? ?: ""
-                    val key = map.get("key") as String? ?: ""
-                    val temp = Todo(uid,title,date,memo,key)
-                    Log.d("스냅샷todo",temp.toString())
-                    todolist.add(temp)
+                    todolist.add(createTodo(td.value as Map<String, Any?>))
                 }
 
                 //Todo Friend
@@ -162,19 +141,9 @@ class CalendarsRepository(key: String?) {
                     val fid = fmap.get("fid") as String? ?: ""
                     val friendTodo = snapshot.child("User-todolists").child(fid).child(date.toString())
                     for(td in friendTodo.children) {
-                        val map = td.value as Map<String, Any?>
-                        val uid = map.get("uid") as String? ?: ""
-                        val title = map.get("title") as String? ?: ""
-                        val dateStr = map.get("date") as String? ?: ""
-                        val date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE)
-                        val memo = map.get("memo") as String? ?: ""
-                        val key = map.get("key") as String? ?: ""
-                        val temp = Todo(uid,title,date,memo,key)
-                        todolist.add(temp)
+                        todolist.add(createTodo(td.value as Map<String, Any?>))
                     }
                 }
-
-
 
                 //Me, Friend post
                 Log.d("최종스냅todo",todolist.toString())
@@ -237,15 +206,7 @@ class CalendarsRepository(key: String?) {
                 val todoSnap = snapshot.child("User-todolists").child(phone).child(date.toString()).child(key)
                 Log.d("일정한개",todoSnap.value.toString())
                 if(todoSnap.value != null) {
-                    val map = todoSnap.value as Map<String, Any?>
-                    val todouid = map.get("uid") as String? ?: ""
-                    val todotitle = map.get("title") as String? ?: ""
-                    val dateStr = map.get("date") as String? ?: ""
-                    val tododate = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE)
-                    val todomemo = map.get("memo") as String? ?: ""
-                    val todokey = map.get("key") as String? ?: ""
-                    val temp = Todo(todouid, todotitle, tododate, todomemo, todokey)
-                    view.postValue(temp)
+                    view.postValue(createTodo(todoSnap.value as Map<String, Any?>))
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -303,6 +264,17 @@ class CalendarsRepository(key: String?) {
         )
 
         dataRef.updateChildren(childUpdates)
+    }
+
+    fun createTodo(map: Map<String,Any?>): Todo {
+        val todouid = map.get("uid") as String? ?: ""
+        val todotitle = map.get("title") as String? ?: ""
+        val dateStr = map.get("date") as String? ?: ""
+        val tododate = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE)
+        val todomemo = map.get("memo") as String? ?: ""
+        val todokey = map.get("key") as String? ?: ""
+        val todo = Todo(todouid, todotitle, tododate, todomemo, todokey)
+        return todo
     }
 
 }
