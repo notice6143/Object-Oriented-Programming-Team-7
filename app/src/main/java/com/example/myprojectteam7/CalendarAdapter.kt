@@ -30,6 +30,8 @@ class CalendarAdapter(val cals: LiveData<ArrayList<ViewCalendar>>, val phone: St
                             else -> R.drawable.ic_baseline_date_disabled
                         }
                     )
+
+                    //일정 클릭
                     binding.date.setOnClickListener { view ->
                         viewModel.setViewDate(it.date1)
                         val bundle = bundleOf("Phone" to phone)

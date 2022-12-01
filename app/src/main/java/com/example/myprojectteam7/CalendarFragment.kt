@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myprojectteam7.databinding.FragmentCalendarBinding
@@ -17,15 +18,18 @@ import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 //메인 캘린더
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarFragment : Fragment() {
-    //lateinit var myCal: Mycalendar
     var binding: FragmentCalendarBinding? = null
     var phone: String = ""
+    val viewModel: CalendarsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            //myCal = it.getSerializable("Calendar") as Mycalendar
             phone = it.getString("Phone") as String
+            viewModel.setKey(phone)
+            viewModel.observeLiveData("date")
+            viewModel.observeLiveData("calendar")
+            viewModel.observeLiveData("friend")
         }
     }
 
@@ -39,7 +43,6 @@ class CalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel = CalendarsViewModel(phone)
 
         //년도, 월 표시
         viewModel.date.observe(viewLifecycleOwner) {
@@ -47,7 +50,7 @@ class CalendarFragment : Fragment() {
             binding?.txtMonth?.text = viewModel.monthStr
         }
 
-        //캘린더 리사이클러
+        //캘린더 리사이클러뷰
         viewModel.calendar.observe(viewLifecycleOwner) {
             binding?.recWeek?.adapter?.notifyDataSetChanged()
             Log.d("캘린더확인",viewModel.calendar.value.toString())
@@ -55,7 +58,7 @@ class CalendarFragment : Fragment() {
         binding?.recWeek?.layoutManager = GridLayoutManager(context,7)
         binding?.recWeek?.adapter = CalendarAdapter(viewModel.calendar, phone)
 
-        //캘린더 리사이클러
+        //친구 리사이클러뷰
         viewModel.friend.observe(viewLifecycleOwner) {
             binding?.recFriend?.adapter?.notifyDataSetChanged()
         }

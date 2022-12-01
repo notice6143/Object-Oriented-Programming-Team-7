@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myprojectteam7.databinding.FragmentTodoeditBinding
 import com.example.myprojectteam7.viewmodel.CalendarsViewModel
@@ -19,11 +20,14 @@ import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 class TodoEditFragment : Fragment() {
     var binding: FragmentTodoeditBinding? = null
     var phone: String = ""
+    val viewModel: CalendarsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             phone = it.getString("Phone") as String
+            viewModel.setKey(phone)
+            viewModel.observeLiveData("date")
         }
     }
 
