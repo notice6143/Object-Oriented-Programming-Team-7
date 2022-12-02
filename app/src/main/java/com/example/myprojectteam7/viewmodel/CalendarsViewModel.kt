@@ -15,10 +15,9 @@ import java.time.format.DateTimeFormatter
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarsViewModel: ViewModel() {
 
-
-    //현재 사용자가 선택한 Date -> 년월일 변화에 실시간으로 대응
-    private val _date = MutableLiveData<LocalDate>()
-    val date : LiveData<LocalDate> get() = _date
+    //사용자 정보
+    private val _user = MutableLiveData<User>()
+    val user : LiveData<User> get() = _user
 
     //Calendar(Date, ArrayList<Todolist>) -> 중첩리사이클러뷰
     //CalendarFragment -> CalendarAdapter -> CalendarListAdapter
@@ -39,8 +38,8 @@ class CalendarsViewModel: ViewModel() {
     val friend : LiveData<ArrayList<Friend>> get() = _friend
 
     //Users 경로
-    val userkey = "Users/"
-    private val repository = CalendarsRepository(userkey)
+    private val repository = CalendarsRepository("Users/")
+
 
     //유저의 키 set
     private fun modifyKey(phone: String) {
@@ -53,7 +52,7 @@ class CalendarsViewModel: ViewModel() {
 
     fun observeLiveData(obs: String) {
         when(obs) {
-            "date" -> repository.observeDate(_date)   //날짜 포인터
+            "user" -> repository.observeUser(_user) //유저 정보
             "calendar" -> repository.observeCalendar(_calendar)   //달력 표시
             "todolist" -> repository.observeViewTodolist(_todolist) //일정리스트 표시
             "todo" -> repository.observeTodo(_todo) //일정 포인터
@@ -63,12 +62,18 @@ class CalendarsViewModel: ViewModel() {
 
 
     //get
+    //유저정보
+    val name get() = _user.value?.username ?: ""
+    val phone get() = _user.value?.usernumber ?: ""
+
+
     //년도, 월, 일, 월 약자
-    //date -> _date.value?.toString()
-    val year get() = _date.value?.year ?: 0
-    val month get() = _date.value?.monthValue ?: 0
-    val day get() = _date.value?.dayOfMonth ?: 0
-    val monthStr get() = _date.value?.month.toString().substring(0 .. 2)
+    val date get() = _user.value?.viewDate ?: LocalDate.parse(UNCHECKED_DATE, DateTimeFormatter.ISO_DATE)
+    val year get() = _user.value?.viewDate?.year ?: 0
+    val month get() = _user.value?.viewDate?.monthValue ?: 0
+    val day get() = _user.value?.viewDate?.dayOfMonth ?: 0
+    val monthStr get() = _user.value?.viewDate?.month.toString().substring(0 .. 2)
+
 
     //일정 제목, id, date, memo get
     val todouid get() = _todo.value?.uid ?: ""
@@ -81,6 +86,16 @@ class CalendarsViewModel: ViewModel() {
 
 
     //Set
+    private fun modifyNewUser(newUser: User) {
+        repository.postNewUser(newUser)
+    }
+
+    fun setNewUser(name: String, number: String, password: String) {
+        val now = LocalDate.now()
+        val user = User(name, number, password, now, "")
+        modifyNewUser(user)
+    }
+
     //viewDate -> 사용자가 가르키고 있는 날짜 set -> 날짜포인터
     private fun modifyViewDate(newDate: LocalDate) {
         repository.postViewDate(newDate)

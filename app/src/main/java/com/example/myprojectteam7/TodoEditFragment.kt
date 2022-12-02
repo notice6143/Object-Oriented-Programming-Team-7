@@ -27,7 +27,7 @@ class TodoEditFragment : Fragment() {
         arguments?.let {
             phone = it.getString("Phone") as String
             viewModel.setKey(phone)
-            viewModel.observeLiveData("date")
+            viewModel.observeLiveData("user")
         }
     }
 
@@ -41,15 +41,14 @@ class TodoEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel = CalendarsViewModel(phone)
 
-        viewModel.date.observe(viewLifecycleOwner) {
+        viewModel.user.observe(viewLifecycleOwner) {
             binding?.todoeditDate?.text = "${viewModel.monthStr} ${viewModel.day}, ${viewModel.year}"
             binding?.btnSave2?.setOnClickListener {
                 val title: String = binding?.edtTitle?.getText().toString()
                 val memo: String = binding?.edtMemo?.getText().toString()
                 if(title != "") {
-                    val todo = Todo(phone, title, viewModel.date.value, memo)
+                    val todo = Todo(phone, title, viewModel.date, memo)
                     viewModel.setTodo(todo)
                     val bundle = bundleOf("Phone" to phone)
                     findNavController().navigate(R.id.action_todoeditFragment_to_todolistFragment, bundle)

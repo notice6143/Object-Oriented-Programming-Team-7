@@ -15,14 +15,14 @@ import java.time.LocalDate
 
 //캘린더 날짜 어답터, 중첩리사이클러뷰 -> 날짜어답터안에 리스트어답터 추가
 @RequiresApi(Build.VERSION_CODES.O)
-class TodoListAdapter(val lists: LiveData<ArrayList<Todo>>, val phone: String): RecyclerView.Adapter<TodoListAdapter.ViewHolder>() {
+class TodoListAdapter(val lists: LiveData<ArrayList<Todo>>, val viewModel: CalendarsViewModel): RecyclerView.Adapter<TodoListAdapter.ViewHolder>() {
 
-    class ViewHolder(val binding: ListTodolistBinding, val phone: String) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(val binding: ListTodolistBinding, val viewModel: CalendarsViewModel) : RecyclerView.ViewHolder(binding.root) {
         fun bind(todo: Todo?) {
             todo?.let {
                 binding.todolist.setBackgroundResource(
-                    when (todo?.uid ?: phone) {
-                        phone -> R.drawable.ic_baseline_me_todolist
+                    when (todo?.uid ?: viewModel.phone) {
+                        viewModel.phone -> R.drawable.ic_baseline_me_todolist
                         else -> R.drawable.ic_baseline_friend_todolist
                     }
                 )
@@ -33,11 +33,9 @@ class TodoListAdapter(val lists: LiveData<ArrayList<Todo>>, val phone: String): 
 
                 binding.todolist.setOnClickListener { view ->
                     //선택한 Me or Friend ID 확인
-                    val viewModel = CalendarsViewModel(it.uid.toString())
                     viewModel.setViewDate(it.date as LocalDate)
                     viewModel.setViewTodo(it)
-                    val bundle = bundleOf("Phone" to phone,
-                    "TodoID" to it.uid.toString())
+                    val bundle = bundleOf("Phone" to viewModel.phone, "TodoID" to it.uid.toString())
                     view.findNavController().navigate(R.id.action_todolistFragment_to_tododetailFragment, bundle)
                 }
 
@@ -47,8 +45,7 @@ class TodoListAdapter(val lists: LiveData<ArrayList<Todo>>, val phone: String): 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ListTodolistBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-
-        return ViewHolder(binding, phone)
+        return ViewHolder(binding, viewModel)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

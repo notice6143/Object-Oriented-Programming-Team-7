@@ -25,7 +25,7 @@ class TodoListFragment : Fragment() {
         arguments?.let {
             phone = it.getString("Phone") as String
             viewModel.setKey(phone)
-            viewModel.observeLiveData("date")
+            viewModel.observeLiveData("user")
             viewModel.observeLiveData("todolist")
         }
     }
@@ -40,23 +40,32 @@ class TodoListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel = CalendarsViewModel(phone)
-        viewModel.date.observe(viewLifecycleOwner) {
+
+        //날짜 표시
+        viewModel.user.observe(viewLifecycleOwner) {
             binding?.todolistDate?.text = "${viewModel.monthStr} ${viewModel.day}, ${viewModel.year}"
+            binding?.recTodolist?.adapter?.notifyDataSetChanged()
         }
+
+
+
 
         //Todolist 리사이클러뷰
         viewModel.todolist.observe(viewLifecycleOwner) {
             binding?.recTodolist?.adapter?.notifyDataSetChanged()
         }
 
+        //일정리스트 출력
         binding?.recTodolist?.layoutManager = LinearLayoutManager(context)
-        binding?.recTodolist?.adapter = TodoListAdapter(viewModel.todolist, phone)
+        binding?.recTodolist?.adapter = TodoListAdapter(viewModel.todolist, viewModel)
 
+
+        //일정추가
         binding?.btnEdit?.setOnClickListener {
             val bundle = bundleOf("Phone" to phone)
             findNavController().navigate(R.id.action_todolistFragment_to_todoeditFragment,bundle)
         }
+
 
         binding?.btnClose?.setOnClickListener {
             val bundle = bundleOf("Phone" to phone)

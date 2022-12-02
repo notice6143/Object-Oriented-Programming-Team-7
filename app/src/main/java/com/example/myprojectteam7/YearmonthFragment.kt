@@ -44,15 +44,12 @@ class YearmonthFragment : Fragment() {
         binding?.btnYmres?.setOnClickListener {
             val year = binding?.edtYear?.getText().toString()
             val month = binding?.edtMonth?.getText().toString()
-            Log.d("널확인", year)
+
             if(year != "" && month != "") {
                 val date = LocalDate.of(year.toInt(), month.toInt(), 1)
                 viewModel.setViewDate(date)
                 val bundle = bundleOf("Phone" to phone)
-                findNavController().navigate(
-                    R.id.action_yearmonthFragment_to_calendarFragment,
-                    bundle
-                )
+                findNavController().navigate(R.id.action_yearmonthFragment_to_calendarFragment, bundle)
             }
         }
 

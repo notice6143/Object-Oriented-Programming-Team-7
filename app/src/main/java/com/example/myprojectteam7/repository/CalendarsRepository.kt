@@ -29,19 +29,44 @@ import java.time.format.DateTimeFormatter
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarsRepository(key: String?) {
     val database = Firebase.database
-    //dataRef: 루트, userRef: 유저
-    val dataRef = database.reference
+    //userRef -> /Users
     val userRef = database.getReference(key ?: "bug")
-    //var phone = key?.split("/")?.get(1) ?: ""
     var phone: String = ""
 
-    //Todo 현재날짜
+
+
+    //유저 정보 가져오기
+    fun observeUser(view: MutableLiveData<User>) {
+        userRef.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userSnap = snapshot.child(phone)
+                val user = searchUser(userSnap.value as Map<String, Any?>)
+
+                view.postValue(user)
+            }
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
+
+
+    //새로운 유저 추가
+    fun postNewUser(newUser: User) {
+        val postValues = newUser.toMap()
+
+        val childUpdates = hashMapOf<String, Any>("/$phone" to postValues)
+
+        userRef.updateChildren(childUpdates)
+    }
+
+
     //현재 유저가 가르키고 있는 Date 읽기
     fun observeDate(view: MutableLiveData<LocalDate>) {
         userRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val viewDate = snapshot.child("viewDate")
+                val viewDate = snapshot.child(phone).child("viewDate")
                 val date = LocalDate.parse(viewDate.value.toString(), DateTimeFormatter.ISO_DATE)
+
                 view.postValue(date)
             }
             override fun onCancelled(error: DatabaseError) {
@@ -52,16 +77,16 @@ class CalendarsRepository(key: String?) {
 
     //viewDate 쓰기 -> 유저의 Date 포인터
     fun postViewDate(newDate: LocalDate) {
-        userRef.child("viewDate").setValue(newDate.toString())
+        userRef.child(phone).child("viewDate").setValue(newDate.toString())
     }
 
     //달력 관련
     //Date-Todolist 객체
     //Date하나에-일정여러개 매핑 -> 리사이클러뷰
     fun observeCalendar(view: MutableLiveData<ArrayList<ViewCalendar>>) {
-        dataRef.addValueEventListener(object: ValueEventListener {
+        userRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val viewDate = snapshot.child("Users").child(phone).child("viewDate")   //Users/phone/viewDate
+                val viewDate = snapshot.child(phone).child("viewDate")   //Users/phone/viewDate
                 Log.d("스냅맵",viewDate.toString())
                 val date = LocalDate.parse(viewDate.value.toString(), DateTimeFormatter.ISO_DATE) //LocalDate
 
@@ -79,7 +104,7 @@ class CalendarsRepository(key: String?) {
 
                     //todolist추가
                     //친구는 관계에서 번호를 가져온 후에 반복문 한번 더
-                    val viewTodo = snapshot.child("User-todolists").child(phone).child(temp.toString())
+                    val viewTodo = snapshot.child(phone).child("MyTodoList").child(temp.toString())
                     val todolist = ArrayList<Todo>()
                     //Me
                     for(td in viewTodo.children) {
@@ -88,12 +113,12 @@ class CalendarsRepository(key: String?) {
 
                     //Todo Friend
                     //Friend
-                    val friendSnap = snapshot.child("Users").child(phone).child("MyFriendList")
+                    val friendSnap = snapshot.child(phone).child("MyFriendList")
                     for(fd in friendSnap.children) {
                         Log.d("친구스냅샷", fd.value.toString())
                         val fmap = fd.value as Map<String, Any?>
                         val fid = fmap.get("fid") as String? ?: ""
-                        val friendTodo = snapshot.child("User-todolists").child(fid).child(temp.toString())
+                        val friendTodo = snapshot.child(fid).child("MyTodoList").child(temp.toString())
                         for(td in friendTodo.children) {
                             todolist.add(createTodo(td.value as Map<String, Any?>))
                         }
@@ -118,12 +143,12 @@ class CalendarsRepository(key: String?) {
     //일정목록경로 -> User-todolists/사용자아이디/yyyy-mm/key
     //Todo yym? yymd? 둘 중 하나 선택
     fun observeViewTodolist(view: MutableLiveData<ArrayList<Todo>>) {
-        dataRef.addValueEventListener(object: ValueEventListener {
+        userRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val viewDate = snapshot.child("Users").child(phone).child("viewDate")   //Users/phone/viewDate
+                val viewDate = snapshot.child(phone).child("viewDate")   //Users/phone/viewDate
                 val date = LocalDate.parse(viewDate.value.toString(), DateTimeFormatter.ISO_DATE) //LocalDate
 
-                val viewTodo = snapshot.child("User-todolists").child(phone).child(date.toString())
+                val viewTodo = snapshot.child(phone).child("MyTodoList").child(date.toString())
                 //일정리스트
                 val todolist = ArrayList<Todo>()
 
@@ -134,12 +159,12 @@ class CalendarsRepository(key: String?) {
 
                 //Todo Friend
                 //Friend
-                val friendSnap = snapshot.child("Users").child(phone).child("MyFriendList")
+                val friendSnap = snapshot.child(phone).child("MyFriendList")
                 for(fd in friendSnap.children) {
                     Log.d("친구스냅샷", fd.value.toString())
                     val fmap = fd.value as Map<String, Any?>
                     val fid = fmap.get("fid") as String? ?: ""
-                    val friendTodo = snapshot.child("User-todolists").child(fid).child(date.toString())
+                    val friendTodo = snapshot.child(fid).child("MyTodoList").child(date.toString())
                     for(td in friendTodo.children) {
                         todolist.add(createTodo(td.value as Map<String, Any?>))
                     }
@@ -185,25 +210,24 @@ class CalendarsRepository(key: String?) {
 
         //경로 설정
         val childUpdates = hashMapOf<String, Any>(
-            "/Users/$phone/MyTodoList/$yymd/$key" to postValues,
-            "/User-todolists/$phone/$yymd/$key" to postValues
+            "/$phone/MyTodoList/$yymd/$key" to postValues
         )
-        dataRef.updateChildren(childUpdates)
+        userRef.updateChildren(childUpdates)
     }
 
     //일정 한 개 읽기
     fun observeTodo(view: MutableLiveData<Todo>) {
-        dataRef.addValueEventListener(object: ValueEventListener {
+        userRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val viewDate = snapshot.child("Users").child(phone).child("viewDate")   //Users/phone/viewDate
+                val viewDate = snapshot.child(phone).child("viewDate")   //Users/phone/viewDate
                 val date = LocalDate.parse(viewDate.value.toString(), DateTimeFormatter.ISO_DATE) //LocalDate
 
                 //일정 포인터
-                val viewTodo = snapshot.child("Users").child(phone).child("viewTodo")
+                val viewTodo = snapshot.child(phone).child("viewTodo")
                 val key = viewTodo.value.toString()
 
                 //일정경로
-                val todoSnap = snapshot.child("User-todolists").child(phone).child(date.toString()).child(key)
+                val todoSnap = snapshot.child(phone).child("MyTodoList").child(date.toString()).child(key)
                 Log.d("일정한개",todoSnap.value.toString())
                 if(todoSnap.value != null) {
                     view.postValue(createTodo(todoSnap.value as Map<String, Any?>))
@@ -216,7 +240,7 @@ class CalendarsRepository(key: String?) {
 
     //현재 유저가 선택한 일정 포인터 -> 일정 키 값
     fun postViewTodo(newTodo: Todo) {
-        userRef.child("viewTodo").setValue(newTodo.key.toString())
+        userRef.child(phone).child("viewTodo").setValue(newTodo.key.toString())
     }
 
     //Todo 친구관련
@@ -225,7 +249,7 @@ class CalendarsRepository(key: String?) {
     fun observeFriendlist(view: MutableLiveData<ArrayList<Friend>>) {
         userRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val friendSnap = snapshot.child("MyFriendList")
+                val friendSnap = snapshot.child("phone").child("MyFriendList")
 
                 val friendlist = ArrayList<Friend>()
 
@@ -259,11 +283,11 @@ class CalendarsRepository(key: String?) {
 
         //경로 설정
         val childUpdates = hashMapOf<String, Any>(
-            "/Users/$phone/MyFriendList/$friendID" to postUid,
-            "/Users/$friendID/MyFriendList/$phone" to postFid
+            "/$phone/MyFriendList/$friendID" to postUid,
+            "/$friendID/MyFriendList/$phone" to postFid
         )
 
-        dataRef.updateChildren(childUpdates)
+        userRef.updateChildren(childUpdates)
     }
 
     fun createTodo(map: Map<String,Any?>): Todo {
@@ -275,6 +299,17 @@ class CalendarsRepository(key: String?) {
         val todokey = map.get("key") as String? ?: ""
         val todo = Todo(todouid, todotitle, tododate, todomemo, todokey)
         return todo
+    }
+
+    fun searchUser(map: Map<String,Any?>): User {
+        val name = map.get("username") as String? ?: ""
+        val phone = map.get("usernumber") as String? ?: ""
+        val pw = map.get("userpassword") as String? ?: ""
+        val dateStr = map.get("viewDate") as String? ?: ""
+        val date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE)
+        val todo = map.get("viewTodo") as String? ?: ""
+        val user = User(name,phone,pw,date,todo)
+        return user
     }
 
 }
