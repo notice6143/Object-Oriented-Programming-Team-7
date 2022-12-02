@@ -2,15 +2,14 @@ package com.example.myprojectteam7
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myprojectteam7.databinding.FragmentTodolistBinding
 import com.example.myprojectteam7.viewmodel.CalendarsViewModel
@@ -19,11 +18,15 @@ import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 class TodoListFragment : Fragment() {
     var binding: FragmentTodolistBinding? = null
     var phone: String = ""
+    val viewModel: CalendarsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             phone = it.getString("Phone") as String
+            viewModel.setKey(phone)
+            viewModel.observeLiveData("date")
+            viewModel.observeLiveData("todolist")
         }
     }
 
@@ -37,7 +40,7 @@ class TodoListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel = CalendarsViewModel(phone)
+        val viewModel = CalendarsViewModel()
         viewModel.date.observe(viewLifecycleOwner) {
             binding?.todolistDate?.text = "${viewModel.monthStr} ${viewModel.day}, ${viewModel.year}"
         }

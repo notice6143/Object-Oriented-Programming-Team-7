@@ -19,7 +19,7 @@ class CalendarAdapter(val cals: LiveData<ArrayList<ViewCalendar>>, val phone: St
     class ViewHolder(val binding: ListDayBinding, val nowMonth: Int, val phone: String) : RecyclerView.ViewHolder(binding.root) {
         fun bind(cal: ViewCalendar?) {
             cal?.let {
-                val viewModel = CalendarsViewModel(phone)
+                val viewModel = CalendarsViewModel()
 
                 //월이 일치하면 실행
                 if(nowMonth==it.date1.monthValue) {
@@ -30,6 +30,8 @@ class CalendarAdapter(val cals: LiveData<ArrayList<ViewCalendar>>, val phone: St
                             else -> R.drawable.ic_baseline_date_disabled
                         }
                     )
+
+                    //일정 클릭
                     binding.date.setOnClickListener { view ->
                         viewModel.setViewDate(it.date1)
                         val bundle = bundleOf("Phone" to phone)

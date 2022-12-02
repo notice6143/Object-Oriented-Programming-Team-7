@@ -38,7 +38,7 @@ class SettingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel = CalendarsViewModel(phone)
+        val viewModel = CalendarsViewModel()
         binding?.txtNumber?.text = phone
 
         binding?.btnEnter?.setOnClickListener {

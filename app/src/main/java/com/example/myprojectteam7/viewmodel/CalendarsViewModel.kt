@@ -13,7 +13,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @RequiresApi(Build.VERSION_CODES.O)
-data class CalendarsViewModel(val phone:String): ViewModel() {
+class CalendarsViewModel: ViewModel() {
 
 
     //현재 사용자가 선택한 Date -> 년월일 변화에 실시간으로 대응
@@ -38,17 +38,29 @@ data class CalendarsViewModel(val phone:String): ViewModel() {
     private val _friend = MutableLiveData<ArrayList<Friend>>()
     val friend : LiveData<ArrayList<Friend>> get() = _friend
 
-    //User의 key
-    val userkey = "Users/$phone"
+    //Users 경로
+    val userkey = "Users/"
     private val repository = CalendarsRepository(userkey)
 
-    init {
-        repository.observeDate(_date)   //날짜 포인터
-        repository.observeCalendar(_calendar)   //달력 표시
-        repository.observeViewTodolist(_todolist) //일정리스트 표시
-        repository.observeTodo(_todo) //일정 포인터
-        repository.observeFriendlist(_friend) //친구목록 표시
+    //유저의 키 set
+    private fun modifyKey(phone: String) {
+        repository.phone = phone
     }
+
+    fun setKey(phone: String) {
+        modifyKey(phone)
+    }
+
+    fun observeLiveData(obs: String) {
+        when(obs) {
+            "date" -> repository.observeDate(_date)   //날짜 포인터
+            "calendar" -> repository.observeCalendar(_calendar)   //달력 표시
+            "todolist" -> repository.observeViewTodolist(_todolist) //일정리스트 표시
+            "todo" -> repository.observeTodo(_todo) //일정 포인터
+            "friend" -> repository.observeFriendlist(_friend) //친구목록 표시
+        }
+    }
+
 
     //get
     //년도, 월, 일, 월 약자
@@ -64,7 +76,7 @@ data class CalendarsViewModel(val phone:String): ViewModel() {
     val tododate get() = _todo.value?.date ?: LocalDate.parse(UNCHECKED_DATE, DateTimeFormatter.ISO_DATE)
     val todomemo get() = _todo.value?.memo ?: ""
     val todokey get() = _todo.value?.key ?: ""
-    val todolacation get() = _todo.value?.location ?:""
+    val todolocation get() = _todo.value?.location ?:""
 
 
 

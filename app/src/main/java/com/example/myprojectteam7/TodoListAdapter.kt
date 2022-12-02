@@ -33,7 +33,7 @@ class TodoListAdapter(val lists: LiveData<ArrayList<Todo>>, val phone: String): 
 
                 binding.todolist.setOnClickListener { view ->
                     //선택한 Me or Friend ID 확인
-                    val viewModel = CalendarsViewModel(it.uid.toString())
+                    val viewModel = CalendarsViewModel()
                     viewModel.setViewDate(it.date as LocalDate)
                     viewModel.setViewTodo(it)
                     val bundle = bundleOf("Phone" to phone,
