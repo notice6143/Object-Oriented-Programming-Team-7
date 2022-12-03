@@ -33,7 +33,6 @@ class TodoListAdapter(val lists: LiveData<ArrayList<Todo>>, val viewModel: Calen
 
                 binding.todolist.setOnClickListener { view ->
                     //선택한 Me or Friend ID 확인
-                    viewModel.setViewDate(it.date as LocalDate)
                     viewModel.setViewTodo(it)
                     val bundle = bundleOf("Phone" to viewModel.phone, "TodoID" to it.uid.toString())
                     view.findNavController().navigate(R.id.action_todolistFragment_to_tododetailFragment, bundle)

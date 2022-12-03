@@ -42,32 +42,21 @@ class TodoDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //유저가 선택한 일정을 표시
 
+        //유저가 선택한 일정을 표시
         viewModel.todo.observe(viewLifecycleOwner) {
             binding?.txtTitle?.text = viewModel.todotitle
             binding?.txtDate?.text = viewModel.tododate.toString()
             binding?.txtUid?.text = viewModel.todouid
             binding?.edtMemo?.hint = viewModel.todomemo
-            binding?.txtLocation?.text = viewModel.todolocation
 
             binding?.btnEdit?.setOnClickListener {
                 val memo: String = binding?.edtMemo?.getText().toString()
-                if(memo != "") {
-                    val todo = Todo(viewModel.todouid, viewModel.todotitle, viewModel.tododate, memo, viewModel.todolocation,viewModel.todokey)
-                    viewModel.setTodo(todo)
-                    val bundle = bundleOf("Phone" to phone)
-                    findNavController().navigate(R.id.action_tododetailFragment_to_todolistFragment, bundle)
-                    Toast.makeText(binding?.root?.context,"일정이 수정되었습니다.", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            //location 입력 여부에 따라 창 띄워주기
-            binding?.txtLocation?.setOnClickListener {
-                if(viewModel.todolocation != ""){
-                    val bundle = bundleOf("Phone" to phone)
-                    findNavController().navigate(R.id.action_tododetailFragment_to_mapFragment2,bundle)        //이거 타고 지도 띄워주기
-                }
+                val todo = Todo(viewModel.todouid,viewModel.todoname ,viewModel.todotitle, viewModel.tododate, memo, viewModel.todokey)
+                viewModel.setTodo(todo)
+                val bundle = bundleOf("Phone" to phone)
+                findNavController().navigate(R.id.action_tododetailFragment_to_todolistFragment, bundle)
+                Toast.makeText(binding?.root?.context,"일정이 수정되었습니다.", Toast.LENGTH_SHORT).show()
             }
         }
 
