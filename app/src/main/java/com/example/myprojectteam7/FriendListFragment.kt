@@ -11,24 +11,28 @@ import androidx.core.os.bundleOf
 import androidx.core.view.marginRight
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myprojectteam7.databinding.FragmentFrdlistBinding
 import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 //import kotlinx.android.synthetic.main.list_friend.*
 
+@RequiresApi(Build.VERSION_CODES.O)
 class FriendListFragment : Fragment(){
 
-    val viewModel: CalendarsViewModel by activityViewModels()
+    val viewModel: CalendarsViewModel by viewModels()
     var binding: FragmentFrdlistBinding? = null
     var phone: String = ""
-    //val lists = LiveData<ArrayList<Friend>>()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             phone = it.getString("Phone") as String
+            viewModel.setKey(phone)
+            viewModel.observeLiveData("user")
+            viewModel.observeLiveData("friend")
         }
         /*binding?.recFrdlist?.layoutManager = LinearLayoutManager(requireContext())
         binding?.recFrdlist?.adapter = FriendItemAdapter(viewModel.friend,phone, onClickDelete = {
@@ -40,10 +44,6 @@ class FriendListFragment : Fragment(){
 
     fun deleteTask(friend: Friend){
         friend.fid = ""
-        /*
-        viewModel.friend.remove(friend)
-        binding?.recFrdlist?.adapter?.notifyDataSetChanged()
-         */
     }
 
     override fun onCreateView(
@@ -56,7 +56,6 @@ class FriendListFragment : Fragment(){
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -64,7 +63,7 @@ class FriendListFragment : Fragment(){
             binding?.recFrdlist?.adapter?.notifyDataSetChanged()
         }
         binding?.recFrdlist?.layoutManager = LinearLayoutManager(context)
-        binding?.recFrdlist?.adapter = FriendItemAdapter(viewModel.friend, phone)
+        binding?.recFrdlist?.adapter = FriendItemAdapter(viewModel.friend, viewModel)
 
         binding?.btnBacktocal?.setOnClickListener{
             val bundle = bundleOf("Phone" to phone)

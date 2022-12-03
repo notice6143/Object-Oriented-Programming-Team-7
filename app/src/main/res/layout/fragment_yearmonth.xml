@@ -5,9 +5,8 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@drawable/yearmonth_background"
     android:clickable="true"
-    tools:background="@drawable/yearmonth_background"
     tools:context=".YearmonthFragment"
     android:focusable="true">
 

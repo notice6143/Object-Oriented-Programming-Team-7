@@ -22,9 +22,9 @@
         android:layout_marginTop="99dp"
         android:layout_marginEnd="350dp"
         android:layout_marginBottom="15dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/rec_frdlist"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="invisible" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

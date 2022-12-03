@@ -9,6 +9,7 @@ import com.example.myprojectteam7.*
 import com.example.myprojectteam7.Todo
 import com.example.myprojectteam7.ViewCalendar
 import com.example.myprojectteam7.repository.CalendarsRepository
+import com.google.firebase.database.FirebaseDatabase
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -60,6 +61,19 @@ class CalendarsViewModel: ViewModel() {
         }
     }
 
+    /*fun deleteFriend(position : Int){
+        val Data = FirebaseDatabase.getInstance()
+        val rmvFrd = _friend.value?.get(position)
+        val dataRmv = Data.getReference(rmvFrd.toString())
+
+        dataRmv.removeValue()
+    }
+
+     */
+
+    fun deleteFriend(){
+        repository.userRef.child(phone).child("MyFriendList").removeValue()
+    }
 
     //get
     //유저정보
@@ -81,8 +95,7 @@ class CalendarsViewModel: ViewModel() {
     val tododate get() = _todo.value?.date ?: LocalDate.parse(UNCHECKED_DATE, DateTimeFormatter.ISO_DATE)
     val todomemo get() = _todo.value?.memo ?: ""
     val todokey get() = _todo.value?.key ?: ""
-    val todolocation get() = _todo.value?.location ?:""
-
+    val todolocation get() = _todo.value?.key ?:""
 
 
 
