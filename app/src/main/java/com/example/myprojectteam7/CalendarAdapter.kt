@@ -23,23 +23,29 @@ class CalendarAdapter(val cals: LiveData<ArrayList<ViewCalendar>>, val viewModel
         fun bind(cal: ViewCalendar?) {
             cal?.let {
 
+                binding.txtDay1.text = it.date1.dayOfMonth.toString()
+                binding.txtDay1.setTextColor(
+                    when(cal.date1.monthValue) {
+                        viewModel.month -> R.color.black
+                        else -> R.color.white
+                    }
+                )
+
+                binding.date.setBackgroundResource(
+                    when (cal.date1.monthValue) {
+                        viewModel.month -> R.drawable.ic_baseline_date
+                        else -> R.drawable.ic_baseline_date_weekend
+                    }
+                )
+
                 //월이 일치하면 실행
                 if(viewModel.month==it.date1.monthValue) {
-                    binding.txtDay1.text = it.date1.dayOfMonth.toString()
-                    binding.date.setBackgroundResource(
-                        when (cal.date1.monthValue) {
-                            viewModel.month -> R.drawable.ic_baseline_date
-                            else -> R.drawable.ic_baseline_date_disabled
-                        }
-                    )
-
                     //일정 클릭
                     binding.date.setOnClickListener { view ->
                         viewModel.setViewDate(it.date1)
                         val bundle = bundleOf("Phone" to viewModel.phone)
                         view.findNavController().navigate(R.id.action_calendarFragment_to_todolistFragment, bundle)
                     }
-
                     binding.txtDay1.setOnClickListener { view ->
                         //선택한 날짜로 포인터
                         viewModel.setViewDate(it.date1)

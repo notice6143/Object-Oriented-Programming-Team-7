@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/frdlist_background">
+    android:background="@drawable/frdlist_bg">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rec_frdlist"
@@ -14,17 +14,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/btn_backtocal"
-        android:layout_width="54dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="99dp"
-        android:layout_marginEnd="350dp"
-        android:layout_marginBottom="15dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/rec_frdlist"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

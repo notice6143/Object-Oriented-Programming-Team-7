@@ -47,8 +47,6 @@ class TodoListFragment : Fragment() {
             binding?.recTodolist?.adapter?.notifyDataSetChanged()
         }
 
-
-
         //Todolist 리사이클러뷰
         viewModel.todolist.observe(viewLifecycleOwner) {
             binding?.recTodolist?.adapter?.notifyDataSetChanged()

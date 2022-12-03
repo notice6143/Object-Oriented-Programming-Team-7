@@ -25,10 +25,10 @@ class FriendItemAdapter(
                     viewModel.phone -> R.drawable.ic_baseline_none_rect
                     else -> R.drawable.frdlist_item
                 })
-
+                //val fid = it.fid
                 binding.txtFrdname.text = it.fid
                 binding.btnFrddelete.setOnClickListener {
-                    viewModel.deleteFriend()
+                    friend.fid?.let { it1 -> viewModel.deleteFriend(it1) }
                 }
             }
         }
@@ -41,12 +41,6 @@ class FriendItemAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         lists.value?.getOrNull(position)?.let { holder.bind(it) }
-
-        /*holder.binding.btnFrddelete.setOnClickListener{
-            viewModel.deleteFriend(position)
-        }
-
-         */
 
     }
 

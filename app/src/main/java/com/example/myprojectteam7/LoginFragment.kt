@@ -43,10 +43,28 @@ class LoginFragment : Fragment() {
 
         binding?.btnLogin?.setOnClickListener {
             val now : LocalDate = LocalDate.now()
-
             val phone = binding?.edtPhone?.getText().toString()
             val password= binding?.edtPw?.getText().toString()
-            database.child("Users").get().addOnSuccessListener {
+
+
+            //로그인 검사
+            viewModel.setKey(phone)
+            viewModel.observeLiveData("user")
+
+            viewModel.user.observe(viewLifecycleOwner) {
+                //로그인
+                if(viewModel.phone == phone && viewModel.password == password) {
+                    viewModel.setViewDate(now)
+
+                    val bundle = bundleOf("Phone" to phone)
+                    findNavController().navigate(R.id.action_loginFragment_to_calendarFragment, bundle)
+                    Toast.makeText(binding?.root?.context,"$phone 님 환영합니다.", Toast.LENGTH_SHORT).show()
+                }
+                else
+                    binding?.txtError?.setText("Incorrect username or password.")
+            }
+        }
+            /*database.child("Users").get().addOnSuccessListener {
                 val userphone = it.child(phone).child("usernumber").value.toString()
                 val userpassword = it.child(phone).child("userpassword").value.toString()
 
@@ -63,8 +81,8 @@ class LoginFragment : Fragment() {
 
                 else
                     binding?.txtError?.setText("Incorrect username or password.")
-            }
-        }
+            }*/
+
         binding?.btnSignup?.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
         }

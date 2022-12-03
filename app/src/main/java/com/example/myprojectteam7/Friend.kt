@@ -6,7 +6,8 @@ import com.google.firebase.database.Exclude
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-//친구 -> fid: 친구아이디, uid:유저아이디, key:파이어베이스key
+
+//친구 -> fid: 친구아이디, uid:유저아이디
 @RequiresApi(Build.VERSION_CODES.O)
 data class Friend(
     var uid: String? = "",
@@ -18,5 +19,18 @@ data class Friend(
             "uid" to uid,
             "fid" to fid
         )
+    }
+
+    fun toFriend(value: Any?) :Friend {
+        if(value == null)
+            return Friend()
+
+        val map = value as Map<String, Any?>
+        val friend = Friend()
+        friend.let {
+            it.uid = map.get("uid") as String? ?: ""
+            it.fid = map.get("fid") as String? ?: ""
+        }
+        return friend
     }
 }

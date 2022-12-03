@@ -14,7 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myprojectteam7.databinding.FragmentFrdlistBinding
+import com.example.myprojectteam7.databinding.FragmentFriendlistBinding
 import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 //import kotlinx.android.synthetic.main.list_friend.*
 
@@ -22,7 +22,7 @@ import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 class FriendListFragment : Fragment(){
 
     val viewModel: CalendarsViewModel by viewModels()
-    var binding: FragmentFrdlistBinding? = null
+    var binding: FragmentFriendlistBinding? = null
     var phone: String = ""
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -34,16 +34,7 @@ class FriendListFragment : Fragment(){
             viewModel.observeLiveData("user")
             viewModel.observeLiveData("friend")
         }
-        /*binding?.recFrdlist?.layoutManager = LinearLayoutManager(requireContext())
-        binding?.recFrdlist?.adapter = FriendItemAdapter(viewModel.friend,phone, onClickDelete = {
-            deleteTask(viewModel.friend.value.get(super))
-        })
 
-         */
-    }
-
-    fun deleteTask(friend: Friend){
-        friend.fid = ""
     }
 
     override fun onCreateView(
@@ -51,7 +42,7 @@ class FriendListFragment : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentFrdlistBinding.inflate(inflater)
+        binding = FragmentFriendlistBinding.inflate(inflater)
         return binding?.root
     }
 
@@ -64,11 +55,6 @@ class FriendListFragment : Fragment(){
         }
         binding?.recFrdlist?.layoutManager = LinearLayoutManager(context)
         binding?.recFrdlist?.adapter = FriendItemAdapter(viewModel.friend, viewModel)
-
-        binding?.btnBacktocal?.setOnClickListener{
-            val bundle = bundleOf("Phone" to phone)
-            findNavController().navigate(R.id.action_friendListFragment_to_calendarFragment,bundle)
-        }
 
     }
 
