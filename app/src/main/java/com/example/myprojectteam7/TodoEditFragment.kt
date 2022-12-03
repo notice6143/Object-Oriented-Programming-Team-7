@@ -1,6 +1,5 @@
 package com.example.myprojectteam7
 
-import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myprojectteam7.databinding.FragmentTodoeditBinding
 import com.example.myprojectteam7.viewmodel.CalendarsViewModel
@@ -20,11 +20,14 @@ import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 class TodoEditFragment : Fragment() {
     var binding: FragmentTodoeditBinding? = null
     var phone: String = ""
+    val viewModel: CalendarsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             phone = it.getString("Phone") as String
+            viewModel.setKey(phone)
+            viewModel.observeLiveData("user")
         }
     }
 
@@ -36,19 +39,17 @@ class TodoEditFragment : Fragment() {
         return binding?.root
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel = CalendarsViewModel()
 
-        viewModel.date.observe(viewLifecycleOwner) {
+        viewModel.user.observe(viewLifecycleOwner) {
             binding?.todoeditDate?.text = "${viewModel.monthStr} ${viewModel.day}, ${viewModel.year}"
             binding?.btnSave2?.setOnClickListener {
                 val title: String = binding?.edtTitle?.getText().toString()
                 val memo: String = binding?.edtMemo?.getText().toString()
-                val location: String = binding?.edtLocation?.getText().toString()       //위치 입력받고 지도? 아무튼 구현하기
+                val location: String = binding?.edtLocation.toString()
                 if(title != "") {
-                    val todo = Todo(phone, title, viewModel.date.value, memo, location)       //key는 왜 없나요
+                    val todo = Todo(phone, title, viewModel.date, memo, location)
                     viewModel.setTodo(todo)
                     val bundle = bundleOf("Phone" to phone)
                     findNavController().navigate(R.id.action_todoeditFragment_to_todolistFragment, bundle)
