@@ -30,7 +30,7 @@ class MapFragment :Fragment(),OnMapReadyCallback{
     }
 
     override fun onMapReady(map: GoogleMap) {
-        val point = LatLng(37.514655, 126.979974)
+        val point = LatLng(37.514655, 126.979974)       //의미 없는 위치  -> 내가 point 지정 가능? 혹은 검색 가능?
         map.moveCamera(CameraUpdateFactory.newLatLng(point))
         map.moveCamera(CameraUpdateFactory.zoomTo(15f))
 
