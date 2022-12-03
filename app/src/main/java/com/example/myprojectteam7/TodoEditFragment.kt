@@ -39,7 +39,7 @@ class TodoEditFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel = CalendarsViewModel(phone)
+        val viewModel = CalendarsViewModel()
 
         viewModel.date.observe(viewLifecycleOwner) {
             binding?.todoeditDate?.text = "${viewModel.monthStr} ${viewModel.day}, ${viewModel.year}"
@@ -48,7 +48,7 @@ class TodoEditFragment : Fragment() {
                 val memo: String = binding?.edtMemo?.getText().toString()
                 val location: String = binding?.edtLocation?.getText().toString()       //위치 입력받고 지도? 아무튼 구현하기
                 if(title != "") {
-                    val todo = Todo(phone, title, viewModel.date.value, memo, "",location)       //key는 왜 없나요
+                    val todo = Todo(phone, title, viewModel.date.value, memo, location)       //key는 왜 없나요
                     viewModel.setTodo(todo)
                     val bundle = bundleOf("Phone" to phone)
                     findNavController().navigate(R.id.action_todoeditFragment_to_todolistFragment, bundle)
