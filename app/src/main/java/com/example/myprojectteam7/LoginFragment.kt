@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myprojectteam7.databinding.FragmentLoginBinding
 import com.example.myprojectteam7.viewmodel.CalendarsViewModel
@@ -21,6 +22,7 @@ import java.time.LocalDate
 class LoginFragment : Fragment() {
     var binding: FragmentLoginBinding? = null
     lateinit var database: DatabaseReference
+    val viewModel: CalendarsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +52,7 @@ class LoginFragment : Fragment() {
 
                 //로그인
                 if(userphone == phone && userpassword == password) {
-                    val viewModel = CalendarsViewModel(userphone)
+                    viewModel.setKey(phone)
                     viewModel.setViewDate(now)
                     val bundle = bundleOf("Phone" to userphone)
                     findNavController().navigate(R.id.action_loginFragment_to_calendarFragment, bundle)

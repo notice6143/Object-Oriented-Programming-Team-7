@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_tododetailFragment_to_todolistFragment"
             app:destination="@id/todolistFragment" />
+        <action
+            android:id="@+id/action_tododetailFragment_to_mapFragment2"
+            app:destination="@id/mapFragment2" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -73,6 +76,9 @@
         <action
             android:id="@+id/action_calendarFragment_to_yearmonthFragment"
             app:destination="@id/yearmonthFragment" />
+        <action
+            android:id="@+id/action_calendarFragment_to_friendListFragment"
+            app:destination="@id/friendListFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -94,5 +100,23 @@
         <action
             android:id="@+id/action_signupFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment2"
+        android:name="com.example.myprojectteam7.MapFragment"
+        android:label="MapFragment"
+        tools:layout="@layout/fragment_map">
+        <action
+            android:id="@+id/action_mapFragment2_to_tododetailFragment"
+            app:destination="@id/tododetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/friendListFragment"
+        android:name="com.example.myprojectteam7.FriendListFragment"
+        android:label="FriendListFragment"
+        tools:layout="@layout/fragment_frdlist">
+        <action
+            android:id="@+id/action_friendListFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
     </fragment>
 </navigation>

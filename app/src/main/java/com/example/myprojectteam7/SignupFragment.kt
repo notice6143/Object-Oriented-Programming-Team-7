@@ -10,22 +10,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myprojectteam7.databinding.FragmentSignupBinding
 import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 class SignupFragment : Fragment() {
     var binding: FragmentSignupBinding? = null
     lateinit var database: DatabaseReference
-    data class User(val username: String? = null, val usernumber: String? = null, val userpassword: String? = null)
-    fun writeNewUser(name: String, number: String, password: String) {
-        val user = User(name, number, password)
-        database.child("Users").child(number).setValue(user)
-    }
+    val viewModel: CalendarsViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +62,8 @@ class SignupFragment : Fragment() {
                 else if(password == "")
                     binding?.txtError?.setText("Please enter password")
                 else if(key == null) {
-                    writeNewUser(name, number, password)
+                    viewModel.setKey(number)
+                    viewModel.setNewUser(name, number, password)
                     findNavController().navigate(R.id.action_signupFragment_to_loginFragment)
                     Toast.makeText(binding?.root?.context,"회원가입 성공", Toast.LENGTH_SHORT).show()
                 }

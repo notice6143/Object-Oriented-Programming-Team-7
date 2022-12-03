@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import com.example.myprojectteam7.databinding.FragmentSettingBinding
@@ -20,11 +21,14 @@ import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 class SettingFragment : Fragment() {
     var binding: FragmentSettingBinding? = null
     var phone: String = ""
+    val viewModel: CalendarsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             phone = it.getString("Phone") as String
+            viewModel.setKey(phone)
+
         }
     }
 
@@ -38,7 +42,7 @@ class SettingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel = CalendarsViewModel(phone)
+
         binding?.txtNumber?.text = phone
 
         binding?.btnEnter?.setOnClickListener {
