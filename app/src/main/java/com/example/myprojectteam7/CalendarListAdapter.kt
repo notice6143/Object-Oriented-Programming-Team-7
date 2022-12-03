@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myprojectteam7.databinding.ListRectBinding
 
 //캘린더 날짜 어답터, 중첩리사이클러뷰 -> 날짜어답터안에 리스트어답터 추가
+//달력에 일정 표시
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarListAdapter(val lists: ArrayList<Todo>, val phone: String): RecyclerView.Adapter<CalendarListAdapter.ViewHolder>() {
 

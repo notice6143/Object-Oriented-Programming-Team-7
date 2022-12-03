@@ -14,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myprojectteam7.databinding.FragmentCalendarBinding
 import com.example.myprojectteam7.viewmodel.CalendarsViewModel
-import java.time.LocalDate
 
 //메인 캘린더
 @RequiresApi(Build.VERSION_CODES.O)
@@ -28,7 +27,10 @@ class CalendarFragment : Fragment() {
         arguments?.let {
             phone = it.getString("Phone") as String
             viewModel.setKey(phone)
+<<<<<<< HEAD
             viewModel.observeLiveData("date")
+=======
+>>>>>>> origin/master
             viewModel.observeLiveData("calendar")
             viewModel.observeLiveData("friend")
             viewModel.observeLiveData("user")
@@ -53,11 +55,15 @@ class CalendarFragment : Fragment() {
             binding?.recWeek?.adapter?.notifyDataSetChanged()
         }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
         //캘린더 리사이클러뷰
         viewModel.calendar.observe(viewLifecycleOwner) {
             binding?.recWeek?.adapter?.notifyDataSetChanged()
         }
+<<<<<<< HEAD
 
         //캘린더 출력
         binding?.recWeek?.layoutManager = GridLayoutManager(context,7)
@@ -97,11 +103,22 @@ class CalendarFragment : Fragment() {
 
         //친구목록 리사이클러뷰
         /*viewModel.friend.observe(viewLifecycleOwner) {
+=======
+
+        //캘린더 출력
+        binding?.recWeek?.layoutManager = GridLayoutManager(context,7)
+        binding?.recWeek?.adapter = CalendarAdapter(viewModel.calendar, viewModel)
+
+
+        //친구목록 리사이클러뷰
+        viewModel.friend.observe(viewLifecycleOwner) {
+>>>>>>> origin/master
             binding?.recFriend?.adapter?.notifyDataSetChanged()
         }
 
         //친구목록 출력
         binding?.recFriend?.layoutManager = GridLayoutManager(context,3)
+<<<<<<< HEAD
         binding?.recFriend?.adapter = FriendListAdapter(viewModel.friend, phone)
          */
 
@@ -109,6 +126,9 @@ class CalendarFragment : Fragment() {
             val bundle = bundleOf("Phone" to phone)
             findNavController().navigate(R.id.action_calendarFragment_to_friendListFragment, bundle)
         }
+=======
+        binding?.recFriend?.adapter = FriendListAdapter(viewModel.friend)
+>>>>>>> origin/master
 
 
         //년월 선택

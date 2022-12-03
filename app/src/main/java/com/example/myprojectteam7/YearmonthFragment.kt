@@ -45,6 +45,7 @@ class YearmonthFragment : Fragment() {
             val year = binding?.edtYear?.getText().toString()
             val month = binding?.edtMonth?.getText().toString()
 
+            //년도와 월 입력 후 변경
             if(year != "" && month != "") {
                 val date = LocalDate.of(year.toInt(), month.toInt(), 1)
                 viewModel.setViewDate(date)

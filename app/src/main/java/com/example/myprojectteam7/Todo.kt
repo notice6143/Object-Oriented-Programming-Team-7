@@ -11,21 +11,43 @@ import java.time.format.DateTimeFormatter
 @RequiresApi(Build.VERSION_CODES.O)
 data class Todo(
     var uid: String? = "",
+    var author: String? = "",
     var title: String? = "",
     var date: LocalDate? = LocalDate.parse(UNCHECKED_DATE, DateTimeFormatter.ISO_DATE),
     var memo: String? = "",
     var location: String? = "",
     var key: String? = ""
 ) {
+    //Todo -> Map
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
             "uid" to uid,
+            "author" to author,
             "title" to title,
             "date" to date.toString(),
             "memo" to memo,
             "location" to location,
             "key" to key
         )
+    }
+
+    //Map -> Todo
+    fun toTodo(value: Any?) :Todo {
+        if(value == null)
+            return Todo()
+
+        val map = value as Map<String, Any?>
+        val todo = Todo()
+        todo.let {
+            it.uid = map.get("uid") as String? ?: ""
+            it.title = map.get("title") as String? ?: ""
+            it.author = map.get("author") as String? ?: ""
+            it.date = LocalDate.parse(map.get("date") as String? ?: "", DateTimeFormatter.ISO_DATE)
+            it.memo = map.get("memo") as String? ?: ""
+            it.location = map.get("location") as String? ?: ""
+            it.key = map.get("key") as String? ?: ""
+        }
+        return todo
     }
 }

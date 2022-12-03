@@ -15,6 +15,7 @@ import com.google.firebase.ktx.Firebase
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+<<<<<<< HEAD
 /* Todo 수정 할 부분
 * ViewCalendar -> Date, ArrayList<Todo>
   HashMap<LocalDate, ArrayList<Todo>> -> 해쉬맵으로 해당되는 Date를 불러와서 ArrayList<Todo> 사용
@@ -25,10 +26,13 @@ import java.time.format.DateTimeFormatter
 * User-todolists는 불필요
  */
 
+=======
+>>>>>>> origin/master
 
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarsRepository(key: String?) {
     val database = Firebase.database
+<<<<<<< HEAD
     //userRef -> /Users
     val userRef = database.getReference(key ?: "bug")
     var phone: String = ""
@@ -68,10 +72,44 @@ class CalendarsRepository(key: String?) {
                 val date = LocalDate.parse(viewDate.value.toString(), DateTimeFormatter.ISO_DATE)
 
                 view.postValue(date)
+=======
+
+    //userRef -> /Users
+    val userRef = database.getReference(key ?: "bug")
+    var phone: String = ""
+
+
+
+    //유저 정보 가져오기
+    fun observeUser(view: MutableLiveData<User>) {
+        userRef.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userSnap = snapshot.child(phone)
+                val user = searchUser(userSnap.value as Map<String, Any?>)
+
+                view.postValue(user)
+>>>>>>> origin/master
             }
             override fun onCancelled(error: DatabaseError) {
             }
         })
+    }
+
+
+<<<<<<< HEAD
+    //viewDate 쓰기 -> 유저의 Date 포인터
+    fun postViewDate(newDate: LocalDate) {
+        userRef.child(phone).child("viewDate").setValue(newDate.toString())
+    }
+
+=======
+    //새로운 유저 추가
+    fun postNewUser(newUser: User) {
+        val postValues = newUser.toMap()
+
+        val childUpdates = hashMapOf<String, Any>("/$phone" to postValues)
+
+        userRef.updateChildren(childUpdates)
     }
 
 
@@ -80,6 +118,7 @@ class CalendarsRepository(key: String?) {
         userRef.child(phone).child("viewDate").setValue(newDate.toString())
     }
 
+>>>>>>> origin/master
     //달력 관련
     //Date-Todolist 객체
     //Date하나에-일정여러개 매핑 -> 리사이클러뷰
@@ -87,20 +126,21 @@ class CalendarsRepository(key: String?) {
         userRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val viewDate = snapshot.child(phone).child("viewDate")   //Users/phone/viewDate
+<<<<<<< HEAD
                 Log.d("스냅맵",viewDate.toString())
+=======
+>>>>>>> origin/master
                 val date = LocalDate.parse(viewDate.value.toString(), DateTimeFormatter.ISO_DATE) //LocalDate
-
-                val dateTodo = ArrayList<ViewCalendar>()
-
                 val firstday = LocalDate.of(date.year,date.monthValue,1)
                 val firstdayOfWeek = if(firstday.dayOfWeek.value!=7) firstday.dayOfWeek.value else 0
                 val startdate = firstday.minusDays(firstdayOfWeek.toLong())
 
 
+                val dateTodo = ArrayList<ViewCalendar>()
                 //42칸 달력 표시
                 for(dt in 0.. 41) {
                     val temp = startdate.plusDays(dt.toLong())   //변하는 Date
-                    Log.d("일정변화",temp.toString())
+
 
                     //todolist추가
                     //친구는 관계에서 번호를 가져온 후에 반복문 한번 더
@@ -108,19 +148,26 @@ class CalendarsRepository(key: String?) {
                     val todolist = ArrayList<Todo>()
                     //Me
                     for(td in viewTodo.children) {
+<<<<<<< HEAD
                         todolist.add(createTodo(td.value as Map<String, Any?>))
+=======
+                        todolist.add(searchTodo(td.value as Map<String, Any?>))
+>>>>>>> origin/master
                     }
 
                     //Todo Friend
                     //Friend
                     val friendSnap = snapshot.child(phone).child("MyFriendList")
                     for(fd in friendSnap.children) {
-                        Log.d("친구스냅샷", fd.value.toString())
                         val fmap = fd.value as Map<String, Any?>
                         val fid = fmap.get("fid") as String? ?: ""
                         val friendTodo = snapshot.child(fid).child("MyTodoList").child(temp.toString())
                         for(td in friendTodo.children) {
+<<<<<<< HEAD
                             todolist.add(createTodo(td.value as Map<String, Any?>))
+=======
+                            todolist.add(searchTodo(td.value as Map<String, Any?>))
+>>>>>>> origin/master
                         }
                     }
 
@@ -130,7 +177,6 @@ class CalendarsRepository(key: String?) {
 
 
                 //CalendarList post
-                Log.d("최종스냅todo",dateTodo.toString())
                 view.postValue(dateTodo)
             }
             override fun onCancelled(error: DatabaseError) {
@@ -149,29 +195,39 @@ class CalendarsRepository(key: String?) {
                 val date = LocalDate.parse(viewDate.value.toString(), DateTimeFormatter.ISO_DATE) //LocalDate
 
                 val viewTodo = snapshot.child(phone).child("MyTodoList").child(date.toString())
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
                 //일정리스트
                 val todolist = ArrayList<Todo>()
 
                 //Me
                 for(td in viewTodo.children) {
+<<<<<<< HEAD
                     todolist.add(createTodo(td.value as Map<String, Any?>))
+=======
+                    todolist.add(searchTodo(td.value as Map<String, Any?>))
+>>>>>>> origin/master
                 }
 
                 //Todo Friend
                 //Friend
                 val friendSnap = snapshot.child(phone).child("MyFriendList")
                 for(fd in friendSnap.children) {
-                    Log.d("친구스냅샷", fd.value.toString())
                     val fmap = fd.value as Map<String, Any?>
                     val fid = fmap.get("fid") as String? ?: ""
                     val friendTodo = snapshot.child(fid).child("MyTodoList").child(date.toString())
                     for(td in friendTodo.children) {
+<<<<<<< HEAD
                         todolist.add(createTodo(td.value as Map<String, Any?>))
+=======
+                        todolist.add(searchTodo(td.value as Map<String, Any?>))
+>>>>>>> origin/master
                     }
                 }
 
                 //Me, Friend post
-                Log.d("최종스냅todo",todolist.toString())
                 view.postValue(todolist)
             }
             override fun onCancelled(error: DatabaseError) {
@@ -183,8 +239,6 @@ class CalendarsRepository(key: String?) {
     //새로운 일정 업데이트
     //newTodo(userId, title, Date, memo)
     fun postTodo(newTodo: Todo) {
-        //yymd -> "20xx-xx-xx"
-        //val yymd = newTodo.date?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).toString()
         val yymd = newTodo.date?.toString()
 
 
@@ -203,7 +257,7 @@ class CalendarsRepository(key: String?) {
         else
             key = newTodo.key
 
-        val newTodoKey = Todo(newTodo.uid,newTodo.title,newTodo.date,newTodo.memo, key)
+        val newTodoKey = Todo(newTodo.uid,newTodo.author,newTodo.title,newTodo.date,newTodo.memo, key)
         Log.d("키추가",newTodoKey.toString())
         val postValues = newTodoKey.toMap()
 
@@ -214,6 +268,8 @@ class CalendarsRepository(key: String?) {
         )
         userRef.updateChildren(childUpdates)
     }
+
+
 
     //일정 한 개 읽기
     fun observeTodo(view: MutableLiveData<Todo>) {
@@ -228,9 +284,15 @@ class CalendarsRepository(key: String?) {
 
                 //일정경로
                 val todoSnap = snapshot.child(phone).child("MyTodoList").child(date.toString()).child(key)
+<<<<<<< HEAD
                 Log.d("일정한개",todoSnap.value.toString())
                 if(todoSnap.value != null) {
                     view.postValue(createTodo(todoSnap.value as Map<String, Any?>))
+=======
+
+                if(todoSnap.value != null) {
+                    view.postValue(searchTodo(todoSnap.value as Map<String, Any?>))
+>>>>>>> origin/master
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -238,10 +300,12 @@ class CalendarsRepository(key: String?) {
         })
     }
 
+
     //현재 유저가 선택한 일정 포인터 -> 일정 키 값
     fun postViewTodo(newTodo: Todo) {
         userRef.child(phone).child("viewTodo").setValue(newTodo.key.toString())
     }
+
 
     //Todo 친구관련
 
@@ -254,16 +318,14 @@ class CalendarsRepository(key: String?) {
                 val friendlist = ArrayList<Friend>()
 
                 for(fs in friendSnap.children) {
-                    Log.d("친구스냅샷",fs.value.toString())
                     val map = fs.value as Map<String, Any?>
                     val uid = map.get("uid") as String? ?: ""
                     val fid = map.get("fid") as String? ?: ""
-                    val temp = Friend(uid,fid)
-                    Log.d("친구스냅샷",temp.toString())
+                    val temp = Friend(uid, fid)
                     friendlist.add(temp)
                 }
 
-                Log.d("친구최종스냅",friendlist.toString())
+
                 view.postValue(friendlist)
             }
             override fun onCancelled(error: DatabaseError) {
@@ -290,18 +352,35 @@ class CalendarsRepository(key: String?) {
         userRef.updateChildren(childUpdates)
     }
 
+<<<<<<< HEAD
     fun createTodo(map: Map<String,Any?>): Todo {
         val todouid = map.get("uid") as String? ?: ""
         val todotitle = map.get("title") as String? ?: ""
+=======
+    //일정 정보 가져오기
+    fun searchTodo(map: Map<String,Any?>): Todo {
+        val todouid = map.get("uid") as String? ?: ""
+        val todotitle = map.get("title") as String? ?: ""
+        val todoname = map.get("author") as String? ?: ""
+>>>>>>> origin/master
         val dateStr = map.get("date") as String? ?: ""
         val tododate = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE)
         val todomemo = map.get("memo") as String? ?: ""
         val todokey = map.get("key") as String? ?: ""
+<<<<<<< HEAD
         val todolocation = map.get("location") as String? ?: ""
         val todo = Todo(todouid, todotitle, tododate, todomemo, todolocation, todokey)
         return todo
     }
 
+=======
+        val todo = Todo(todouid, todoname, todotitle, tododate, todomemo, todokey)
+        return todo
+    }
+
+
+    //유저 정보 가져오기
+>>>>>>> origin/master
     fun searchUser(map: Map<String,Any?>): User {
         val name = map.get("username") as String? ?: ""
         val phone = map.get("usernumber") as String? ?: ""
@@ -309,7 +388,11 @@ class CalendarsRepository(key: String?) {
         val dateStr = map.get("viewDate") as String? ?: ""
         val date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE)
         val todo = map.get("viewTodo") as String? ?: ""
+<<<<<<< HEAD
         val user = User(name,phone,pw,date,todo)
+=======
+        val user = User(name, phone ,pw, date, todo)
+>>>>>>> origin/master
         return user
     }
 

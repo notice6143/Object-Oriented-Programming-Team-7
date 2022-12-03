@@ -47,9 +47,14 @@ class TodoEditFragment : Fragment() {
             binding?.btnSave2?.setOnClickListener {
                 val title: String = binding?.edtTitle?.getText().toString()
                 val memo: String = binding?.edtMemo?.getText().toString()
+<<<<<<< HEAD
                 val location: String = binding?.edtLocation.toString()
                 if(title != "") {
                     val todo = Todo(phone, title, viewModel.date, memo, location)
+=======
+                if(title != "") {
+                    val todo = Todo(viewModel.phone, viewModel.name, title, viewModel.date, memo)
+>>>>>>> origin/master
                     viewModel.setTodo(todo)
                     val bundle = bundleOf("Phone" to phone)
                     findNavController().navigate(R.id.action_todoeditFragment_to_todolistFragment, bundle)
