@@ -13,14 +13,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myprojectteam7.databinding.FragmentFrdlistBinding
+import com.example.myprojectteam7.databinding.FragmentFriendlistBinding
 import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 //import kotlinx.android.synthetic.main.list_friend.*
 
 class FriendListFragment : Fragment(){
 
     val viewModel: CalendarsViewModel by activityViewModels()
-    var binding: FragmentFrdlistBinding? = null
+    var binding: FragmentFriendlistBinding? = null
     var phone: String = ""
     //val lists = LiveData<ArrayList<Friend>>()
 
@@ -51,7 +51,7 @@ class FriendListFragment : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentFrdlistBinding.inflate(inflater)
+        binding = FragmentFriendlistBinding.inflate(inflater)
         return binding?.root
     }
 

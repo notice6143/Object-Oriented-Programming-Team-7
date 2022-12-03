@@ -114,7 +114,7 @@
         android:id="@+id/friendListFragment"
         android:name="com.example.myprojectteam7.FriendListFragment"
         android:label="FriendListFragment"
-        tools:layout="@layout/fragment_frdlist">
+        tools:layout="@layout/fragment_friendlist">
         <action
             android:id="@+id/action_friendListFragment_to_calendarFragment"
             app:destination="@id/calendarFragment" />

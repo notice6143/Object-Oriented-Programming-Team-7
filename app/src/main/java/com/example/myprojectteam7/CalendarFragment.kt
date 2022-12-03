@@ -1,5 +1,6 @@
 package com.example.myprojectteam7
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -43,6 +44,7 @@ class CalendarFragment : Fragment() {
         return binding?.root
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -51,6 +53,7 @@ class CalendarFragment : Fragment() {
             binding?.txtYear?.text = viewModel.year.toString()
             binding?.txtMonth?.text = viewModel.monthStr
             binding?.recWeek?.adapter?.notifyDataSetChanged()
+            binding?.recFriend?.adapter?.notifyDataSetChanged()
         }
 
 
@@ -102,7 +105,14 @@ class CalendarFragment : Fragment() {
 
         //친구목록 출력
         binding?.recFriend?.layoutManager = GridLayoutManager(context,3)
-        binding?.recFriend?.adapter = FriendListAdapter(viewModel.friend, phone)
+        binding?.recFriend?.adapter = FriendListAdapter(viewModel.friend, viewModel)
+
+
+        binding?.recFriend?.setOnClickListener{
+            val bundle = bundleOf("Phone" to phone)
+            findNavController().navigate(R.id.action_calendarFragment_to_friendListFragment, bundle)
+        }
+
 
 
         //년월 선택
@@ -116,6 +126,8 @@ class CalendarFragment : Fragment() {
             val bundle = bundleOf("Phone" to phone)
             findNavController().navigate(R.id.action_calendarFragment_to_settingFragment, bundle)
         }
+
+
     }
     override fun onDestroyView() {
         super.onDestroyView()

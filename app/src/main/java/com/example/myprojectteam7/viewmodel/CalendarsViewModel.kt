@@ -9,6 +9,7 @@ import com.example.myprojectteam7.*
 import com.example.myprojectteam7.Todo
 import com.example.myprojectteam7.ViewCalendar
 import com.example.myprojectteam7.repository.CalendarsRepository
+import com.google.firebase.database.FirebaseDatabase
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -127,6 +128,15 @@ class CalendarsViewModel: ViewModel() {
     }
     fun setFriend(newFriend: String) {
         modifyFriend(newFriend)
+    }
+
+    //친구삭제
+    fun deleteFriend(position: Int){
+        val mData = FirebaseDatabase.getInstance()
+        val rmvFriend = _friend.value?.get(position)
+        val dataRef = mData.getReference(rmvFriend.toString())
+
+        dataRef.removeValue()
     }
 
 }
