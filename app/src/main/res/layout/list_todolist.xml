@@ -39,7 +39,7 @@
                 android:id="@+id/txt_uid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="123dp"
+                android:layout_marginStart="70dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="10dp"
                 android:text="TextView"
@@ -63,11 +63,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="35dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="158dp"
                 android:text="Title"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/btn_delTodo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

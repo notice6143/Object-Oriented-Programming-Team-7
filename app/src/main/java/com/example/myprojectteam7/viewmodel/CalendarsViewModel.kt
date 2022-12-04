@@ -164,8 +164,9 @@ class CalendarsViewModel: ViewModel() {
 
 
     //일정삭제
-    fun deleteTodo(todoKey: String?) {
-        if(todoKey != null)
-            repository.userRef.child(phone).child("MyTodoList").child(todoKey).removeValue()
+    fun deleteTodo(todo: Todo) {
+        if(todo.key != null)
+            repository.userRef.child("${phone}/MyTodoList/${todo.date.toString()}/${todo.key.toString()}").removeValue()
+            //repository.userRef.child(phone).child("MyTodoList").child(todo.date.toString()).child(todo.key.toString()).removeValue()
     }
 }

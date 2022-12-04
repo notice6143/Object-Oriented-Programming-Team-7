@@ -38,11 +38,9 @@ class TodoListAdapter(val lists: LiveData<ArrayList<Todo>>, val viewModel: Calen
                     view.findNavController().navigate(R.id.action_todolistFragment_to_tododetailFragment, bundle)
                 }
 
-                /*binding.btnDelTodo.setOnClickListener {
-                    viewModel.deleteTodo()
+                binding.btnDelTodo.setOnClickListener {view ->
+                    viewModel.deleteTodo(it)
                 }
-                 */
-
             }
         }
     }
