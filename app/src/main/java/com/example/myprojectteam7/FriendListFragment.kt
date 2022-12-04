@@ -34,12 +34,6 @@ class FriendListFragment : Fragment(){
             viewModel.observeLiveData("user")
             viewModel.observeLiveData("friend")
         }
-        /*binding?.recFrdlist?.layoutManager = LinearLayoutManager(requireContext())
-        binding?.recFrdlist?.adapter = FriendItemAdapter(viewModel.friend,phone, onClickDelete = {
-            deleteTask(viewModel.friend.value.get(super))
-        })
-
-         */
     }
 
     fun deleteTask(friend: Friend){
@@ -65,7 +59,7 @@ class FriendListFragment : Fragment(){
         binding?.recFrdlist?.layoutManager = LinearLayoutManager(context)
         binding?.recFrdlist?.adapter = FriendItemAdapter(viewModel.friend, viewModel)
 
-        binding?.btnBacktocal?.setOnClickListener{
+        binding?.btnBacktocal?.setOnClickListener {
             val bundle = bundleOf("Phone" to phone)
             findNavController().navigate(R.id.action_friendListFragment_to_calendarFragment,bundle)
         }

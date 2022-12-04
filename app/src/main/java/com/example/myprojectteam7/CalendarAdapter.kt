@@ -3,6 +3,7 @@ package com.example.myprojectteam7
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.Dimension
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
@@ -24,10 +25,11 @@ class CalendarAdapter(val cals: LiveData<ArrayList<ViewCalendar>>, val viewModel
             cal?.let {
 
                 binding.txtDay1.text = it.date1.dayOfMonth.toString()
+
                 binding.txtDay1.setTextColor(
                     when(cal.date1.monthValue) {
                         viewModel.month -> R.color.black
-                        else -> R.color.white
+                        else -> R.color.white_20
                     }
                 )
 
@@ -38,26 +40,26 @@ class CalendarAdapter(val cals: LiveData<ArrayList<ViewCalendar>>, val viewModel
                     }
                 )
 
-                //월이 일치하면 실행
-                if(viewModel.month==it.date1.monthValue) {
-                    //일정 클릭
-                    binding.date.setOnClickListener { view ->
-                        viewModel.setViewDate(it.date1)
-                        val bundle = bundleOf("Phone" to viewModel.phone)
-                        view.findNavController().navigate(R.id.action_calendarFragment_to_todolistFragment, bundle)
-                    }
-                    binding.txtDay1.setOnClickListener { view ->
-                        //선택한 날짜로 포인터
-                        viewModel.setViewDate(it.date1)
-                        val bundle = bundleOf("Phone" to viewModel.phone)
-                        view.findNavController().navigate(R.id.action_calendarFragment_to_todolistFragment, bundle)
-                    }
+                //월이 일치하지않으면 실행
+                if(viewModel.month!=it.date1.monthValue) {
+                    //첫날, 마지막날
+                    if(it.date1.dayOfMonth == 1 || it.date1.dayOfMonth==it.date1.lengthOfMonth())
+                        binding.txtDay1.text = "${it.date1.dayOfMonth}\n${it.date1.month.toString().substring(0 .. 2)}"
 
-
-                    //중첩리사이클러뷰
-                    binding?.recList?.layoutManager = LinearLayoutManager(binding.recList.context)
-                    binding?.recList?.adapter = CalendarListAdapter(cal.todolist, viewModel.phone)
+                    binding.txtDay1.setTextSize(Dimension.SP,10F)
                 }
+
+                //일정 클릭
+                binding.date.setOnClickListener { view ->
+                    //선택한 날짜로 포인터
+                    viewModel.setViewDate(it.date1)
+                    val bundle = bundleOf("Phone" to viewModel.phone)
+                    view.findNavController().navigate(R.id.action_calendarFragment_to_todolistFragment, bundle)
+                }
+
+                //중첩리사이클러뷰
+                binding?.recList?.layoutManager = LinearLayoutManager(binding.recList.context)
+                binding?.recList?.adapter = CalendarListAdapter(cal.todolist, viewModel.phone)
 
             }
         }
