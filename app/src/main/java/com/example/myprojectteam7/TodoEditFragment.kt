@@ -2,7 +2,6 @@ package com.example.myprojectteam7
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +21,6 @@ class TodoEditFragment : Fragment() {
     var binding: FragmentTodoeditBinding? = null
     var phone: String = ""
     val viewModel: CalendarsViewModel by viewModels()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,7 +69,6 @@ class TodoEditFragment : Fragment() {
             findNavController().navigate(R.id.action_todoeditFragment_to_todolistFragment, bundle)
             Toast.makeText(binding?.root?.context,"일정추가 완료", Toast.LENGTH_SHORT).show()
         }
-
 
         binding?.btnClose2?.setOnClickListener {
             val bundle = bundleOf("Phone" to phone)

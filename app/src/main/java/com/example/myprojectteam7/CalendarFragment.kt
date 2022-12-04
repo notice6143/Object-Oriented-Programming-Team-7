@@ -27,6 +27,7 @@ class CalendarFragment : Fragment() {
         arguments?.let {
             phone = it.getString("Phone") as String
             viewModel.setKey(phone)
+            //viewModel.observeLiveData("date")
             viewModel.observeLiveData("calendar")
             viewModel.observeLiveData("friend")
             viewModel.observeLiveData("user")
@@ -50,23 +51,24 @@ class CalendarFragment : Fragment() {
             binding?.txtMonth?.text = viewModel.monthStr
             binding?.recWeek?.adapter?.notifyDataSetChanged()
         }
-
+        
         //캘린더 리사이클러뷰
         viewModel.calendar.observe(viewLifecycleOwner) {
             binding?.recWeek?.adapter?.notifyDataSetChanged()
         }
-
+        
         //캘린더 출력
         binding?.recWeek?.layoutManager = GridLayoutManager(context,7)
         binding?.recWeek?.adapter = CalendarAdapter(viewModel.calendar, viewModel)
 
 
+        //친구목록 리사이클러뷰
+        //viewModel.friend.observe(viewLifecycleOwner) {
 
-        //친구목록
-        binding?.btnFrdlist?.setOnClickListener {
-            val bundle = bundleOf("Phone" to phone)
-            findNavController().navigate(R.id.action_calendarFragment_to_friendListFragment, bundle)
-        }
+
+        //캘린더 출력
+        binding?.recWeek?.layoutManager = GridLayoutManager(context,7)
+        binding?.recWeek?.adapter = CalendarAdapter(viewModel.calendar, viewModel)
 
         //이전달로 이동
         binding?.btnBack?.setOnClickListener {
@@ -77,6 +79,27 @@ class CalendarFragment : Fragment() {
         binding?.btnNext?.setOnClickListener {
             viewModel.setViewDate(viewModel.date.plusMonths(1))
         }
+
+        //친구목록 리사이클러뷰
+        /*viewModel.friend.observe(viewLifecycleOwner) {
+>>>>>>>>> Temporary merge branch 2
+            binding?.recFriend?.adapter?.notifyDataSetChanged()
+        }
+
+        //친구목록 출력
+        binding?.recFriend?.layoutManager = GridLayoutManager(context,3)
+<<<<<<<<< Temporary merge branch 1
+        binding?.recFriend?.adapter = FriendListAdapter(viewModel.friend)
+=========
+        binding?.recFriend?.adapter = FriendListAdapter(viewModel.friend, phone)
+         */
+
+        binding?.btnFrdlist?.setOnClickListener {
+            val bundle = bundleOf("Phone" to phone)
+            findNavController().navigate(R.id.action_calendarFragment_to_friendListFragment, bundle)
+        }
+
+
 
         //년월 선택
         binding?.txtYear?.setOnClickListener {

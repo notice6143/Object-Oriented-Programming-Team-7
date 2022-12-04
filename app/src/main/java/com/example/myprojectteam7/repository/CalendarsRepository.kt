@@ -19,7 +19,6 @@ import java.time.format.DateTimeFormatter
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarsRepository(key: String?) {
     val database = Firebase.database
-
     //userRef -> /Users
     val userRef = database.getReference(key ?: "bug")
     var phone: String = ""
@@ -39,8 +38,6 @@ class CalendarsRepository(key: String?) {
             }
         })
     }
-
-
     //새로운 유저 추가
     fun postNewUser(newUser: User) {
         val postValues = newUser.toMap()
@@ -119,7 +116,6 @@ class CalendarsRepository(key: String?) {
                 val date = LocalDate.parse(viewDate.value.toString(), DateTimeFormatter.ISO_DATE) //LocalDate
 
                 val viewTodo = snapshot.child(phone).child("MyTodoList").child(date.toString())
-
                 //일정리스트
                 val todolist = ArrayList<Todo>()
 

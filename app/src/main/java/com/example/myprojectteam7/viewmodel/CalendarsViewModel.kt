@@ -37,7 +37,6 @@ class CalendarsViewModel: ViewModel() {
     //친구목록 -> 리사이클러뷰(FriendListAdapter)
     private val _friend = MutableLiveData<ArrayList<Friend>>()
     val friend : LiveData<ArrayList<Friend>> get() = _friend
-
     //Users 경로
     private val repository = CalendarsRepository("Users/")
 
