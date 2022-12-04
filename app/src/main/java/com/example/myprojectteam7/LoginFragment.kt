@@ -64,24 +64,6 @@ class LoginFragment : Fragment() {
                     binding?.txtError?.setText("Incorrect username or password.")
             }
         }
-            /*database.child("Users").get().addOnSuccessListener {
-                val userphone = it.child(phone).child("usernumber").value.toString()
-                val userpassword = it.child(phone).child("userpassword").value.toString()
-
-                //로그인
-                if(userphone == phone && userpassword == password) {
-                    viewModel.setKey(phone)
-                    viewModel.setViewDate(now)
-                    val bundle = bundleOf("Phone" to userphone)
-                    findNavController().navigate(R.id.action_loginFragment_to_calendarFragment, bundle)
-
-                    //메시지출력
-                    Toast.makeText(binding?.root?.context,"$userphone 님 환영합니다.", Toast.LENGTH_SHORT).show()
-                }
-
-                else
-                    binding?.txtError?.setText("Incorrect username or password.")
-            }*/
 
         binding?.btnSignup?.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_signupFragment)

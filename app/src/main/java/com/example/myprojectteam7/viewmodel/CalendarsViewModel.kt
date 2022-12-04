@@ -41,7 +41,7 @@ class CalendarsViewModel: ViewModel() {
     private val repository = CalendarsRepository("Users/")
 
 
-
+    //LiveData observe
     fun observeLiveData(obs: String) {
         when(obs) {
             "user" -> repository.observeUser(_user) //유저 정보
@@ -52,22 +52,11 @@ class CalendarsViewModel: ViewModel() {
         }
     }
 
-    fun deleteFriend(fid:String){
-        repository.userRef.child(phone).child("MyFriendList").child(fid).removeValue()
-    }
-
-    fun deleteTodo(){
-        repository.userRef.child(phone).child("MyTodoList").child(tododate.toString())
-            .child(todolocation.toString()).removeValue()
-    }
+    //viewModel - Repository
 
     //유저의 키 set
     private fun modifyKey(phone: String) {
         repository.phone = phone
-    }
-
-    fun setKey(phone: String) {
-        modifyKey(phone)
     }
 
     //새로운 유저 추가
@@ -95,6 +84,7 @@ class CalendarsViewModel: ViewModel() {
         repository.postFriend(newFriend)
     }
 
+
     //get
     //유저정보
     val name get() = _user.value?.username ?: ""
@@ -116,8 +106,15 @@ class CalendarsViewModel: ViewModel() {
     val tododate get() = _todo.value?.date ?: LocalDate.parse(UNCHECKED_DATE, DateTimeFormatter.ISO_DATE)
     val todomemo get() = _todo.value?.memo ?: ""
     val todokey get() = _todo.value?.key ?: ""
-    //val todolocation get() = _todo.value?.key ?:""
     val todolocation get() = _todo.value?.location ?: ""
+
+
+
+
+    //프래그먼트에서 접근
+    fun setKey(phone: String) {
+        modifyKey(phone)
+    }
 
 
     fun setNewUser(name: String, number: String, password: String) {
@@ -126,20 +123,49 @@ class CalendarsViewModel: ViewModel() {
         modifyNewUser(user)
     }
 
+
     fun setViewDate(newDate: LocalDate) {
         modifyViewDate(newDate)
     }
 
+
     fun setTodo(newTodo: Todo) {
+        if(newTodo.title == "")
+            newTodo.let {
+                it.title = "Title"
+            }
+
         modifyTodo(newTodo)
     }
+
 
     fun setViewTodo(newTodo: Todo) {
         modifyViewTodo(newTodo)
     }
 
+
     fun setFriend(newFriend: String) {
         modifyFriend(newFriend)
     }
 
+    //유저삭제
+    fun deleteUser(){
+        repository.userRef.child(phone).removeValue()
+    }
+
+
+    //친구삭제
+    fun deleteFriend(friendID: String?) {
+        if(friendID != null) {
+            repository.userRef.child(phone).child("MyFriendList").child(friendID).removeValue()
+            repository.userRef.child(friendID).child("MyFriendList").child(phone).removeValue()
+        }
+    }
+
+
+    //일정삭제
+    fun deleteTodo(todoKey: String?) {
+        if(todoKey != null)
+            repository.userRef.child(phone).child("MyTodoList").child(todoKey).removeValue()
+    }
 }

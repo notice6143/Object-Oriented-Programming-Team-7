@@ -1,6 +1,5 @@
 package com.example.myprojectteam7
 
-import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -15,10 +14,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myprojectteam7.databinding.FragmentCalendarBinding
 import com.example.myprojectteam7.viewmodel.CalendarsViewModel
-import java.time.LocalDate
 
 //메인 캘린더
-@SuppressLint("NotifyDataSetChanged")
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarFragment : Fragment() {
     var binding: FragmentCalendarBinding? = null
@@ -30,7 +27,7 @@ class CalendarFragment : Fragment() {
         arguments?.let {
             phone = it.getString("Phone") as String
             viewModel.setKey(phone)
-            viewModel.observeLiveData("date")
+            //viewModel.observeLiveData("date")
             viewModel.observeLiveData("calendar")
             viewModel.observeLiveData("friend")
             viewModel.observeLiveData("user")
@@ -54,11 +51,20 @@ class CalendarFragment : Fragment() {
             binding?.txtMonth?.text = viewModel.monthStr
             binding?.recWeek?.adapter?.notifyDataSetChanged()
         }
-
+        
         //캘린더 리사이클러뷰
         viewModel.calendar.observe(viewLifecycleOwner) {
             binding?.recWeek?.adapter?.notifyDataSetChanged()
         }
+        
+        //캘린더 출력
+        binding?.recWeek?.layoutManager = GridLayoutManager(context,7)
+        binding?.recWeek?.adapter = CalendarAdapter(viewModel.calendar, viewModel)
+
+
+        //친구목록 리사이클러뷰
+        //viewModel.friend.observe(viewLifecycleOwner) {
+
 
         //캘린더 출력
         binding?.recWeek?.layoutManager = GridLayoutManager(context,7)
@@ -66,54 +72,25 @@ class CalendarFragment : Fragment() {
 
         //이전달로 이동
         binding?.btnBack?.setOnClickListener {
-            var tempYear = viewModel.year
-            var tempMonth = viewModel.month
-
-            if(tempMonth == 1){
-                tempYear--
-                tempMonth = 12
-            }
-            else
-                tempMonth--
-
-            val date = LocalDate.of(tempYear, tempMonth, 1)
-            viewModel.setViewDate(date)
+            viewModel.setViewDate(viewModel.date.minusMonths(1))
         }
 
         //다음달로 이동
         binding?.btnNext?.setOnClickListener {
-            var tempYear = viewModel.year
-            var tempMonth = viewModel.month
-
-            if(tempMonth == 12){
-                tempYear++
-                tempMonth = 1
-            }
-            else
-                tempMonth++
-
-            val date = LocalDate.of(tempYear, tempMonth, 1)
-            viewModel.setViewDate(date)
+            viewModel.setViewDate(viewModel.date.plusMonths(1))
         }
 
         //친구목록 리사이클러뷰
         /*viewModel.friend.observe(viewLifecycleOwner) {
-=======
-
-        //캘린더 출력
-        binding?.recWeek?.layoutManager = GridLayoutManager(context,7)
-        binding?.recWeek?.adapter = CalendarAdapter(viewModel.calendar, viewModel)
-
-
-        //친구목록 리사이클러뷰
-        viewModel.friend.observe(viewLifecycleOwner) {
->>>>>>> origin/master
+>>>>>>>>> Temporary merge branch 2
             binding?.recFriend?.adapter?.notifyDataSetChanged()
         }
 
         //친구목록 출력
         binding?.recFriend?.layoutManager = GridLayoutManager(context,3)
-<<<<<<< HEAD
+<<<<<<<<< Temporary merge branch 1
+        binding?.recFriend?.adapter = FriendListAdapter(viewModel.friend)
+=========
         binding?.recFriend?.adapter = FriendListAdapter(viewModel.friend, phone)
          */
 
@@ -121,7 +98,8 @@ class CalendarFragment : Fragment() {
             val bundle = bundleOf("Phone" to phone)
             findNavController().navigate(R.id.action_calendarFragment_to_friendListFragment, bundle)
         }
-        //binding?.recFriend?.adapter = FriendListAdapter(viewModel.friend)
+
+
 
         //년월 선택
         binding?.txtYear?.setOnClickListener {

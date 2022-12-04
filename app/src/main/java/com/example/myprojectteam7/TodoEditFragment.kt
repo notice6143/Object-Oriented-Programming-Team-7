@@ -41,20 +41,33 @@ class TodoEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val todo = Todo()
 
         viewModel.user.observe(viewLifecycleOwner) {
             binding?.todoeditDate?.text = "${viewModel.monthStr} ${viewModel.day}, ${viewModel.year}"
-            binding?.btnSave2?.setOnClickListener {
-                val title: String = binding?.edtTitle?.getText().toString()
-                val memo: String = binding?.edtMemo?.getText().toString()
-                if(title != "") {
-                    val todo = Todo(viewModel.phone, viewModel.name, title, viewModel.date, memo)
-                    viewModel.setTodo(todo)
-                    val bundle = bundleOf("Phone" to phone)
-                    findNavController().navigate(R.id.action_todoeditFragment_to_todolistFragment, bundle)
-                    Toast.makeText(binding?.root?.context,"일정추가 완료", Toast.LENGTH_SHORT).show()
-                }
+            //일정 기본값
+            todo.let {
+                it.uid = viewModel.phone
+                it.author = viewModel.name
+                it.date = viewModel.date
             }
+        }
+
+        binding?.btnSave2?.setOnClickListener {
+            val title: String = binding?.edtTitle?.getText().toString()
+            val memo: String = binding?.edtMemo?.getText().toString()
+            val location: String = binding?.edtLocation?.getText().toString()
+            //일정 편집
+            todo.let {
+                it.title = title
+                it.memo = memo
+                it.location = location
+            }
+
+            viewModel.setTodo(todo)
+            val bundle = bundleOf("Phone" to phone)
+            findNavController().navigate(R.id.action_todoeditFragment_to_todolistFragment, bundle)
+            Toast.makeText(binding?.root?.context,"일정추가 완료", Toast.LENGTH_SHORT).show()
         }
 
         binding?.btnClose2?.setOnClickListener {
