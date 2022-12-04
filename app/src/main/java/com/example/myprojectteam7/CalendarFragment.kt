@@ -27,10 +27,6 @@ class CalendarFragment : Fragment() {
         arguments?.let {
             phone = it.getString("Phone") as String
             viewModel.setKey(phone)
-<<<<<<< HEAD
-            viewModel.observeLiveData("date")
-=======
->>>>>>> origin/master
             viewModel.observeLiveData("calendar")
             viewModel.observeLiveData("friend")
             viewModel.observeLiveData("user")
@@ -55,81 +51,32 @@ class CalendarFragment : Fragment() {
             binding?.recWeek?.adapter?.notifyDataSetChanged()
         }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
         //캘린더 리사이클러뷰
         viewModel.calendar.observe(viewLifecycleOwner) {
             binding?.recWeek?.adapter?.notifyDataSetChanged()
         }
-<<<<<<< HEAD
-
-        //캘린더 출력
-        binding?.recWeek?.layoutManager = GridLayoutManager(context,7)
-        binding?.recWeek?.adapter = CalendarAdapter(viewModel.calendar, viewModel)
-
-        //이전달로 이동
-        binding?.btnBack?.setOnClickListener {
-            var tempYear = viewModel.year
-            var tempMonth = viewModel.month
-
-            if(tempMonth == 1){
-                tempYear--
-                tempMonth = 12
-            }
-            else
-                tempMonth--
-
-            val date = LocalDate.of(tempYear, tempMonth, 1)
-            viewModel.setViewDate(date)
-        }
-
-        //다음달로 이동
-        binding?.btnNext?.setOnClickListener {
-            var tempYear = viewModel.year
-            var tempMonth = viewModel.month
-
-            if(tempMonth == 12){
-                tempYear++
-                tempMonth = 1
-            }
-            else
-                tempMonth++
-
-            val date = LocalDate.of(tempYear, tempMonth, 1)
-            viewModel.setViewDate(date)
-        }
-
-        //친구목록 리사이클러뷰
-        /*viewModel.friend.observe(viewLifecycleOwner) {
-=======
 
         //캘린더 출력
         binding?.recWeek?.layoutManager = GridLayoutManager(context,7)
         binding?.recWeek?.adapter = CalendarAdapter(viewModel.calendar, viewModel)
 
 
-        //친구목록 리사이클러뷰
-        viewModel.friend.observe(viewLifecycleOwner) {
->>>>>>> origin/master
-            binding?.recFriend?.adapter?.notifyDataSetChanged()
-        }
 
-        //친구목록 출력
-        binding?.recFriend?.layoutManager = GridLayoutManager(context,3)
-<<<<<<< HEAD
-        binding?.recFriend?.adapter = FriendListAdapter(viewModel.friend, phone)
-         */
-
+        //친구목록
         binding?.btnFrdlist?.setOnClickListener {
             val bundle = bundleOf("Phone" to phone)
             findNavController().navigate(R.id.action_calendarFragment_to_friendListFragment, bundle)
         }
-=======
-        binding?.recFriend?.adapter = FriendListAdapter(viewModel.friend)
->>>>>>> origin/master
 
+        //이전달로 이동
+        binding?.btnBack?.setOnClickListener {
+            viewModel.setViewDate(viewModel.date.minusMonths(1))
+        }
+
+        //다음달로 이동
+        binding?.btnNext?.setOnClickListener {
+            viewModel.setViewDate(viewModel.date.plusMonths(1))
+        }
 
         //년월 선택
         binding?.txtYear?.setOnClickListener {

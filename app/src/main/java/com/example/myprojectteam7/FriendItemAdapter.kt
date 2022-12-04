@@ -27,8 +27,8 @@ class FriendItemAdapter(
                 })
 
                 binding.txtFrdname.text = it.fid
-                binding.btnFrddelete.setOnClickListener {
-                    viewModel.deleteFriend()
+                binding.btnFrddelete.setOnClickListener { view ->
+                    viewModel.deleteFriend(it.fid)
                 }
             }
         }

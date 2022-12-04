@@ -21,13 +21,8 @@ import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 @RequiresApi(Build.VERSION_CODES.O)
 class FriendListFragment : Fragment(){
 
-<<<<<<< HEAD
     val viewModel: CalendarsViewModel by viewModels()
-    var binding: FragmentFrdlistBinding? = null
-=======
-    val viewModel: CalendarsViewModel by activityViewModels()
     var binding: FragmentFriendlistBinding? = null
->>>>>>> origin/master
     var phone: String = ""
 
     @RequiresApi(Build.VERSION_CODES.O)

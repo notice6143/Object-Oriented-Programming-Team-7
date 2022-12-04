@@ -89,6 +89,7 @@
         android:layout_marginBottom="6dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="#00FF0000"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
