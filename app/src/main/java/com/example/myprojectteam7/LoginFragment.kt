@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.myprojectteam7.databinding.FragmentLoginBinding
@@ -21,12 +22,10 @@ import java.time.LocalDate
 @RequiresApi(Build.VERSION_CODES.O)
 class LoginFragment : Fragment() {
     var binding: FragmentLoginBinding? = null
-    lateinit var database: DatabaseReference
-    val viewModel: CalendarsViewModel by viewModels()
+    val viewModel: CalendarsViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        database = Firebase.database.reference
     }
 
     override fun onCreateView(
@@ -42,22 +41,19 @@ class LoginFragment : Fragment() {
 
 
         binding?.btnLogin?.setOnClickListener {
-            val now : LocalDate = LocalDate.now()
-            val phone = binding?.edtPhone?.getText().toString()
-            val password= binding?.edtPw?.getText().toString()
+            var now : LocalDate = LocalDate.now()
+            var phone = binding?.edtPhone?.getText().toString()
+            var password= binding?.edtPw?.getText().toString()
 
 
             //로그인 검사
             viewModel.setKey(phone)
-            viewModel.observeLiveData("user")
 
             viewModel.user.observe(viewLifecycleOwner) {
                 //로그인
                 if(viewModel.phone == phone && viewModel.password == password) {
                     viewModel.setViewDate(now)
-
-                    val bundle = bundleOf("Phone" to phone)
-                    findNavController().navigate(R.id.action_loginFragment_to_calendarFragment, bundle)
+                    findNavController().navigate(R.id.action_loginFragment_to_calendarFragment)
                     Toast.makeText(binding?.root?.context,"$phone 님 환영합니다.", Toast.LENGTH_SHORT).show()
                 }
                 else

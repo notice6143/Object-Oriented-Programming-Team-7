@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,18 +18,8 @@ import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 @RequiresApi(Build.VERSION_CODES.O)
 class TodoListFragment : Fragment() {
     var binding: FragmentTodolistBinding? = null
-    var phone: String = ""
-    val viewModel: CalendarsViewModel by viewModels()
+    val viewModel: CalendarsViewModel by activityViewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            phone = it.getString("Phone") as String
-            viewModel.setKey(phone)
-            viewModel.observeLiveData("user")
-            viewModel.observeLiveData("todolist")
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,14 +50,12 @@ class TodoListFragment : Fragment() {
 
         //일정추가
         binding?.btnEdit?.setOnClickListener {
-            val bundle = bundleOf("Phone" to phone)
-            findNavController().navigate(R.id.action_todolistFragment_to_todoeditFragment,bundle)
+            findNavController().navigate(R.id.action_todolistFragment_to_todoeditFragment)
         }
 
 
         binding?.btnClose?.setOnClickListener {
-            val bundle = bundleOf("Phone" to phone)
-            findNavController().navigate(R.id.action_todolistFragment_to_calendarFragment,bundle)
+            findNavController().navigate(R.id.action_todolistFragment_to_calendarFragment)
         }
     }
 

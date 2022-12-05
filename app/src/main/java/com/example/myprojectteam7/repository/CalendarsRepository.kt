@@ -1,12 +1,13 @@
 package com.example.myprojectteam7.repository
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.example.myprojectteam7.*
-import com.example.myprojectteam7.Todo
-import com.example.myprojectteam7.ViewCalendar
+import com.example.myprojectteam7.bin.Todo
+import com.example.myprojectteam7.bin.ViewCalendar
+import com.example.myprojectteam7.bin.Friend
+import com.example.myprojectteam7.bin.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -22,6 +23,7 @@ class CalendarsRepository(key: String?) {
     //userRef -> /Users
     val userRef = database.getReference(key ?: "bug")
     var phone: String = ""
+    var todophone: String = ""
 
 
 
@@ -32,7 +34,6 @@ class CalendarsRepository(key: String?) {
                 val userSnap = snapshot.child(phone)
                 val user = User().toUser(userSnap.value)
                 view.postValue(user)
-
             }
             override fun onCancelled(error: DatabaseError) {
             }
@@ -42,7 +43,7 @@ class CalendarsRepository(key: String?) {
     fun postNewUser(newUser: User) {
         val postValues = newUser.toMap()
 
-        val childUpdates = hashMapOf<String, Any>("/$phone" to postValues)
+        val childUpdates = hashMapOf<String, Any>("/${newUser.usernumber}" to postValues)
 
         userRef.updateChildren(childUpdates)
     }
@@ -59,6 +60,9 @@ class CalendarsRepository(key: String?) {
     fun observeCalendar(view: MutableLiveData<ArrayList<ViewCalendar>>) {
         userRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.child(phone).value==null)
+                    return
+
                 val viewDate = snapshot.child(phone).child("viewDate")   //Users/phone/viewDate
                 val date = LocalDate.parse(viewDate.value.toString(), DateTimeFormatter.ISO_DATE) //LocalDate
                 val firstday = LocalDate.of(date.year,date.monthValue,1)
@@ -106,12 +110,14 @@ class CalendarsRepository(key: String?) {
     }
 
     //일정 여러 개 읽기 -> 리사이클러뷰 todolist
-    //dataRef -> /
     //일정목록경로 -> User-todolists/사용자아이디/yyyy-mm/key
     //Todo yym? yymd? 둘 중 하나 선택
     fun observeViewTodolist(view: MutableLiveData<ArrayList<Todo>>) {
         userRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.child(phone).value==null)
+                    return
+
                 val viewDate = snapshot.child(phone).child("viewDate")   //Users/phone/viewDate
                 val date = LocalDate.parse(viewDate.value.toString(), DateTimeFormatter.ISO_DATE) //LocalDate
 
@@ -160,31 +166,37 @@ class CalendarsRepository(key: String?) {
             }
         }
 
-
         val postValues = newTodo.toMap()
 
         //경로 설정
         val childUpdates = hashMapOf<String, Any>(
-            "/$phone/MyTodoList/$yymd/${newTodo.key}" to postValues
+            "/${newTodo.uid}/MyTodoList/$yymd/${newTodo.key}" to postValues
         )
         userRef.updateChildren(childUpdates)
     }
 
-
+    //현재 유저가 클릭한 일정 포인터 -> 일정 키 값과 아이디 확인
+    fun postViewTodo(newTodo: Todo) {
+        todophone = newTodo.uid.toString()
+        userRef.child(phone).child("viewTodo").setValue(newTodo.key.toString())
+    }
 
     //일정 한 개 읽기
     fun observeTodo(view: MutableLiveData<Todo>) {
         userRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.child(phone).value==null)
+                    return
+
                 val viewDate = snapshot.child(phone).child("viewDate")   //Users/phone/viewDate
                 val date = LocalDate.parse(viewDate.value.toString(), DateTimeFormatter.ISO_DATE) //LocalDate
 
                 //일정 포인터
-                val viewTodo = snapshot.child(phone).child("viewTodo")
-                val key = viewTodo.value.toString()
+                val viewTodo = snapshot.child(phone).child("viewTodo").value.toString()
 
                 //일정경로
-                val todoSnap = snapshot.child(phone).child("MyTodoList").child(date.toString()).child(key)
+                val todoSnap = snapshot.child(todophone)
+                    .child("MyTodoList").child(date.toString()).child(viewTodo)
 
                 if(todoSnap.value != null) {
                     //Map -> toTodo
@@ -197,18 +209,15 @@ class CalendarsRepository(key: String?) {
     }
 
 
-    //현재 유저가 선택한 일정 포인터 -> 일정 키 값
-    fun postViewTodo(newTodo: Todo) {
-        userRef.child(phone).child("viewTodo").setValue(newTodo.key.toString())
-    }
-
 
     //Todo 친구관련
-
     //유저의 친구목록 가져오기
     fun observeFriendlist(view: MutableLiveData<ArrayList<Friend>>) {
         userRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.child(phone).value==null)
+                    return
+
                 val friendSnap = snapshot.child(phone).child("MyFriendList")
 
                 val friendlist = ArrayList<Friend>()
@@ -251,15 +260,27 @@ class CalendarsRepository(key: String?) {
     //친구삭제
     fun deleteFriend(friendID: String?){
         if(friendID != null) {
-            userRef.child(phone).child("MyFriendList").child(friendID).removeValue()
-            userRef.child(friendID).child("MyFriendList").child(phone).removeValue()
+            //myID
+            userRef.child(phone)
+                .child("MyFriendList")
+                .child(friendID)
+                .removeValue()
+            //friendID
+            userRef.child(friendID)
+                .child("MyFriendList")
+                .child(phone)
+                .removeValue()
         }
     }
 
     //일정삭제
-    fun deleteTodo(todoKey: String?) {
-        if(todoKey != null)
-            userRef.child(phone).child("MyTodoList").child(todoKey).removeValue()
+    fun deleteTodo(delTodo: Todo) {
+        if(delTodo.key != null)
+            userRef.child(delTodo.uid.toString())
+                .child("MyTodoList")
+                .child(delTodo.date.toString())
+                .child(delTodo.key.toString())
+                .removeValue()
     }
 
 }

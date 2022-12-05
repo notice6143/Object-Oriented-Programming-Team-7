@@ -8,12 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
-import androidx.core.view.marginRight
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myprojectteam7.bin.Friend
 import com.example.myprojectteam7.databinding.FragmentFriendlistBinding
 import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 //import kotlinx.android.synthetic.main.list_friend.*
@@ -21,19 +21,12 @@ import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 @RequiresApi(Build.VERSION_CODES.O)
 class FriendListFragment : Fragment(){
 
-    val viewModel: CalendarsViewModel by viewModels()
+    val viewModel: CalendarsViewModel by activityViewModels()
     var binding: FragmentFriendlistBinding? = null
-    var phone: String = ""
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            phone = it.getString("Phone") as String
-            viewModel.setKey(phone)
-            viewModel.observeLiveData("user")
-            viewModel.observeLiveData("friend")
-        }
     }
 
     fun deleteTask(friend: Friend){
@@ -60,8 +53,7 @@ class FriendListFragment : Fragment(){
         binding?.recFrdlist?.adapter = FriendItemAdapter(viewModel.friend, viewModel)
 
         binding?.btnBacktocal?.setOnClickListener {
-            val bundle = bundleOf("Phone" to phone)
-            findNavController().navigate(R.id.action_friendListFragment_to_calendarFragment,bundle)
+            findNavController().navigate(R.id.action_friendListFragment_to_calendarFragment)
         }
 
     }

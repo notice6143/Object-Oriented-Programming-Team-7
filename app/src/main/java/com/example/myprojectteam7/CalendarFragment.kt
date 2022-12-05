@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,20 +20,8 @@ import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarFragment : Fragment() {
     var binding: FragmentCalendarBinding? = null
-    var phone: String = ""
-    val viewModel: CalendarsViewModel by viewModels()
+    val viewModel: CalendarsViewModel by activityViewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            phone = it.getString("Phone") as String
-            viewModel.setKey(phone)
-            //viewModel.observeLiveData("date")
-            viewModel.observeLiveData("calendar")
-            viewModel.observeLiveData("friend")
-            viewModel.observeLiveData("user")
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,9 +51,6 @@ class CalendarFragment : Fragment() {
         binding?.recWeek?.adapter = CalendarAdapter(viewModel.calendar, viewModel)
 
 
-        //친구목록 리사이클러뷰
-        //viewModel.friend.observe(viewLifecycleOwner) {
-
 
         //캘린더 출력
         binding?.recWeek?.layoutManager = GridLayoutManager(context,7)
@@ -80,37 +66,21 @@ class CalendarFragment : Fragment() {
             viewModel.setViewDate(viewModel.date.plusMonths(1))
         }
 
-        //친구목록 리사이클러뷰
-        /*viewModel.friend.observe(viewLifecycleOwner) {
->>>>>>>>> Temporary merge branch 2
-            binding?.recFriend?.adapter?.notifyDataSetChanged()
-        }
-
-        //친구목록 출력
-        binding?.recFriend?.layoutManager = GridLayoutManager(context,3)
-<<<<<<<<< Temporary merge branch 1
-        binding?.recFriend?.adapter = FriendListAdapter(viewModel.friend)
-=========
-        binding?.recFriend?.adapter = FriendListAdapter(viewModel.friend, phone)
-         */
 
         binding?.btnFrdlist?.setOnClickListener {
-            val bundle = bundleOf("Phone" to phone)
-            findNavController().navigate(R.id.action_calendarFragment_to_friendListFragment, bundle)
+            findNavController().navigate(R.id.action_calendarFragment_to_friendListFragment)
         }
 
 
 
         //년월 선택
         binding?.txtYear?.setOnClickListener {
-            val bundle = bundleOf("Phone" to phone)
-            findNavController().navigate(R.id.action_calendarFragment_to_yearmonthFragment, bundle)
+            findNavController().navigate(R.id.action_calendarFragment_to_yearmonthFragment)
         }
 
         //세팅
         binding?.btnSetting?.setOnClickListener {
-            val bundle = bundleOf("Phone" to phone)
-            findNavController().navigate(R.id.action_calendarFragment_to_settingFragment, bundle)
+            findNavController().navigate(R.id.action_calendarFragment_to_settingFragment)
         }
     }
     override fun onDestroyView() {

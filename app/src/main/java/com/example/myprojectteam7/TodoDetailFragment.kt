@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.myprojectteam7.bin.Todo
 import com.example.myprojectteam7.databinding.FragmentTododetailBinding
 import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 
@@ -18,19 +20,8 @@ import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 @RequiresApi(Build.VERSION_CODES.O)
 class TodoDetailFragment : Fragment() {
     var binding: FragmentTododetailBinding? = null
-    var phone: String = ""
-    var todoid: String = ""
-    val viewModel: CalendarsViewModel by viewModels()
+    val viewModel: CalendarsViewModel by activityViewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            phone = it.getString("Phone") as String
-            todoid = it.getString("TodoID") as String
-            viewModel.setKey(todoid)
-            viewModel.observeLiveData("todo")
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,30 +44,25 @@ class TodoDetailFragment : Fragment() {
 
             binding?.btnEdit?.setOnClickListener {
                 val memo: String = binding?.edtMemo?.getText().toString()
-
                 val todo = viewModel.todo.value ?: Todo()
                 todo?.let {
                     it.memo = memo
                 }
 
                 viewModel.setTodo(todo)
-                val bundle = bundleOf("Phone" to phone)
-                findNavController().navigate(R.id.action_tododetailFragment_to_todolistFragment, bundle)
+                findNavController().navigate(R.id.action_tododetailFragment_to_todolistFragment)
                 Toast.makeText(binding?.root?.context,"일정이 수정되었습니다.", Toast.LENGTH_SHORT).show()
             }
 
             //location 입력 여부에 따라 창 띄워주기
             binding?.txtLocation?.setOnClickListener {
                 if(viewModel.todolocation != ""){
-                    val bundle = bundleOf("Phone" to phone)
-                    findNavController().navigate(R.id.action_tododetailFragment_to_mapFragment2,bundle)        //이거 타고 지도 띄워주기
+                    findNavController().navigate(R.id.action_tododetailFragment_to_mapFragment2)        //이거 타고 지도 띄워주기
                 }
             }
-        }
-
-        binding?.btnClose?.setOnClickListener {
-            val bundle = bundleOf("Phone" to phone)
-            findNavController().navigate(R.id.action_tododetailFragment_to_todolistFragment,bundle)
+            binding?.btnClose?.setOnClickListener {
+                findNavController().navigate(R.id.action_tododetailFragment_to_todolistFragment)
+            }
         }
 
     }

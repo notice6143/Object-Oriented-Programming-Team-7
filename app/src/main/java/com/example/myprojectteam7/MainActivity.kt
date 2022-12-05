@@ -3,10 +3,13 @@ package com.example.myprojectteam7
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.myprojectteam7.databinding.ActivityMainBinding
+import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

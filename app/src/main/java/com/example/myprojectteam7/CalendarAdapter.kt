@@ -6,12 +6,11 @@ import android.view.ViewGroup
 import androidx.annotation.Dimension
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myprojectteam7.bin.ViewCalendar
 import com.example.myprojectteam7.databinding.ListDayBinding
 import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 
@@ -42,19 +41,21 @@ class CalendarAdapter(val cals: LiveData<ArrayList<ViewCalendar>>, val viewModel
 
                 //월이 일치하지않으면 실행
                 if(viewModel.month!=it.date1.monthValue) {
-                    //첫날, 마지막날
+                    //첫날, 마지막날 달 표시
                     if(it.date1.dayOfMonth == 1 || it.date1.dayOfMonth==it.date1.lengthOfMonth())
                         binding.txtDay1.text = "${it.date1.dayOfMonth}\n${it.date1.month.toString().substring(0 .. 2)}"
 
                     binding.txtDay1.setTextSize(Dimension.SP,10F)
+                }
+                else {
+                    binding.txtDay1.setTextSize(Dimension.SP,14F)
                 }
 
                 //일정 클릭
                 binding.date.setOnClickListener { view ->
                     //선택한 날짜로 포인터
                     viewModel.setViewDate(it.date1)
-                    val bundle = bundleOf("Phone" to viewModel.phone)
-                    view.findNavController().navigate(R.id.action_calendarFragment_to_todolistFragment, bundle)
+                    view.findNavController().navigate(R.id.action_calendarFragment_to_todolistFragment)
                 }
 
                 //중첩리사이클러뷰

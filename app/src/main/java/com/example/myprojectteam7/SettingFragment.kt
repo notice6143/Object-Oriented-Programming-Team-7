@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
@@ -20,17 +21,8 @@ import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 @RequiresApi(Build.VERSION_CODES.O)
 class SettingFragment : Fragment() {
     var binding: FragmentSettingBinding? = null
-    var phone: String = ""
-    val viewModel: CalendarsViewModel by viewModels()
+    val viewModel: CalendarsViewModel by activityViewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            phone = it.getString("Phone") as String
-            viewModel.setKey(phone)
-
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,8 +34,9 @@ class SettingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding?.txtNumber?.text = phone
+        viewModel.user.observe(viewLifecycleOwner) {
+            binding?.txtNumber?.text = viewModel.phone
+        }
 
         binding?.btnEnter?.setOnClickListener {
             val newFriend : String = binding?.edtFriend?.getText().toString()
@@ -57,13 +50,11 @@ class SettingFragment : Fragment() {
         }
 
         binding?.btnSave?.setOnClickListener {
-            val bundle = bundleOf("Phone" to phone)
-            findNavController().navigate(R.id.action_settingFragment_to_calendarFragment, bundle)
+            findNavController().navigate(R.id.action_settingFragment_to_calendarFragment)
         }
 
         binding?.btnClose?.setOnClickListener {
-            val bundle = bundleOf("Phone" to phone)
-            findNavController().navigate(R.id.action_settingFragment_to_calendarFragment, bundle)
+            findNavController().navigate(R.id.action_settingFragment_to_calendarFragment)
         }
     }
 

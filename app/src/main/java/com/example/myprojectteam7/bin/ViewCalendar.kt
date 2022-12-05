@@ -1,4 +1,4 @@
-package com.example.myprojectteam7
+package com.example.myprojectteam7.bin
 
 import java.time.LocalDate
 

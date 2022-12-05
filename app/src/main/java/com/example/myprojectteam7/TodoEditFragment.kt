@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.myprojectteam7.bin.Todo
 import com.example.myprojectteam7.databinding.FragmentTodoeditBinding
 import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 
@@ -19,17 +21,8 @@ import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 @RequiresApi(Build.VERSION_CODES.O)
 class TodoEditFragment : Fragment() {
     var binding: FragmentTodoeditBinding? = null
-    var phone: String = ""
-    val viewModel: CalendarsViewModel by viewModels()
+    val viewModel: CalendarsViewModel by activityViewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            phone = it.getString("Phone") as String
-            viewModel.setKey(phone)
-            viewModel.observeLiveData("user")
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,14 +58,12 @@ class TodoEditFragment : Fragment() {
             }
 
             viewModel.setTodo(todo)
-            val bundle = bundleOf("Phone" to phone)
-            findNavController().navigate(R.id.action_todoeditFragment_to_todolistFragment, bundle)
+            findNavController().navigate(R.id.action_todoeditFragment_to_todolistFragment)
             Toast.makeText(binding?.root?.context,"일정추가 완료", Toast.LENGTH_SHORT).show()
         }
 
         binding?.btnClose2?.setOnClickListener {
-            val bundle = bundleOf("Phone" to phone)
-            findNavController().navigate(R.id.action_todoeditFragment_to_todolistFragment,bundle)
+            findNavController().navigate(R.id.action_todoeditFragment_to_todolistFragment)
         }
     }
     override fun onDestroyView() {

@@ -1,10 +1,8 @@
-package com.example.myprojectteam7
+package com.example.myprojectteam7.bin
 
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.google.firebase.database.Exclude
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 
 //친구 -> fid: 친구아이디, uid:유저아이디
@@ -21,7 +19,7 @@ data class Friend(
         )
     }
 
-    fun toFriend(value: Any?) :Friend {
+    fun toFriend(value: Any?) : Friend {
         if(value == null)
             return Friend()
 

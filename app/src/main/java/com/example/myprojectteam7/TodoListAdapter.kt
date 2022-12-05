@@ -1,7 +1,6 @@
 package com.example.myprojectteam7
 
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
@@ -9,9 +8,9 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myprojectteam7.bin.Todo
 import com.example.myprojectteam7.databinding.ListTodolistBinding
 import com.example.myprojectteam7.viewmodel.CalendarsViewModel
-import java.time.LocalDate
 
 //캘린더 날짜 어답터, 중첩리사이클러뷰 -> 날짜어답터안에 리스트어답터 추가
 @RequiresApi(Build.VERSION_CODES.O)
@@ -34,8 +33,7 @@ class TodoListAdapter(val lists: LiveData<ArrayList<Todo>>, val viewModel: Calen
                 binding.todolist.setOnClickListener { view ->
                     //선택한 Me or Friend ID 확인
                     viewModel.setViewTodo(it)
-                    val bundle = bundleOf("Phone" to viewModel.phone, "TodoID" to it.uid.toString())
-                    view.findNavController().navigate(R.id.action_todolistFragment_to_tododetailFragment, bundle)
+                    view.findNavController().navigate(R.id.action_todolistFragment_to_tododetailFragment)
                 }
 
                 binding.btnDelTodo.setOnClickListener {view ->

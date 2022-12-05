@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myprojectteam7.bin.Friend
 import com.example.myprojectteam7.databinding.FriendlistItemBinding
 import com.example.myprojectteam7.viewmodel.CalendarsViewModel
-import com.google.firebase.database.FirebaseDatabase
 
 @RequiresApi(Build.VERSION_CODES.O)
 class FriendItemAdapter(
@@ -41,13 +41,6 @@ class FriendItemAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         lists.value?.getOrNull(position)?.let { holder.bind(it) }
-
-        /*holder.binding.btnFrddelete.setOnClickListener{
-            viewModel.deleteFriend(position)
-        }
-
-         */
-
     }
 
     override fun getItemCount() = lists.value?.size ?: 0

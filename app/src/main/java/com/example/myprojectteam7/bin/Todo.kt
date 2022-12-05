@@ -1,4 +1,4 @@
-package com.example.myprojectteam7
+package com.example.myprojectteam7.bin
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -33,7 +33,7 @@ data class Todo(
     }
 
     //Map -> Todo
-    fun toTodo(value: Any?) :Todo {
+    fun toTodo(value: Any?) : Todo {
         if(value == null)
             return Todo()
 

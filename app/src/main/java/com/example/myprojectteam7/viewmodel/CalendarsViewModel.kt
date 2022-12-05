@@ -6,10 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myprojectteam7.*
-import com.example.myprojectteam7.Todo
-import com.example.myprojectteam7.ViewCalendar
+import com.example.myprojectteam7.bin.Todo
+import com.example.myprojectteam7.bin.ViewCalendar
+import com.example.myprojectteam7.bin.Friend
+import com.example.myprojectteam7.bin.UNCHECKED_DATE
+import com.example.myprojectteam7.bin.User
 import com.example.myprojectteam7.repository.CalendarsRepository
-import com.google.firebase.database.FirebaseDatabase
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -42,14 +44,12 @@ class CalendarsViewModel: ViewModel() {
 
 
     //LiveData observe
-    fun observeLiveData(obs: String) {
-        when(obs) {
-            "user" -> repository.observeUser(_user) //유저 정보
-            "calendar" -> repository.observeCalendar(_calendar)   //달력 표시
-            "todolist" -> repository.observeViewTodolist(_todolist) //일정리스트 표시
-            "todo" -> repository.observeTodo(_todo) //일정 포인터
-            "friend" -> repository.observeFriendlist(_friend) //친구목록 표시
-        }
+    init {
+        repository.observeUser(_user) //유저 정보
+        repository.observeCalendar(_calendar)   //달력 표시
+        repository.observeViewTodolist(_todolist) //일정리스트 표시
+        repository.observeTodo(_todo) //일정 포인터
+        repository.observeFriendlist(_friend) //친구목록 표시
     }
 
     //viewModel - Repository
@@ -112,23 +112,25 @@ class CalendarsViewModel: ViewModel() {
 
 
     //프래그먼트에서 접근
-    fun setKey(phone: String) {
-        modifyKey(phone)
+    //유저키 세팅
+    fun setKey(phone: String?) {
+        if(phone != null && phone != "")
+            modifyKey(phone.toString())
     }
 
-
+    //새로운 유저
     fun setNewUser(name: String, number: String, password: String) {
         val now = LocalDate.now()
         val user = User(name, number, password, now, "")
         modifyNewUser(user)
     }
 
-
+    //클릭한 일자
     fun setViewDate(newDate: LocalDate) {
         modifyViewDate(newDate)
     }
 
-
+    //일정추가
     fun setTodo(newTodo: Todo) {
         if(newTodo.title == "")
             newTodo.let {
@@ -138,15 +140,16 @@ class CalendarsViewModel: ViewModel() {
         modifyTodo(newTodo)
     }
 
-
+    //클릭한 일정
     fun setViewTodo(newTodo: Todo) {
         modifyViewTodo(newTodo)
     }
 
-
+    //친구추가
     fun setFriend(newFriend: String) {
         modifyFriend(newFriend)
     }
+
 
     //유저삭제
     fun deleteUser(){
@@ -165,8 +168,7 @@ class CalendarsViewModel: ViewModel() {
 
     //일정삭제
     fun deleteTodo(todo: Todo) {
-        if(todo.key != null)
-            repository.userRef.child("${phone}/MyTodoList/${todo.date.toString()}/${todo.key.toString()}").removeValue()
-            //repository.userRef.child(phone).child("MyTodoList").child(todo.date.toString()).child(todo.key.toString()).removeValue()
+        repository.deleteTodo(todo)
+        //repository.userRef.child("${phone}/MyTodoList/${todo.date.toString()}/${todo.key.toString()}").removeValue()
     }
 }

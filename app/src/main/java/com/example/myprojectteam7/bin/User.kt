@@ -1,4 +1,4 @@
-package com.example.myprojectteam7
+package com.example.myprojectteam7.bin
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -31,7 +31,7 @@ data class User(var username: String? = "",
     }
 
     //Map -> User
-    fun toUser(value: Any?) :User {
+    fun toUser(value: Any?) : User {
         if(value == null)
             return User()
         val map = value as Map<String, Any?>
