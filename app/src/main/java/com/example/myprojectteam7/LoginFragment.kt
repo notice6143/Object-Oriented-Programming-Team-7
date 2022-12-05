@@ -1,5 +1,6 @@
 package com.example.myprojectteam7
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -53,7 +54,10 @@ class LoginFragment : Fragment() {
                 //로그인
                 if(viewModel.phone == phone && viewModel.password == password) {
                     viewModel.setViewDate(now)
-                    findNavController().navigate(R.id.action_loginFragment_to_calendarFragment)
+
+                    val intent = Intent(context, CalendarActivity::class.java)
+
+                    activity?.startActivity(intent)
                     Toast.makeText(binding?.root?.context,"$phone 님 환영합니다.", Toast.LENGTH_SHORT).show()
                 }
                 else
