@@ -2,17 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawablelayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".CalendarActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/frg_nav"
+        android:id="@+id/frg_cal"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_main"/>
+        app:navGraph="@navigation/nav_calendar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

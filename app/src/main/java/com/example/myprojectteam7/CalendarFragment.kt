@@ -1,5 +1,9 @@
 package com.example.myprojectteam7
 
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -8,10 +12,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myprojectteam7.databinding.FragmentCalendarBinding
 import com.example.myprojectteam7.viewmodel.CalendarsViewModel
@@ -68,21 +74,22 @@ class CalendarFragment : Fragment() {
 
 
         binding?.btnFrdlist?.setOnClickListener {
-            findNavController().navigate(R.id.action_calendarFragment_to_friendListFragment)
+            findNavController().navigate(R.id.action_calendarFragment2_to_friendListFragment2)
         }
 
 
 
         //년월 선택
         binding?.txtYear?.setOnClickListener {
-            findNavController().navigate(R.id.action_calendarFragment_to_yearmonthFragment)
+            findNavController().navigate(R.id.action_calendarFragment2_to_yearmonthFragment2)
         }
 
         //세팅
         binding?.btnSetting?.setOnClickListener {
-            findNavController().navigate(R.id.action_calendarFragment_to_settingFragment)
+            findNavController().navigate(R.id.action_calendarFragment2_to_settingFragment2)
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null

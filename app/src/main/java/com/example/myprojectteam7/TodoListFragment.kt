@@ -50,12 +50,12 @@ class TodoListFragment : Fragment() {
 
         //일정추가
         binding?.btnEdit?.setOnClickListener {
-            findNavController().navigate(R.id.action_todolistFragment_to_todoeditFragment)
+            findNavController().navigate(R.id.action_todoListFragment_to_todoDetailFragment)
         }
 
 
         binding?.btnClose?.setOnClickListener {
-            findNavController().navigate(R.id.action_todolistFragment_to_calendarFragment)
+            findNavController().navigate(R.id.action_todoListFragment_to_calendarFragment2)
         }
     }
 

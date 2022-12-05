@@ -53,7 +53,7 @@ class FriendListFragment : Fragment(){
         binding?.recFrdlist?.adapter = FriendItemAdapter(viewModel.friend, viewModel)
 
         binding?.btnBacktocal?.setOnClickListener {
-            findNavController().navigate(R.id.action_friendListFragment_to_calendarFragment)
+            findNavController().navigate(R.id.action_friendListFragment2_to_calendarFragment2)
         }
 
     }

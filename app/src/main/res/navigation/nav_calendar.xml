@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_calendar"
+    app:startDestination="@id/calendarFragment2">
+
+    <fragment
+        android:id="@+id/calendarFragment2"
+        android:name="com.example.myprojectteam7.CalendarFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_calendar" >
+        <action
+            android:id="@+id/action_calendarFragment2_to_todoListFragment"
+            app:destination="@id/todoListFragment" />
+        <action
+            android:id="@+id/action_calendarFragment2_to_friendListFragment2"
+            app:destination="@id/friendListFragment2" />
+        <action
+            android:id="@+id/action_calendarFragment2_to_yearmonthFragment2"
+            app:destination="@id/yearmonthFragment2" />
+        <action
+            android:id="@+id/action_calendarFragment2_to_settingFragment2"
+            app:destination="@id/settingFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/friendListFragment2"
+        android:name="com.example.myprojectteam7.FriendListFragment"
+        android:label="FriendListFragment" >
+        <action
+            android:id="@+id/action_friendListFragment2_to_calendarFragment2"
+            app:destination="@id/calendarFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment2"
+        android:name="com.example.myprojectteam7.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_settingFragment2_to_calendarFragment2"
+            app:destination="@id/calendarFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/todoDetailFragment"
+        android:name="com.example.myprojectteam7.TodoDetailFragment"
+        android:label="fragment_tododetail"
+        tools:layout="@layout/fragment_tododetail" >
+        <action
+            android:id="@+id/action_todoDetailFragment_to_mapFragment3"
+            app:destination="@id/mapFragment3" />
+        <action
+            android:id="@+id/action_todoDetailFragment_to_todoListFragment"
+            app:destination="@id/todoListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/todoListFragment"
+        android:name="com.example.myprojectteam7.TodoListFragment"
+        android:label="fragment_todolist"
+        tools:layout="@layout/fragment_todolist" >
+        <action
+            android:id="@+id/action_todoListFragment_to_todoDetailFragment"
+            app:destination="@id/todoDetailFragment" />
+        <action
+            android:id="@+id/action_todoListFragment_to_calendarFragment2"
+            app:destination="@id/calendarFragment2" />
+        <action
+            android:id="@+id/action_todoListFragment_to_todoEditFragment"
+            app:destination="@id/todoEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/yearmonthFragment2"
+        android:name="com.example.myprojectteam7.YearmonthFragment"
+        android:label="fragment_yearmonth"
+        tools:layout="@layout/fragment_yearmonth" >
+        <action
+            android:id="@+id/action_yearmonthFragment2_to_calendarFragment2"
+            app:destination="@id/calendarFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment3"
+        android:name="com.example.myprojectteam7.MapFragment"
+        android:label="MapFragment" >
+        <action
+            android:id="@+id/action_mapFragment3_to_todoDetailFragment"
+            app:destination="@id/todoDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/todoEditFragment"
+        android:name="com.example.myprojectteam7.TodoEditFragment"
+        android:label="fragment_todoedit"
+        tools:layout="@layout/fragment_todoedit" >
+        <action
+            android:id="@+id/action_todoEditFragment_to_todoListFragment"
+            app:destination="@id/todoListFragment" />
+    </fragment>
+</navigation>

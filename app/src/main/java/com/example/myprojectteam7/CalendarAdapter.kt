@@ -55,7 +55,7 @@ class CalendarAdapter(val cals: LiveData<ArrayList<ViewCalendar>>, val viewModel
                 binding.date.setOnClickListener { view ->
                     //선택한 날짜로 포인터
                     viewModel.setViewDate(it.date1)
-                    view.findNavController().navigate(R.id.action_calendarFragment_to_todolistFragment)
+                    view.findNavController().navigate(R.id.action_calendarFragment2_to_todoListFragment)
                 }
 
                 //중첩리사이클러뷰

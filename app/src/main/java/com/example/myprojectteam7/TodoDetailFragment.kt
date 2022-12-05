@@ -50,18 +50,18 @@ class TodoDetailFragment : Fragment() {
                 }
 
                 viewModel.setTodo(todo)
-                findNavController().navigate(R.id.action_tododetailFragment_to_todolistFragment)
+                findNavController().navigate(R.id.action_todoDetailFragment_to_todoListFragment)
                 Toast.makeText(binding?.root?.context,"일정이 수정되었습니다.", Toast.LENGTH_SHORT).show()
             }
 
             //location 입력 여부에 따라 창 띄워주기
             binding?.txtLocation?.setOnClickListener {
                 if(viewModel.todolocation != ""){
-                    findNavController().navigate(R.id.action_tododetailFragment_to_mapFragment2)        //이거 타고 지도 띄워주기
+                    findNavController().navigate(R.id.action_todoDetailFragment_to_mapFragment3)        //이거 타고 지도 띄워주기
                 }
             }
             binding?.btnClose?.setOnClickListener {
-                findNavController().navigate(R.id.action_tododetailFragment_to_todolistFragment)
+                findNavController().navigate(R.id.action_todoDetailFragment_to_todoListFragment)
             }
         }
 

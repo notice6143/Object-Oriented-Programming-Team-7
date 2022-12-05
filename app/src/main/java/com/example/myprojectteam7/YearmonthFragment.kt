@@ -41,12 +41,12 @@ class YearmonthFragment : Fragment() {
             if(year != "" && month != "") {
                 val date = LocalDate.of(year.toInt(), month.toInt(), 1)
                 viewModel.setViewDate(date)
-                findNavController().navigate(R.id.action_yearmonthFragment_to_calendarFragment)
+                findNavController().navigate(R.id.action_yearmonthFragment2_to_calendarFragment2)
             }
         }
 
         binding?.btnCancel?.setOnClickListener {
-            findNavController().navigate(R.id.action_yearmonthFragment_to_calendarFragment)
+            findNavController().navigate(R.id.action_yearmonthFragment2_to_calendarFragment2)
         }
     }
     override fun onDestroyView() {

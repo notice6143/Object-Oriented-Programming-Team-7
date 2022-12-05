@@ -58,12 +58,12 @@ class TodoEditFragment : Fragment() {
             }
 
             viewModel.setTodo(todo)
-            findNavController().navigate(R.id.action_todoeditFragment_to_todolistFragment)
+            findNavController().navigate(R.id.action_todoEditFragment_to_todoListFragment)
             Toast.makeText(binding?.root?.context,"일정추가 완료", Toast.LENGTH_SHORT).show()
         }
 
         binding?.btnClose2?.setOnClickListener {
-            findNavController().navigate(R.id.action_todoeditFragment_to_todolistFragment)
+            findNavController().navigate(R.id.action_todoEditFragment_to_todoListFragment)
         }
     }
     override fun onDestroyView() {

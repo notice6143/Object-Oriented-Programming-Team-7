@@ -1,5 +1,6 @@
 package com.example.myprojectteam7
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -45,16 +46,19 @@ class SettingFragment : Fragment() {
         }
 
         binding?.btnLogout?.setOnClickListener {
-            findNavController().navigate(R.id.action_settingFragment_to_loginFragment)
+            //setting -> login
             Toast.makeText(binding?.root?.context,"로그아웃 성공", Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(this.context,MainActivity::class.java)
+            startActivity(intent)
         }
 
         binding?.btnSave?.setOnClickListener {
-            findNavController().navigate(R.id.action_settingFragment_to_calendarFragment)
+            findNavController().navigate(R.id.action_settingFragment2_to_calendarFragment2)
         }
 
         binding?.btnClose?.setOnClickListener {
-            findNavController().navigate(R.id.action_settingFragment_to_calendarFragment)
+            findNavController().navigate(R.id.action_settingFragment2_to_calendarFragment2)
         }
     }
 

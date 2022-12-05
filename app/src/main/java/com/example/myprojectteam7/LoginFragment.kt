@@ -55,10 +55,10 @@ class LoginFragment : Fragment() {
                 if(viewModel.phone == phone && viewModel.password == password) {
                     viewModel.setViewDate(now)
 
-                    val intent = Intent(context, CalendarActivity::class.java)
-
-                    activity?.startActivity(intent)
                     Toast.makeText(binding?.root?.context,"$phone 님 환영합니다.", Toast.LENGTH_SHORT).show()
+
+                    val intent = Intent(context, CalendarActivity::class.java)
+                    activity?.startActivity(intent)
                 }
                 else
                     binding?.txtError?.setText("Incorrect username or password.")
