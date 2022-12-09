@@ -171,4 +171,8 @@ class CalendarsViewModel: ViewModel() {
         repository.deleteTodo(todo)
         //repository.userRef.child("${phone}/MyTodoList/${todo.date.toString()}/${todo.key.toString()}").removeValue()
     }
+
+    fun searchUser() {
+        repository.observeUser(_user)
+    }
 }

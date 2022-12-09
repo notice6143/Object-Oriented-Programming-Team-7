@@ -51,11 +51,6 @@ class CalendarFragment : Fragment() {
         binding?.recWeek?.adapter = CalendarAdapter(viewModel.calendar, viewModel)
 
 
-
-        //캘린더 출력
-        binding?.recWeek?.layoutManager = GridLayoutManager(context,7)
-        binding?.recWeek?.adapter = CalendarAdapter(viewModel.calendar, viewModel)
-
         //이전달로 이동
         binding?.btnBack?.setOnClickListener {
             viewModel.setViewDate(viewModel.date.minusMonths(1))

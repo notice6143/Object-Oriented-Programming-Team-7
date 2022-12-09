@@ -2,6 +2,7 @@ package com.example.myprojectteam7
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.myprojectteam7.bin.UNCHECKED_DATE
 import com.example.myprojectteam7.databinding.FragmentLoginBinding
 import com.example.myprojectteam7.viewmodel.CalendarsViewModel
 import com.google.firebase.database.DatabaseReference
@@ -38,18 +40,18 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val now : LocalDate = LocalDate.now()
 
         binding?.btnLogin?.setOnClickListener {
-            var now : LocalDate = LocalDate.now()
-            var phone = binding?.edtPhone?.getText().toString()
-            var password= binding?.edtPw?.getText().toString()
+            val phone = binding?.edtPhone?.getText().toString()
+            val password = binding?.edtPw?.getText().toString()
 
 
             //로그인 검사
             viewModel.setKey(phone)
-
+            viewModel.searchUser()
             viewModel.user.observe(viewLifecycleOwner) {
+
                 //로그인
                 if(viewModel.phone == phone && viewModel.password == password) {
                     viewModel.setViewDate(now)
@@ -60,6 +62,7 @@ class LoginFragment : Fragment() {
                     binding?.txtError?.setText("Incorrect username or password.")
             }
         }
+
 
         binding?.btnSignup?.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
